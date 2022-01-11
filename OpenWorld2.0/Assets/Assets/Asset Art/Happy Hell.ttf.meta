@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 3f9dc48ba3426be4f8893f3c85b64858
+timeCreated: 1567453111
+licenseType: Store
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Happy Hell
+  fontNames:
+  - Happy Hell
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
