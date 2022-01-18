@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 using Openworld.Models;
 
 namespace Openworld.Forms
 {
     public class RegisterForm : BaseForm
     {
-        [SerializeField] TMP_InputField emailComponent;
-        [SerializeField] TMP_InputField nameComponent;
-        [SerializeField] TMP_InputField passwordComponent;
-        [SerializeField] TMP_InputField confirmComponent;
+        [SerializeField] InputField emailComponent;
+        [SerializeField] InputField nameComponent;
+        [SerializeField] InputField passwordComponent;
+        [SerializeField] InputField confirmComponent;
 
         protected override bool ShouldValidate { get { return false; } }
 
