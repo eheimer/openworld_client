@@ -43,8 +43,9 @@ namespace Openworld.Scenes
         }
 
         void Update() {
+            
             if (Input.GetKeyDown(KeyCode.Tab)) {
-                FocusGameObject(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift));
+        FocusGameObject(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift));
             }
         }
 
