@@ -1175,10 +1175,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78ed92eec335a0d97ae9cef40c0945d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tabStops: []
-  formError: {fileID: 0}
-  nameComponent: {fileID: 0}
-  maxPlayersComponent: {fileID: 0}
+  tabStops:
+  - {fileID: 102199410}
+  - {fileID: 1624614578}
+  - {fileID: 829353014}
+  - {fileID: 577807782}
+  formError: {fileID: 691493018}
+  nameComponent: {fileID: 102199410}
+  maxPlayersComponent: {fileID: 1624614578}
 --- !u!4 &977389004
 Transform:
   m_ObjectHideFlags: 0
@@ -2314,7 +2318,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Seed:'
+  m_text: '# of players:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
