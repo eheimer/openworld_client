@@ -27,7 +27,7 @@ namespace Openworld
       LogMessage("", message);
     }
 
-    private string[] scenes = new string[] { "login", "games", "register", "New Game", "Invite", "Character", "Battles", "BattleBoard" };
+    private string[] scenes = new string[] { "login", "games", "register", "newgame", "Invite", "Character", "Battles", "BattleBoard" };
 
     public static GameManager instance;
     [SerializeField] public string baseUrl;
