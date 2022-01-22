@@ -1,16 +1,16 @@
-using System.Runtime.CompilerServices;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using Proyecto26;
-using System;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Openworld.Models;
 using Openworld.Scenes;
+using Proyecto26;
 using TMPro;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Openworld.Scenes
 {
@@ -18,7 +18,6 @@ namespace Openworld.Scenes
   {
     [SerializeField] GameObject gameObjectPrefab;
     [SerializeField] GameObject container;
-    [SerializeField] TMP_Text tempDebug;
 
     protected override void GetData()
     {
@@ -33,20 +32,17 @@ namespace Openworld.Scenes
         return;
       }
 
-      var debug = "";
       foreach (GamesResponse game in games)
       {
-        debug += game.game.name + "(" + game.character.name + ")\n";
-        // string text = game.game.name + "(" + game.character.name + ")";
-        // GameObject obj = Instantiate(gameObjectPrefab, container.transform);
-        // obj.GetComponentInChildren<TMPro.TMP_Text>().text = text;
-        // GameSelect item = obj.GetComponent<GameSelect>();
-        // item.gameId = game.game.id;
-        // item.character = game.character;
-        // item.SetOwner(game.owner);
+        Debug.Log("Game: " + game.game.name + "(" + game.character.name + ")");
+        string text = game.game.name + "(" + game.character.name + ")";
+        GameObject obj = Instantiate(gameObjectPrefab, container.transform);
+        obj.GetComponentInChildren<TMPro.TMP_Text>().text = text;
+        GameSelect item = obj.GetComponent<GameSelect>();
+        item.gameId = game.game.id;
+        item.character = game.character;
+        item.SetOwner(game.owner);
       }
-      Debug.Log(debug);
-      tempDebug.text = debug;
     }
 
     public void CreateGame()

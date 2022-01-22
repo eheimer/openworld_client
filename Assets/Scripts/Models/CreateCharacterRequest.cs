@@ -9,6 +9,7 @@ namespace Openworld.Models
         public int maxHp;
         public int baseResist;
         public int inventorySize;
-    }
+
+  }
 }
 

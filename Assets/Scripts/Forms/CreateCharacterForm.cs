@@ -11,10 +11,12 @@ namespace Openworld.Forms {
     {
         [SerializeField] TMP_InputField nameComponent;
         [SerializeField] TMP_InputField maxhpComponent;
+    [SerializeField] TMP_InputField inventory;
+    [SerializeField] TMP_InputField baseResist;
 
-        protected override void DoSubmit()
+    protected override void DoSubmit()
         {
-            communicator.CreateCharacter(nameComponent.text, Int32.Parse(maxhpComponent.text), CreateSuccess, RequestException);
+            communicator.CreateCharacter(nameComponent.text, Int32.Parse(maxhpComponent.text), Int32.Parse(inventory.text), Int32.Parse(baseResist.text), CreateSuccess, RequestException);
         }
 
         public void CreateSuccess(ResponseHelper res)
