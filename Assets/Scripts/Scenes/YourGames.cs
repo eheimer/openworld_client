@@ -34,14 +34,9 @@ namespace Openworld.Scenes
 
       foreach (GamesResponse game in games)
       {
-        Debug.Log("Game: " + game.game.name + "(" + game.character.name + ")");
-        string text = game.game.name + "(" + game.character.name + ")";
         GameObject obj = Instantiate(gameObjectPrefab, container.transform);
-        obj.GetComponentInChildren<TMPro.TMP_Text>().text = text;
-        GameSelect item = obj.GetComponent<GameSelect>();
-        item.gameId = game.game.id;
-        item.character = game.character;
-        item.SetOwner(game.owner);
+        GameSelect item = obj.GetComponentInChildren<GameSelect>();
+        item.SetData(game);
       }
     }
 
