@@ -1,16 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Openworld.Scenes;
+using Openworld.Models;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEditor;
-using Openworld.Models;
 
 namespace Openworld 
 {
-  public enum SceneName
-  {
-    LogIn, YourGames, Register, NewGame, Invite, Character, Battles, BattleBoard
-  }
   public class GameManager : MonoBehaviour
   {
     public void LogMessage(string title, string message)
@@ -27,7 +24,6 @@ namespace Openworld
       LogMessage("", message);
     }
 
-    private string[] scenes = new string[] { "login", "games", "register", "newgame", "Invite", "Character", "Battles", "BattleBoard" };
 
     public static GameManager instance;
     [SerializeField] public string baseUrl;
@@ -109,7 +105,7 @@ namespace Openworld
 
     public void LoadScene(SceneName sceneName)
     {
-      SceneManager.LoadScene(scenes[(int)sceneName]);
+      SceneManager.LoadScene(sceneName.name());
     }
   }
 }
