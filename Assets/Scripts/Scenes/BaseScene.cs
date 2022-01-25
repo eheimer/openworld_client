@@ -16,7 +16,7 @@ namespace Openworld.Scenes
 
   static class SceneNameExtensions
   {
-    private static string[] names = new string[] { "login", "games", "register", "newgame", "Invite", "character", "Battles", "BattleBoard" };
+    private static string[] names = new string[] { "login", "games", "register", "newgame", "Invite", "character", "battles", "BattleBoard" };
     public static string name(this SceneName scene)
     {
       return names[(int)scene];

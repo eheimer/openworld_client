@@ -25,12 +25,13 @@ namespace Openworld.Scenes
 
     public void SetBattles(Battle[] battles)
     {
+      Debug.Log("Battles: " + battles.Length);
       foreach (Battle battle in battles)
       {
         string text = battle.getName();
         GameObject obj = Instantiate(battleObjectPrefab, container.transform);
         obj.GetComponentInChildren<TMPro.TMP_Text>().text = text;
-        BattleSelect item = obj.GetComponent<BattleSelect>();
+        BattleSelect item = obj.GetComponentInChildren<BattleSelect>();
         item.battleId = battle.id;
       }
     }
