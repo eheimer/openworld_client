@@ -73,9 +73,8 @@ namespace Openworld
             .Catch(err => HandleError(err, error));
         }
 
-        public void CreateCharacter(string name, int maxHp, Action<ResponseHelper> success, Action<RequestException> error){
-            RequestHelper req = CreateCharacterRequest(name, maxHp);
-            RestClient.Post<ResponseHelper>(CreateCharacterRequest(name, maxHp))
+        public void CreateCharacter(string name, int maxHp, int inventory, int baseResist, Action<ResponseHelper> success, Action<RequestException> error){
+            RestClient.Post<ResponseHelper>(CreateCharacterRequest(name, maxHp, inventory, baseResist))
             .Then(res => success(res))
             .Catch(err => HandleError(err, error));
         }
@@ -149,9 +148,9 @@ namespace Openworld
             return getAuthorizedRequest("/games/" + id + "/battles");
         }
 
-        private RequestHelper CreateCharacterRequest(string name, int maxHp){
+        private RequestHelper CreateCharacterRequest(string name, int maxHp, int inventory, int baseResist){
             RequestHelper req = getAuthorizedRequest("/games/" + gameManager.currentGame + "/characters");
-            req.Body = new CreateCharacterRequest { name = name, maxHp = maxHp, inventorySize = 10 };
+            req.Body = new CreateCharacterRequest { name = name, maxHp = maxHp, inventorySize = inventory, baseResist = baseResist };
             return req;
         }
 

@@ -1,13 +1,14 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using Proyecto26;
-using System;
+using System.Runtime.CompilerServices;
 using Openworld.Models;
+using Proyecto26;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using Openworld.Scenes;
 
 namespace Openworld.Forms
 {
@@ -17,6 +18,16 @@ namespace Openworld.Forms
     [SerializeField] TMP_InputField passwordComponent;
 
     protected override bool ShouldValidate { get { return false; } }
+
+    override protected void Start() {
+      //TODO: this can/should be deleted for production code, though it shouldn't affect it
+      if (Application.isEditor)
+      {
+        usernameComponent.text = "eric@heimerman.org";
+        passwordComponent.text = "eric";
+      }
+      base.Start();
+    }
 
     protected override void DoSubmit()
     {
