@@ -906,8 +906,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -68}
-  m_SizeDelta: {x: 177.6138, y: 72.8725}
+  m_AnchoredPosition: {x: 0, y: -31.6392}
+  m_SizeDelta: {x: 270.87, y: 63.2789}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &303963379
 MonoBehaviour:
@@ -929,10 +929,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: OpenWorld
+  m_text: New Character
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 896460306544d2247a1f35e0374d5834, type: 2}
+  m_sharedMaterial: {fileID: -3672845428181347552, guid: 896460306544d2247a1f35e0374d5834, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -956,7 +956,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.75
+  m_fontSize: 43.4
   m_fontSizeBase: 65
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -992,7 +992,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -60.46991, y: 0, z: -51.463806, w: 0}
+  m_margin: {x: 2.0885315, y: 0, z: 6.01239, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1173,7 +1173,7 @@ GameObject:
   - component: {fileID: 360478347}
   - component: {fileID: 360478346}
   m_Layer: 5
-  m_Name: Text_Email
+  m_Name: Text_Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1220,8 +1220,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Character Name:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 34a555147faa8f4d493523b47243bc16, type: 2}
+  m_sharedMaterial: {fileID: -188623593693981369, guid: 34a555147faa8f4d493523b47243bc16, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1245,7 +1245,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.05
+  m_fontSize: 26.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1422,8 +1422,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.3115, y: -47.073}
-  m_SizeDelta: {x: 351.9541, y: 534.7679}
+  m_AnchoredPosition: {x: 0.00098991, y: -25.0502}
+  m_SizeDelta: {x: 270.87, y: 435.8997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &451977778
 MonoBehaviour:
@@ -1438,14 +1438,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.8018868, g: 0.66303414, b: 0.5862852, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5eda9b7534458483b982df6ee25d4fd4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d269ecf492dba03448bef9cfd82f3b6b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1631,8 +1631,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 352, y: 625}
+  m_AnchoredPosition: {x: 1.0668, y: 0}
+  m_SizeDelta: {x: 270.87, y: 486}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &648262071
 GameObject:
@@ -1935,7 +1935,7 @@ GameObject:
   - component: {fileID: 782521580}
   - component: {fileID: 782521579}
   m_Layer: 5
-  m_Name: Text_Password
+  m_Name: Text_Hitpoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1982,8 +1982,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Hitpoints:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 34a555147faa8f4d493523b47243bc16, type: 2}
+  m_sharedMaterial: {fileID: -188623593693981369, guid: 34a555147faa8f4d493523b47243bc16, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2007,7 +2007,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.05
+  m_fontSize: 26.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2092,8 +2092,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 75.063, y: -179.2}
-  m_SizeDelta: {x: 150.1263, y: 66.971}
+  m_AnchoredPosition: {x: 67.525, y: -185.37}
+  m_SizeDelta: {x: 135.0506, y: 65.169}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &799561819
 MonoBehaviour:
@@ -2201,7 +2201,7 @@ GameObject:
   - component: {fileID: 820588905}
   - component: {fileID: 820588904}
   m_Layer: 5
-  m_Name: Text_Password (1)
+  m_Name: Text_Inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2246,10 +2246,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Inventory
+  m_text: 'Inventory Size:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 34a555147faa8f4d493523b47243bc16, type: 2}
+  m_sharedMaterial: {fileID: -188623593693981369, guid: 34a555147faa8f4d493523b47243bc16, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2273,7 +2273,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.05
+  m_fontSize: 26.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2544,7 +2544,7 @@ GameObject:
   - component: {fileID: 1107495003}
   - component: {fileID: 1107495002}
   m_Layer: 5
-  m_Name: Text_Password (2)
+  m_Name: Text_Resist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2589,10 +2589,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Base Resist
+  m_text: 'Base Resist:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 34a555147faa8f4d493523b47243bc16, type: 2}
+  m_sharedMaterial: {fileID: -188623593693981369, guid: 34a555147faa8f4d493523b47243bc16, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2616,7 +2616,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.05
+  m_fontSize: 26.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2753,7 +2753,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -68.155, y: -181}
+  m_AnchoredPosition: {x: -68.155, y: -186.27}
   m_SizeDelta: {x: 136.31, y: 63.3664}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1193912669
