@@ -45,11 +45,11 @@ namespace Openworld.Scenes
       if (gameManager == null || communicator == null || (ShouldValidate && !Validate()))
       {
         ValidateFail();
+      } else
+      {
+        GetData();
+        FocusGameObject(false);
       }
-
-      GetData();
-
-      FocusGameObject(false);
     }
 
     protected virtual bool Validate()
