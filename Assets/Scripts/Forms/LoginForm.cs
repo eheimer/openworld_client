@@ -26,7 +26,7 @@ namespace Openworld.Forms
         usernameComponent.text = "eric@heimerman.org";
         passwordComponent.text = "eric";
       } else {
-        devToggle.enabled = false;
+        devToggle.gameObject.SetActive(false);
       }
       base.Start();
       ToggleDev();
