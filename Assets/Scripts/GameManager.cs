@@ -26,8 +26,6 @@ namespace Openworld
 
 
     public static GameManager instance;
-    [SerializeField] public string baseUrl;
-    [SerializeField] public string baseApiPath;
     [SerializeField] public bool debugApi;
     [SerializeField] Player player;
     [SerializeField] Communicator communicator;

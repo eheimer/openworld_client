@@ -9,27 +9,21 @@ namespace Openworld
 {
     public class Communicator : MonoBehaviour
     {
+        private const string prodUrl = "https://www.openworld-game.com";
+        private const string devUrl = "http://localhost:3001";
+    [SerializeField] public string baseUrl = prodUrl;
+    [SerializeField] public string apiPath = "/api/v1";
         protected GameManager gameManager;
-        protected string baseUrl;
-    protected string apiPath;
-    protected string apiUrl;
-
-        public void SetBaseUrl(string url){
-            baseUrl = url;
-            apiUrl = baseUrl + apiPath;
-        }
-
-        public void SetAPIPath(string path){
-            apiPath = path;
-            apiUrl = baseUrl + path;
-        }
 
         protected void Start()
         {
             gameManager = FindObjectOfType<GameManager>();
-            SetBaseUrl(gameManager.baseUrl);
-            SetAPIPath(gameManager.baseApiPath);
         }
+
+        public void SetIsDevUrl(bool isDevUrl){
+      baseUrl = isDevUrl ? devUrl : prodUrl;
+
+    }
 
         public void Login(string username, string password, Action<LoginResponse> success, Action<RequestException> error)
         {
@@ -97,7 +91,7 @@ namespace Openworld
 
         private RequestHelper getBasicRequest(string path, bool root = false)
         {
-            string url = root ? baseUrl + path : apiUrl + path;
+            string url = root ? baseUrl + path : baseUrl + apiPath + path;
             return new RequestHelper
             {
                 Uri = url,

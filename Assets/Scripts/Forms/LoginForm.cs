@@ -18,19 +18,18 @@ namespace Openworld.Forms
     [SerializeField] TMP_InputField passwordComponent;
     [SerializeField] Toggle devToggle;
 
-    private const string prodHost = "https://openworld.heimerman.org";
-    private const string devHost = "http://localhost:3001";
-
     protected override bool ShouldValidate { get { return false; } }
-
     override protected void Start() {
       //TODO: this can/should be deleted for production code, though it shouldn't affect it
       if (Application.isEditor)
       {
         usernameComponent.text = "eric@heimerman.org";
         passwordComponent.text = "eric";
+      } else {
+        devToggle.enabled = false;
       }
       base.Start();
+      ToggleDev();
     }
 
     protected override void DoSubmit()
@@ -50,7 +49,7 @@ namespace Openworld.Forms
     }
 
     public void ToggleDev(){
-      communicator.SetBaseUrl(devToggle.isOn ? devHost : prodHost);
+      communicator.SetIsDevUrl(devToggle.isOn);
     }
   }
 }
