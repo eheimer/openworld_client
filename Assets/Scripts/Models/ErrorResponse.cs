@@ -2,17 +2,26 @@ using System;
 
 namespace Openworld.Models
 {
-	[Serializable]
-	public class ErrorResponse: BaseModel
+  [Serializable]
+  public class ErrorResponse
+  {
+    [Serializable]
+    public class Error
     {
-        [Serializable]
-        public class Error: BaseModel
-        {
-            public string type;
-            public string message;
-        }
+      public string type;
+      public string message;
 
-        public Error error;
+      public string ToString()
+      {
+        return UnityEngine.JsonUtility.ToJson(this, true);
+      }
     }
+
+    public Error error;
+    public override string ToString()
+    {
+      return UnityEngine.JsonUtility.ToJson(this, true);
+    }
+  }
 }
 

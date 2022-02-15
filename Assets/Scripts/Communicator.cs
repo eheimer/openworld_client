@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Openworld.Models;
 using Proyecto26;
+using UnityEngine;
 
 namespace Openworld
 {
@@ -11,13 +11,24 @@ namespace Openworld
     {
         protected GameManager gameManager;
         protected string baseUrl;
-        protected string apiUrl;
+    protected string apiPath;
+    protected string apiUrl;
+
+        public void SetBaseUrl(string url){
+            baseUrl = url;
+            apiUrl = baseUrl + apiPath;
+        }
+
+        public void SetAPIPath(string path){
+            apiPath = path;
+            apiUrl = baseUrl + path;
+        }
 
         protected void Start()
         {
             gameManager = FindObjectOfType<GameManager>();
-            baseUrl = gameManager.baseUrl;
-            apiUrl = baseUrl + gameManager.baseApiPath;
+            SetBaseUrl(gameManager.baseUrl);
+            SetAPIPath(gameManager.baseApiPath);
         }
 
         public void Login(string username, string password, Action<LoginResponse> success, Action<RequestException> error)

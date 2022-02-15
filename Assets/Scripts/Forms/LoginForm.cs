@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Openworld.Models;
+using Openworld.Scenes;
 using Proyecto26;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Openworld.Scenes;
 
 namespace Openworld.Forms
 {
@@ -16,6 +16,10 @@ namespace Openworld.Forms
   {
     [SerializeField] TMP_InputField usernameComponent;
     [SerializeField] TMP_InputField passwordComponent;
+    [SerializeField] Toggle devToggle;
+
+    private const string prodHost = "https://openworld.heimerman.org";
+    private const string devHost = "http://localhost:3001";
 
     protected override bool ShouldValidate { get { return false; } }
 
@@ -43,6 +47,10 @@ namespace Openworld.Forms
     public void Register()
     {
       gameManager.LoadScene(SceneName.Register);
+    }
+
+    public void ToggleDev(){
+      communicator.SetBaseUrl(devToggle.isOn ? devHost : prodHost);
     }
   }
 }
