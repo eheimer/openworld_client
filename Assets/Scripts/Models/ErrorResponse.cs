@@ -11,7 +11,7 @@ namespace Openworld.Models
       public string type;
       public string message;
 
-      public string ToString()
+      public override string ToString()
       {
         return UnityEngine.JsonUtility.ToJson(this, true);
       }
