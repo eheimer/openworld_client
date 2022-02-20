@@ -4,11 +4,10 @@ using System;
 namespace Openworld.Models
 {
   [Serializable]
-  public class GameCharacter
+  public class FailResponse
   {
-    public PublicCharacter character;
-    public Game game;
-    public bool owner;
+    public Error error;
+    public bool success;
 
     public override string ToString(){
       return UnityEngine.JsonUtility.ToJson (this, true);

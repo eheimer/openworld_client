@@ -4,11 +4,9 @@ using System;
 namespace Openworld.Models
 {
   [Serializable]
-  public class GameCharacter
+  public class CharacterDetailResponse : CharacterDetail
   {
-    public PublicCharacter character;
-    public Game game;
-    public bool owner;
+
 
     public override string ToString(){
       return UnityEngine.JsonUtility.ToJson (this, true);

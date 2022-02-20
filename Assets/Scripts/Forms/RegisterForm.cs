@@ -29,7 +29,7 @@ namespace Openworld.Forms
 
         protected void LoginSuccess(LoginResponse res){
             gameManager.SetToken(res.token);
-            communicator.GetPlayer(res.player,gameManager.SetPlayer,RequestException);
+            communicator.GetPlayerDetail(res.player,gameManager.SetPlayer,RequestException);
         }
 
         public void Cancel()

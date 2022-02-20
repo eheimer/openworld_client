@@ -64,7 +64,7 @@ namespace Openworld
       }
     }
 
-    public void SetPlayer(PlayerResponse pr)
+    public void SetPlayer(PlayerDetailResponse pr)
     {
       player.playerId = pr.id;
       player.playerName = pr.name;

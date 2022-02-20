@@ -18,7 +18,7 @@ namespace Openworld.Scenes
   {
     GamesResponse gameData;
     string gameId;
-    Character character;
+    PublicCharacter character;
     Boolean owner;
 
     [SerializeField] GameObject addPlayerButton;

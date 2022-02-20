@@ -46,6 +46,13 @@ namespace Openworld
             .Catch(err => HandleError(err, error));
         }
 
+        public void GetPlayerDetail(string id, Action<PlayerDetailResponse> success, Action<RequestException> error)
+        {
+            RestClient.Get<PlayerDetailResponse>(PlayerRequest(id))
+            .Then(res => success(res))
+            .Catch(err => HandleError(err, error));
+        }
+
         public void GetGames(string playerId, Action<GamesResponse[]> success, Action<RequestException> error)
         {
             RestClient.GetArray<GamesResponse>(GamesRequest(playerId))
