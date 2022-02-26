@@ -73,8 +73,8 @@ namespace Openworld
             .Catch(err => HandleError(err, error));
         }
 
-        public void GetBattles(string gameId, Action<Battle[]> success, Action<RequestException> error){
-            RestClient.GetArray<Battle>(BattlesRequest(gameId))
+        public void GetBattles(string gameId, Action<BattleResponse[]> success, Action<RequestException> error){
+            RestClient.GetArray<BattleResponse>(BattlesRequest(gameId))
             .Then(res => success(res))
             .Catch(err => HandleError(err, error));
         }
