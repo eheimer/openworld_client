@@ -11,8 +11,8 @@ namespace Openworld
     {
         private const string prodUrl = "https://www.openworld-game.com";
         private const string devUrl = "http://localhost:3001";
-    [SerializeField] public string baseUrl = prodUrl;
-    [SerializeField] public string apiPath = "/api/v1";
+        [SerializeField] public string baseUrl = prodUrl;
+        [SerializeField] public string apiPath = "/api/v1";
         protected GameManager gameManager;
 
         protected void Start()
@@ -21,14 +21,13 @@ namespace Openworld
         }
 
         public void SetIsDevUrl(bool isDevUrl){
-      baseUrl = isDevUrl ? devUrl : prodUrl;
-
-    }
+            baseUrl = isDevUrl ? devUrl : prodUrl;
+        }
 
         public void Login(string username, string password, Action<LoginResponse> success, Action<RequestException> error)
         {
             RestClient.Post<LoginResponse>(LoginRequest(username, password))
-            .Then(res => success(res))
+            .Then(res => { Debug.Log(res); success(res); })
             .Catch(err => HandleError(err, error));
         }
 
@@ -42,52 +41,52 @@ namespace Openworld
         public void GetPlayer(string id, Action<PlayerResponse> success, Action<RequestException> error)
         {
             RestClient.Get<PlayerResponse>(PlayerRequest(id))
-            .Then(res => success(res))
+            .Then(res => { Debug.Log(res); success(res); })
             .Catch(err => HandleError(err, error));
         }
 
         public void GetPlayerDetail(string id, Action<PlayerDetailResponse> success, Action<RequestException> error)
         {
-            RestClient.Get<PlayerDetailResponse>(PlayerRequest(id))
-            .Then(res => success(res))
+            RestClient.Get<PlayerDetailResponse>(PlayerDetailRequest(id))
+            .Then(res => { Debug.Log(res); success(res); })
             .Catch(err => HandleError(err, error));
         }
 
         public void GetGames(string playerId, Action<GamesResponse[]> success, Action<RequestException> error)
         {
             RestClient.GetArray<GamesResponse>(GamesRequest(playerId))
-            .Then(res => success(res))
+            .Then(res => { Debug.Log(res); success(res); })
             .Catch(err => HandleError(err, error));
         }
 
         public void CreateGame(string name, int maxPlayers, Action<ResponseHelper> success, Action<RequestException> error)
         {
             RestClient.Post<ResponseHelper>(CreateGameRequest(name, maxPlayers))
-            .Then(res => success(res))
+            .Then(res => { Debug.Log(res); success(res); })
             .Catch(err => HandleError(err, error));
         }
 
         public void InvitePlayer(string gameId, string email, Action<ResponseHelper> success, Action<RequestException> error){
             RestClient.Post<ResponseHelper>(InvitePlayerRequest(gameId, email))
-            .Then(res => success(res))
+            .Then(res => { Debug.Log(res); success(res); })
             .Catch(err => HandleError(err, error));
         }
 
         public void GetBattles(string gameId, Action<BattleResponse[]> success, Action<RequestException> error){
             RestClient.GetArray<BattleResponse>(BattlesRequest(gameId))
-            .Then(res => success(res))
+            .Then(res => { Debug.Log(res); success(res); })
             .Catch(err => HandleError(err, error));
         }
 
         public void CreateBattle(string gameId, Action<ResponseHelper> success, Action<RequestException> error){
             RestClient.Post<ResponseHelper>(CreateBattleRequest(gameId))
-            .Then(res => success(res))
+            .Then(res => { Debug.Log(res); success(res); })
             .Catch(err => HandleError(err, error));
         }
 
         public void CreateCharacter(string name, int maxHp, int inventory, int baseResist, Action<ResponseHelper> success, Action<RequestException> error){
             RestClient.Post<ResponseHelper>(CreateCharacterRequest(name, maxHp, inventory, baseResist))
-            .Then(res => success(res))
+            .Then(res => { Debug.Log(res); success(res); })
             .Catch(err => HandleError(err, error));
         }
 
@@ -125,6 +124,10 @@ namespace Openworld
         private RequestHelper PlayerRequest(string id)
         {
             return getAuthorizedRequest("/players/" + id);
+        }
+
+        private RequestHelper PlayerDetailRequest(string id){
+            return getAuthorizedRequest("/players/" + id + "/detail");
         }
 
         private RequestHelper RegisterRequest(string email, string name, string password)

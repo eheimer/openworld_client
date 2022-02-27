@@ -23,24 +23,16 @@ namespace Openworld.Scenes
       communicator.GetBattles(gameManager.currentGame, SetBattles, RequestException);
     }
 
-    public void SetBattles(Battle[] battles)
+    public void SetBattles(BattleResponse[] battles)
     {
       Debug.Log("Battles: " + battles.Length);
-      foreach (Battle battle in battles)
+      foreach (BattleResponse battle in battles)
       {
-        string text = MakeBattleName(battle);
         GameObject obj = Instantiate(battleObjectPrefab, container.transform);
-        obj.GetComponentInChildren<TMPro.TMP_Text>().text = text;
+        obj.GetComponentInChildren<TMPro.TMP_Text>().text = battle.displayName;
         BattleSelect item = obj.GetComponentInChildren<BattleSelect>();
         item.battleId = battle.id;
       }
-    }
-
-    protected string MakeBattleName(Battle battle)
-    {
-      //convert createdAt to DateTime, then format to string
-      DateTime createdAt = DateTime.Parse(battle.createdAt);
-      return createdAt.ToString("yyyy/MM/dd HH:mm:ss");
     }
 
     public void CreateBattle()

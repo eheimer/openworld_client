@@ -120,7 +120,7 @@ namespace Openworld.Scenes
 
     public virtual void RequestException(RequestException err)
     {
-      Error(UnityEngine.JsonUtility.FromJson<ErrorResponse>(err.Response).error.message);
+      Error(UnityEngine.JsonUtility.FromJson<FailResponse>(err.Response).error.message);
     }
 
     protected virtual void Error(string message)
