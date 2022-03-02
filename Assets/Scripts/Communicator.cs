@@ -25,6 +25,30 @@ namespace Openworld
       baseUrl = isDevUrl ? devUrl : prodUrl;
     }
 
+    private RequestHelper getBasicRequest(string path, bool root = false)
+    {
+      string url = root ? baseUrl + path : baseUrl + apiPath + path;
+      return new RequestHelper
+      {
+        Uri = url,
+        EnableDebug = gameManager.debugApi
+      };
+    }
+
+    private RequestHelper getAuthorizedRequest(string path, bool root = false)
+    {
+      RequestHelper req = getBasicRequest(path, root);
+      var headers = new Dictionary<string, string>();
+      headers.Add("Authorization", "Bearer " + gameManager.GetAuthToken());
+      req.Headers = headers;
+      return req;
+    }
+
+    private void HandleError(Exception err, Action<RequestException> handler)
+    {
+      handler((RequestException)err);
+    }
+
     public void Login(string username, string password, Action<LoginResponse> success, Action<RequestException> error)
     {
       RestClient.Post<LoginResponse>(LoginRequest(username, password))
@@ -93,30 +117,6 @@ namespace Openworld
       RestClient.Post<ResponseHelper>(CreateCharacterRequest(name, maxHp, inventory, baseResist))
       .Then(res => { Debug.Log(res); success(res); })
       .Catch(err => HandleError(err, error));
-    }
-
-    private void HandleError(Exception err, Action<RequestException> handler)
-    {
-      handler((RequestException)err);
-    }
-
-    private RequestHelper getBasicRequest(string path, bool root = false)
-    {
-      string url = root ? baseUrl + path : baseUrl + apiPath + path;
-      return new RequestHelper
-      {
-        Uri = url,
-        EnableDebug = gameManager.debugApi
-      };
-    }
-
-    private RequestHelper getAuthorizedRequest(string path, bool root = false)
-    {
-      RequestHelper req = getBasicRequest(path, root);
-      var headers = new Dictionary<string, string>();
-      headers.Add("Authorization", "Bearer " + gameManager.GetAuthToken());
-      req.Headers = headers;
-      return req;
     }
 
     private RequestHelper LoginRequest(string email, string password)
