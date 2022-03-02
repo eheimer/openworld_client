@@ -20,7 +20,7 @@ namespace Openworld.Scenes
 
     protected override void GetData()
     {
-      communicator.GetBattles(gameManager.currentGame, SetBattles, RequestException);
+      communicator.GetGameBattles(gameManager.currentGame, SetBattles, RequestException);
     }
 
     public void SetBattles(BattleResponse[] battles)

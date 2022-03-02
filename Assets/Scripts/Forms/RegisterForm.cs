@@ -1,7 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using Openworld.Models;
+﻿using Openworld.Models;
 using Openworld.Scenes;
+using Proyecto26;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace Openworld.Forms
 {
@@ -23,7 +24,7 @@ namespace Openworld.Forms
             communicator.Register(emailComponent.text, nameComponent.text, passwordComponent.text, RegisterSuccess, RequestException);
         }
 
-        protected void RegisterSuccess(PlayerResponse res){
+        protected void RegisterSuccess(ResponseHelper res){
             communicator.Login(emailComponent.text, passwordComponent.text, LoginSuccess, RequestException);
         }
 

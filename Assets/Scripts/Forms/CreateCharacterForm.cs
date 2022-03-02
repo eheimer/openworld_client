@@ -17,7 +17,7 @@ namespace Openworld.Forms {
 
     protected override void DoSubmit()
         {
-            communicator.CreateCharacter(nameComponent.text, Int32.Parse(maxhpComponent.text), Int32.Parse(inventory.text), Int32.Parse(baseResist.text), CreateSuccess, RequestException);
+            communicator.CreateCharacter(gameManager.currentGame, nameComponent.text, Int32.Parse(maxhpComponent.text), Int32.Parse(inventory.text), Int32.Parse(baseResist.text), CreateSuccess, RequestException);
         }
 
         public void CreateSuccess(ResponseHelper res)
