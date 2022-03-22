@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Openworld.Scenes;
 using Openworld.Models;
+using Openworld.Scenes;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -68,7 +68,6 @@ namespace Openworld
     {
       player.playerId = pr.id;
       player.playerName = pr.name;
-      LoadScene(SceneName.YourGames);
     }
 
     // Start is called before the first frame update
