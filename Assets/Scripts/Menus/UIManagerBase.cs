@@ -6,18 +6,15 @@ using UnityEngine.UIElements;
 namespace Openworld.Menus
 {
 
-  public class StartSceneMenu : MonoBehaviour
+  public abstract class UIManagerBase : MonoBehaviour
   {
 
     [SerializeField]
-    UIDocument start;
+    UIDocument mainMenu;
     [SerializeField]
     UIDocument menuButton;
-    [SerializeField]
-    UIDocument loginForm;
-    GameManager gameManager;
+    protected GameManager gameManager;
 
-    // Start is called before the first frame update
     protected void Start()
     {
       gameManager = FindObjectOfType<GameManager>();
@@ -39,14 +36,24 @@ namespace Openworld.Menus
       }
     }
 
+    protected virtual bool Validate(){
+      return true;
+    }
+
+    /**
+    ** This should handle display in the case of
+    ** validation fail check
+    */
+    protected virtual void InvalidMenu(){ }
+
     public void ShowMenu()
     {
       HideAllMenus();
-      if(gameManager.GetAuthToken() != null && !gameManager.GetAuthToken().Equals("")){
-        start.rootVisualElement.visible = true;
-      }
-      else {
-        loginForm.rootVisualElement.visible = true;
+      if (Validate())
+      {
+        mainMenu.GetComponent<MenuBase>().Show();
+      } else {
+        InvalidMenu();
       }
     }
 

@@ -31,6 +31,7 @@ namespace Openworld.Scenes
     protected virtual bool ShouldValidate { get { return true; } }
 
     [SerializeField] protected Selectable[] tabStops;
+    [SerializeField] protected Selectable[] tabStop;
 
     // Start is called before the first frame update
     protected virtual void Start()

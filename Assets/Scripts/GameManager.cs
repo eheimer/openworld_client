@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Openworld.Models;
 using Openworld.Scenes;
+using Proyecto26;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -73,9 +75,9 @@ namespace Openworld
     // Start is called before the first frame update
     void Start()
     {
-      //update references to all child objects
-      //communicator = FindObjectOfType<Communicator>();
-      player = FindObjectOfType<Player>();
+      //player = FindObjectOfType<Player>();
+      //temporarily forcing dev.  Remove this line to default to prod
+      communicator.SetIsDevUrl(true);
     }
 
     public void Reset()
@@ -105,5 +107,25 @@ namespace Openworld
       SceneManager.LoadScene(sceneName.name());
     }
 
+    public void Logout(){
+      player = new Player();
+      SetToken("");
+    }
+
+    // this is here, because we have to do it in two different places
+    public void Login(string username, string password, Action FinalSuccess, Action<RequestException> Error){
+      communicator.Login(username, password, (resp)=> { LoginSuccess(resp, FinalSuccess, Error);}, Error);
+    }
+
+    void LoginSuccess(LoginResponse resp, Action FinalSuccess, Action<RequestException> Error){
+      Debug.Log("Login success: " + resp);
+      SetToken(resp.token);
+      communicator.GetPlayerDetail(resp.player, (resp) => { PlayerDetailSuccess(resp, FinalSuccess, Error); }, Error);
+    }
+
+    void PlayerDetailSuccess(PlayerDetailResponse resp, Action FinalSuccess, Action<RequestException> Error){
+      SetPlayer(resp);
+      FinalSuccess();
+    }
   }
 }

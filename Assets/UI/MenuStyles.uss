@@ -10,7 +10,7 @@
 .button {
     width: 70%;
     font-size: 40px;
-    background-image: url('/Assets/Assets/ButtonsAndWords/Button_Main_Square_Orange.png');
+    background-image: url('/Assets/Assets/buttons/Orange.png');
     color: rgb(0, 0, 0);
     padding-top: 10px;
     padding-bottom: 10px;
@@ -35,13 +35,12 @@
     color: rgb(221, 221, 221);
 }
 
-.button:active {
-    background-image: url('/Assets/Assets/ButtonsAndWords/Button_Main_Square_Orange_Selected.png');
-    color: rgb(192, 192, 192);
+.button:hover {
+    background-image: url('/Assets/Assets/buttons/Orange_Highlighted.png');
 }
 
-.button:hover {
-    background-image: url('/Assets/Assets/ButtonsAndWords/Button_Main_Square_Orange_Highlighted.png');
+.button:active {
+    background-image: url('/Assets/Assets/buttons/Orange_Selected.png');
 }
 
 .text-field #unity-text-input {
@@ -63,4 +62,12 @@
 
 .menu-button:active {
     background-image: url('/Assets/Assets/ButtonsAndWords/Menu_Orange_Selected.png');
+}
+
+.menu-padding {
+    flex-grow: 1;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
