@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Openworld.Models;
-using Openworld.Scenes;
 using Proyecto26;
 using UnityEditor;
 using UnityEngine;
@@ -10,6 +9,25 @@ using UnityEngine.SceneManagement;
 
 namespace Openworld 
 {
+
+  public enum SceneName
+  {
+    // LogIn, YourGames, Register, NewGame, Invite, Character, Battles, BattleBoard
+    Start,WorldMap,Character,Battle,Store
+  }
+
+  static class SceneNameExtensions
+  {
+    private static string[] names = new string[] {
+      //  "login", "games", "register", "newgame", "Invite", "character", "battles", "BattleBoard" 
+      "Start", "WorldMap", "Character", "Battle", "Store"
+    };
+    public static string name(this SceneName scene)
+    {
+      return names[(int)scene];
+    }
+  }
+
   public class GameManager : MonoBehaviour
   {
     public void LogMessage(string title, string message)
@@ -75,15 +93,16 @@ namespace Openworld
     // Start is called before the first frame update
     void Start()
     {
-      //player = FindObjectOfType<Player>();
       //temporarily forcing dev.  Remove this line to default to prod
       communicator.SetIsDevUrl(true);
+      // temporarily auto logging in.  Remove this line
+      Login("eric@heimerman.org", "eric", () => { }, (RequestException ex) => { });
     }
 
     public void Reset()
     {
       DestroyAll();
-      LoadScene(SceneName.LogIn);
+      LoadScene(SceneName.Start);
     }
 
     void DestroyAll()
@@ -98,8 +117,14 @@ namespace Openworld
 
     public void CloseApplication()
     {
-      LogMessage("If running native, application would close now");
+      // Quit game
       Application.Quit();
+      #if UNITY_EDITOR
+      if(EditorApplication.isPlaying) 
+      {
+        UnityEditor.EditorApplication.isPlaying = false;
+      }
+      #endif
     }
 
     public void LoadScene(SceneName sceneName)
@@ -108,7 +133,8 @@ namespace Openworld
     }
 
     public void Logout(){
-      player = new Player();
+      SetPlayer(new PlayerDetailResponse());
+      // player = new Player();
       SetToken("");
     }
 

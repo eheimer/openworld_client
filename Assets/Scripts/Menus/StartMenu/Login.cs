@@ -10,7 +10,6 @@ namespace Openworld.Menus
     [SerializeField]
     UIDocument registerForm;
     [SerializeField]
-    UIDocument test;
 
     protected override void RegisterButtonHandlers(){
       HandleClick("login-submit", LoginSubmit);

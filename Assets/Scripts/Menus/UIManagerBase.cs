@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace Openworld.Menus
@@ -15,9 +16,12 @@ namespace Openworld.Menus
     UIDocument menuButton;
     protected GameManager gameManager;
 
-    protected void Start()
+    protected virtual void Start()
     {
       gameManager = FindObjectOfType<GameManager>();
+      if(gameManager == null){
+        SceneManager.LoadScene(SceneName.Start.name());
+      }
       CloseMenu();
       menuButton.rootVisualElement.Q<Button>().clickable.clicked += ShowMenu;
     }
@@ -36,12 +40,12 @@ namespace Openworld.Menus
       }
     }
 
-    protected virtual bool Validate(){
+    protected virtual bool MenuValidate(){
       return true;
     }
 
     /**
-    ** This should handle display in the case of
+    ** This should handle menu display in the case of
     ** validation fail check
     */
     protected virtual void InvalidMenu(){ }
@@ -49,7 +53,7 @@ namespace Openworld.Menus
     public void ShowMenu()
     {
       HideAllMenus();
-      if (Validate())
+      if (MenuValidate())
       {
         mainMenu.GetComponent<MenuBase>().Show();
       } else {

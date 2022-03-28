@@ -12,6 +12,7 @@ namespace Openworld.Menus
     protected override void RegisterButtonHandlers()
     {
       HandleClick("newgame-submit", CreateGame);
+      HandleClick("newgame-cancel", CancelClick);
     }
     protected override void ClearForm()
     {
@@ -27,8 +28,14 @@ namespace Openworld.Menus
     }
 
     void CreateSuccess(ResponseHelper resp){
-      //this should switch to the "Game Scene"
-      ui.CloseMenu();
+      Debug.Log(resp.GetHeader("location"));
+      var locParts = resp.GetHeader("location").Split('/');
+      gameManager.currentGame = locParts[locParts.Length - 1];
+      gameManager.LoadScene(SceneName.Character);
+    }
+
+    void CancelClick(){
+      ui.ShowMenu();
     }
   }
 }

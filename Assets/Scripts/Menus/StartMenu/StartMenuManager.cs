@@ -12,14 +12,14 @@ namespace Openworld.Menus
     [SerializeField]
     UIDocument loginForm;
 
-    protected override bool Validate(){
-      return gameManager.GetAuthToken() != null && !gameManager.GetAuthToken().Equals("");
+    protected override bool MenuValidate()
+    {
+      return !string.IsNullOrEmpty(gameManager.GetAuthToken());
     }
 
     protected override void InvalidMenu()
     {
       loginForm.GetComponent<MenuBase>().Show();
     }
-
   }
 }

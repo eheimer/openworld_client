@@ -1,0 +1,25 @@
+.unity-label {
+    color: rgb(0, 0, 0);
+    font-size: 24px;
+    -unity-font-style: bold;
+}
+
+.game-item {
+    background-color: rgb(108, 168, 219);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.game-item:hover {
+    background-color: rgba(0, 79, 147, 255);
+}
+
+.game-item:active {
+    background-color: rgba(255, 255, 255, 255);
+}

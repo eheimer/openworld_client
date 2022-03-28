@@ -34,7 +34,7 @@ namespace Openworld.Menus
     }
 
     void RegisterCancel(){
-      ui.CloseMenu();
+      ui.ShowMenu();
     }
 
     void RegisterSuccess(ResponseHelper resp){

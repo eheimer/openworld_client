@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="/Assets/UI/GameItemStyles.uss" />
+    <ui:Button display-tooltip-when-elided="true" name="button" class="game-item" style="flex-direction: row; flex-wrap: nowrap; align-items: center; justify-content: space-between; min-width: 200px; min-height: 70px; max-height: 50px;">
+        <ui:Label text="&lt;game&gt;" display-tooltip-when-elided="true" name="game_name" class="game" />
+        <ui:Label text="&lt;char&gt;" display-tooltip-when-elided="true" name="character_name" />
+        <ui:Label text="*" display-tooltip-when-elided="true" name="owner" tooltip="You are the owner" />
+    </ui:Button>
+</ui:UXML>

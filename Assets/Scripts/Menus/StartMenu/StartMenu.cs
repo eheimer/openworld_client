@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -32,11 +33,11 @@ namespace Openworld.Menus
 
     void LogoutClick(){
       gameManager.Logout();
-      ui.CloseMenu();
+      ui.ShowMenu();
     }
 
     void QuitClick(){
-        // Quit game
+      gameManager.CloseApplication();
     }
   }
 }

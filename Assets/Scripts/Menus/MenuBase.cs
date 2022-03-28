@@ -27,14 +27,14 @@ namespace Openworld.Menus
     public virtual void Show(){
       ui.HideAllMenus();
       Prep();
-      LoadData();
+      GetData();
       me.visible = true;
     }
 
     protected virtual void Prep() { }
 
     protected virtual void RegisterButtonHandlers() { }
-    protected virtual void LoadData() { }
+    protected virtual void GetData() { }
 
     protected virtual void HandleClick(string selector, Action method){
       me.Q<Button>(selector).clickable.clicked += method;
