@@ -18,8 +18,9 @@ namespace Openworld.Menus
       ClearForm();
     }
 
-    protected override void HandleClick(string selector, Action method){
-      me.Q<Button>(selector).clickable.clicked += method;
+    protected override void HandleClick(string selector, Action method)
+    {
+      GetVisualElement().Q<Button>(selector).clickable.clicked += method;
     }
   }
 }

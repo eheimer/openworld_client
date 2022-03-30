@@ -41,6 +41,7 @@ namespace Openworld.Menus
     }
 
     void QuitClick(){
+      var gameManager = GetGameManager();
       gameManager.currentGame = null;
       gameManager.LoadScene(SceneName.Start);
     }

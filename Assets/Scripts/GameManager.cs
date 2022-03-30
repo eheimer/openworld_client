@@ -1,25 +1,25 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Openworld.Menus;
 using Openworld.Models;
 using Proyecto26;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 namespace Openworld 
 {
 
   public enum SceneName
   {
-    // LogIn, YourGames, Register, NewGame, Invite, Character, Battles, BattleBoard
     Start,WorldMap,Character,Battle,Store
   }
 
   static class SceneNameExtensions
   {
     private static string[] names = new string[] {
-      //  "login", "games", "register", "newgame", "Invite", "character", "battles", "BattleBoard" 
       "Start", "WorldMap", "Character", "Battle", "Store"
     };
     public static string name(this SceneName scene)
@@ -30,34 +30,26 @@ namespace Openworld
 
   public class GameManager : MonoBehaviour
   {
-    public void LogMessage(string title, string message)
-    {
-#if UNITY_EDITOR
-      EditorUtility.DisplayDialog(title, message, "Ok");
-#else
-		    Debug.Log(message);
-#endif
-    }
-
-    public void LogMessage(string message)
-    {
-      LogMessage("", message);
-    }
-
-
     public static GameManager instance;
     [SerializeField] public bool debugApi;
     [SerializeField] Player player;
     [SerializeField] Communicator communicator;
     [SerializeField] string authToken;
-
     [SerializeField] public string currentGame;
     [SerializeField] public string currentBattle;
+    [SerializeField] UIDocument menuButton;
+    [SerializeField] UIManagerBase menuManager;
 
     public Player GetPlayer()
     {
       return player;
     }
+    public void SetPlayer(PlayerDetailResponse pr)
+    {
+      player.playerId = pr.id;
+      player.playerName = pr.name;
+    }
+
     public Communicator GetCommunicator()
     {
       return communicator;
@@ -69,6 +61,9 @@ namespace Openworld
     public void SetToken(string token)
     {
       authToken = token;
+    }
+    public void SetMenuManager(UIManagerBase menu){
+      menuManager = menu;
     }
 
     void Awake()
@@ -84,19 +79,13 @@ namespace Openworld
       }
     }
 
-    public void SetPlayer(PlayerDetailResponse pr)
-    {
-      player.playerId = pr.id;
-      player.playerName = pr.name;
-    }
-
-    // Start is called before the first frame update
     void Start()
     {
+      menuButton.rootVisualElement.Q<Button>().clickable.clicked += ShowMenu;
       //temporarily forcing dev.  Remove this line to default to prod
       communicator.SetIsDevUrl(true);
       // temporarily auto logging in.  Remove this line
-      Login("eric@heimerman.org", "eric", () => { }, (RequestException ex) => { });
+      //Login("eric@heimerman.org", "eric", () => { }, (RequestException ex) => { });
     }
 
     public void Reset()
@@ -132,10 +121,33 @@ namespace Openworld
       SceneManager.LoadScene(sceneName.name());
     }
 
+    public void ShowMenuButton()
+    {
+      menuButton.rootVisualElement.visible = true;
+    }
+
+    public void ShowMenu()
+    {
+      menuManager.ShowMenu();
+    }
+
     public void Logout(){
       SetPlayer(new PlayerDetailResponse());
-      // player = new Player();
       SetToken("");
+    }
+
+    public void LogMessage(string title, string message)
+    {
+#if UNITY_EDITOR
+      EditorUtility.DisplayDialog(title, message, "Ok");
+#else
+		    Debug.Log(message);
+#endif
+    }
+
+    public void LogMessage(string message)
+    {
+      LogMessage("", message);
     }
 
     // this is here, because we have to do it in two different places
@@ -144,7 +156,6 @@ namespace Openworld
     }
 
     void LoginSuccess(LoginResponse resp, Action FinalSuccess, Action<RequestException> Error){
-      Debug.Log("Login success: " + resp);
       SetToken(resp.token);
       communicator.GetPlayerDetail(resp.player, (resp) => { PlayerDetailSuccess(resp, FinalSuccess, Error); }, Error);
     }

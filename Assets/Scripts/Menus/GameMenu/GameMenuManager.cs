@@ -12,25 +12,25 @@ namespace Openworld.Menus
     [SerializeField]
     UIDocument createCharacterForm;
 
-    protected override void Start()
-    {
-      base.Start();
-      if ( string.IsNullOrEmpty(gameManager.GetAuthToken()) || string.IsNullOrEmpty(gameManager.currentGame))
-      {
-        gameManager.LoadScene(SceneName.Start);
-      }
-    }
-
     protected override bool MenuValidate()
     {
-      Debug.Log(gameManager.GetPlayer());
-      Debug.Log(gameManager.GetPlayer().character);
-      return gameManager.GetPlayer() != null && !string.IsNullOrEmpty(gameManager.GetPlayer().character);
+      var gameManager = GetGameManager();
+      return gameManager != null && !string.IsNullOrEmpty(gameManager.GetPlayer().character);
     }
 
     protected override void InvalidMenu()
     {
-        createCharacterForm.GetComponent<MenuBase>().Show();
+      createCharacterForm.GetComponent<MenuBase>().Show();
+    }
+
+    void DestroyAll()
+    {
+      for (int i = 0; i < transform.childCount; i++)
+      {
+        var child = transform.GetChild(i);
+        Destroy(child.gameObject);
+      }
+      Destroy(gameObject);
     }
   }
 }

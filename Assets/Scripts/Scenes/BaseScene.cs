@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Openworld.Menus;
@@ -14,24 +15,18 @@ namespace Openworld.Scenes
 
   public abstract class BaseScene : MonoBehaviour
   {
-    protected GameManager gameManager;
-    protected Communicator communicator;
-    protected Player player;
+    private GameManager gameManager;
 
-    [SerializeField] protected UIManagerBase uiManager;
+    protected UIManagerBase uiManager;
     [SerializeField] protected Selectable[] tabStops;
     [SerializeField] protected Selectable[] tabStop;
 
     protected virtual void Start()
     {
-      gameManager = FindObjectOfType<GameManager>();
-      if (gameManager != null)
-      {
-        communicator = gameManager.GetCommunicator();
-        player = gameManager.GetPlayer();
-      }
+      uiManager = FindObjectOfType<UIManagerBase>();
+      gameManager = GetGameManager();
 
-      if (gameManager == null || communicator == null || !Validate())
+      if (gameManager == null || gameManager.GetCommunicator() == null || !Validate())
       {
         ValidateFail();
       } else
@@ -40,13 +35,28 @@ namespace Openworld.Scenes
       }
     }
 
+    protected GameManager GetGameManager(){
+      if(gameManager == null){
+        gameManager = FindObjectOfType<GameManager>();
+      }
+      return gameManager;
+    }
+
     protected virtual bool Validate()
     {
-      return gameManager.GetAuthToken() != null && !gameManager.GetAuthToken().Equals("");
+      // By default, we only validate authorization and currentGame.  
+      // But this should only fail if the current scene is not Start
+      var gameManager = GetGameManager();
+      if(SceneManager.GetActiveScene().name == "Start") return true;
+      return !string.IsNullOrEmpty(gameManager.GetAuthToken()) && !string.IsNullOrEmpty(gameManager.currentGame);
     }
 
     protected virtual void ValidateFail() {
-      gameManager.LoadScene(SceneName.Start);
+      try{
+        GetGameManager().LoadScene(SceneName.Start);
+      } catch(Exception e){
+        Debug.Log("[BaseScene] ValidateFail: " + e.Message);
+      }
     }
 
     public virtual void RequestException(RequestException err)
@@ -56,7 +66,7 @@ namespace Openworld.Scenes
 
     protected virtual void Error(string message)
     {
-      gameManager.LogMessage("Scene load error:", message);
+      GetGameManager().LogMessage("Scene load error:", message);
     }
 
     protected virtual void GetData() { }

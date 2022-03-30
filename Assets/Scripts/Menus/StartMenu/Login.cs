@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,13 +19,20 @@ namespace Openworld.Menus
     }
 
     protected override void ClearForm(){
-      me.Q<TextField>("username").value = "";
-      me.Q<TextField>("password").value = "";
+      try
+      {
+        var me = GetVisualElement();
+        me.Q<TextField>("username").value = "";
+        me.Q<TextField>("password").value = "";
+      } catch(Exception ex){
+        Debug.Log("[Login] ClearForm: " + ex.Message);
+      }
     }
 
     void LoginSubmit()
     {
-      gameManager.Login(
+      var me = GetVisualElement();
+      GetGameManager().Login(
         me.Q<TextField>("username").value,
         me.Q<TextField>("password").value, LoginSuccess, RequestException);
     }
@@ -34,11 +42,11 @@ namespace Openworld.Menus
     }
 
     void LoginCancel(){
-      ui.CloseMenu();
+      getUI().CloseMenu();
     }
 
     void LoginSuccess(){
-      ui.ShowMenu();
+      getUI().ShowMenu();
     }
   }
 }

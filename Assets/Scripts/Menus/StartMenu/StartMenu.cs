@@ -32,12 +32,12 @@ namespace Openworld.Menus
     }
 
     void LogoutClick(){
-      gameManager.Logout();
-      ui.ShowMenu();
+      GetGameManager().Logout();
+      getUI().ShowMenu();
     }
 
     void QuitClick(){
-      gameManager.CloseApplication();
+      GetGameManager().CloseApplication();
     }
   }
 }

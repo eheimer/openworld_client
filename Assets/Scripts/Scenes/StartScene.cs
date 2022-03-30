@@ -8,6 +8,7 @@ namespace Openworld.Scenes
 
     protected override bool Validate()
     {
+      var gameManager = GetGameManager();
       return gameManager.GetAuthToken() != null && !gameManager.GetAuthToken().Equals("");
     }
 

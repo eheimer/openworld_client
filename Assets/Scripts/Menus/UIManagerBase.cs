@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,34 +10,35 @@ namespace Openworld.Menus
 
   public abstract class UIManagerBase : MonoBehaviour
   {
-
     [SerializeField]
     UIDocument mainMenu;
-    [SerializeField]
-    UIDocument menuButton;
-    protected GameManager gameManager;
+    private GameManager gameManager;
 
     protected virtual void Start()
     {
-      gameManager = FindObjectOfType<GameManager>();
-      if(gameManager == null){
+      if(GetGameManager() == null){
         SceneManager.LoadScene(SceneName.Start.name());
+      } else {
+        GetGameManager().SetMenuManager(this);
+        CloseMenu();
       }
-      CloseMenu();
-      menuButton.rootVisualElement.Q<Button>().clickable.clicked += ShowMenu;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
+    protected GameManager GetGameManager(){
+      if(gameManager == null){
+        gameManager = FindObjectOfType<GameManager>();
+      }
+      return gameManager;
     }
 
     public void HideAllMenus()
     {
       foreach (var menu in FindObjectsOfType<UIDocument>())
       {
-        menu.rootVisualElement.visible = false;
+        try{
+          menu.rootVisualElement.visible = false;
+        } catch(Exception e){
+        }
       }
     }
 
@@ -61,10 +63,9 @@ namespace Openworld.Menus
       }
     }
 
-    public void CloseMenu()
-    {
+    public void CloseMenu(){
       HideAllMenus();
-      menuButton.rootVisualElement.visible = true;
+      GetGameManager().ShowMenuButton();
     }
 
   }

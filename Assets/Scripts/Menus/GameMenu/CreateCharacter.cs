@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Proyecto26;
@@ -17,6 +18,9 @@ namespace Openworld.Menus
     }
 
     void Submit(){
+      var gameManager = GetGameManager();
+      var communicator = gameManager.GetCommunicator();
+      var me = GetVisualElement();
       communicator.CreateCharacter(gameManager.currentGame,
         me.Q<TextField>("name").text,
         int.Parse(me.Q<TextField>("maxHp").text),
@@ -27,13 +31,13 @@ namespace Openworld.Menus
 
     void CreateSuccess(ResponseHelper resp){
       var locParts = resp.GetHeader("location").Split('/');
-      gameManager.GetPlayer().character = locParts[locParts.Length - 1];
+      GetGameManager().GetPlayer().character = locParts[locParts.Length - 1];
       //show the character menu
-      ui.CloseMenu();
+      getUI().CloseMenu();
     }
 
     void CancelClick(){
-      ui.ShowMenu();
+      getUI().ShowMenu();
     }
   }
 }

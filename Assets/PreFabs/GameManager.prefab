@@ -45,6 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: 
   playerId: 
+  character: 
 --- !u!1 &1343716229173143900
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,6 +89,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd1de963d6f8eb0c880ea35e6b3bea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseUrl: https://www.openworld-game.com
+  apiPath: /api/v1
 --- !u!1 &4196553715670442645
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,6 +121,7 @@ Transform:
   m_Children:
   - {fileID: 7219552316725913092}
   - {fileID: 9085440115132899714}
+  - {fileID: 7822530755442322834}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -133,11 +137,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b5b31673819011e59d7c1d39f1c5834, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseUrl: https://openworld.heimerman.org
-  baseApiPath: /api/v1
   debugApi: 0
   player: {fileID: 2858626371293043761}
   communicator: {fileID: 6826094310957169182}
   authToken: 
   currentGame: 
   currentBattle: 
+  menuButton: {fileID: 5528078378915443131}
+  menuManager: {fileID: 0}
+--- !u!1 &5434065356078307912
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7822530755442322834}
+  - component: {fileID: 5528078378915443131}
+  m_Layer: 5
+  m_Name: MenuButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7822530755442322834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5434065356078307912}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 774168424388035205}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5528078378915443131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5434065356078307912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f21c074d86024caca2a0034ce4f53f73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: f5a1bc132f4984779bdafe144e04ad3e, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 77990badac67f864ea7b757b613c1023, type: 3}
+  m_SortingOrder: 0

@@ -10,25 +10,41 @@ namespace Openworld.Menus
 {
   public class MenuBase : MonoBehaviour
   {
-    protected UIManagerBase ui;
-    protected VisualElement me;
-    protected Communicator communicator;
-    protected GameManager gameManager;
+    private UIManagerBase ui;
+    private VisualElement me;
+    private GameManager gameManager;
 
     protected virtual void Start()
     {
-      ui = FindObjectOfType<UIManagerBase>();
-      gameManager = FindObjectOfType<GameManager>();
-      me = this.GetComponent<UIDocument>().rootVisualElement;
-      communicator = FindObjectOfType<Communicator>();
       RegisterButtonHandlers();
     }
 
+    protected GameManager GetGameManager(){
+      if(gameManager == null){
+        gameManager = FindObjectOfType<GameManager>();
+      }
+      return gameManager;
+    }
+
+    protected UIManagerBase getUI(){
+      if(ui == null){
+        ui = FindObjectOfType<UIManagerBase>();
+      }
+      return ui;
+    }
+
+    protected VisualElement GetVisualElement(){
+      if(me == null){
+        me = this.GetComponent<UIDocument>().rootVisualElement;
+      }
+      return me;
+    }
+
     public virtual void Show(){
-      ui.HideAllMenus();
+      getUI().HideAllMenus();
       Prep();
       GetData();
-      me.visible = true;
+      GetVisualElement().visible = true;
     }
 
     protected virtual void Prep() { }
@@ -37,7 +53,7 @@ namespace Openworld.Menus
     protected virtual void GetData() { }
 
     protected virtual void HandleClick(string selector, Action method){
-      me.Q<Button>(selector).clickable.clicked += method;
+      GetVisualElement().Q<Button>(selector).clickable.clicked += method;
     }
 
     public virtual void RequestException(RequestException err)
@@ -47,7 +63,7 @@ namespace Openworld.Menus
 
     protected virtual void Error(string message)
     {
-      gameManager.LogMessage("Scene load error:", message);
+      GetGameManager().LogMessage("Scene load error:", message);
     }
   }
 }

@@ -18,6 +18,7 @@ namespace Openworld.Menus
 
     protected override void ClearForm()
     {
+      var me = GetVisualElement();
       me.Q<TextField>("email").value = "";
       me.Q<TextField>("password").value = "";
       me.Q<TextField>("password-confirm").value = "";
@@ -27,23 +28,23 @@ namespace Openworld.Menus
     void RegisterSubmit(){
       // need to save these, because we need them later, and the FormBase
       // wipes them out after this method is called
+      var me = GetVisualElement();
       email = me.Q<TextField>("email").value;
       pass = me.Q<TextField>("password").value;
-      communicator.Register( email, pass,
+      GetGameManager().GetCommunicator().Register( email, pass,
         me.Q<TextField>("name").value, RegisterSuccess, RequestException);
     }
 
     void RegisterCancel(){
-      ui.ShowMenu();
+      getUI().ShowMenu();
     }
 
     void RegisterSuccess(ResponseHelper resp){
-      Debug.Log("Register success: " + resp.Data);
-      gameManager.Login(email, pass, LoginSuccess, RequestException);
+      GetGameManager().Login(email, pass, LoginSuccess, RequestException);
     }
 
     void LoginSuccess(){
-      ui.ShowMenu();
+      getUI().ShowMenu();
     }
 
   }

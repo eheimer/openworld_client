@@ -18,17 +18,15 @@ namespace Openworld.Menus
 
     protected override void GetData()
     {
-      communicator.GetGames(gameManager.GetPlayer().playerId, GetDataSuccess, RequestException);
+      GetGameManager().GetCommunicator().GetGames(GetGameManager().GetPlayer().playerId, GetDataSuccess, RequestException);
     }
 
     void GetDataSuccess(GamesResponse[] games)
     {
-      var container = me.Q<VisualElement>("unity-content-container");
+      var container = GetVisualElement().Q<VisualElement>("unity-content-container");
       container.Clear();
-      // Debug.Log(container);
       foreach (var item in games)
       {
-        // Debug.Log(item);
         VisualElement disp = gameItem.Instantiate();
         disp.Q<Label>("game_name").text = item.game.name;
         disp.Q<Label>("character_name").text = item.character.name;
@@ -40,16 +38,15 @@ namespace Openworld.Menus
     }
 
     void LoadGameClick(EventBase e){
-      Debug.Log(((Button)e.currentTarget).viewDataKey);
+      var gameManager = GetGameManager();
       string[] data = ((Button)e.currentTarget).viewDataKey.Split('|');
       gameManager.currentGame = data[0];
       gameManager.GetPlayer().character = data[1];
-      Debug.Log(data);
       gameManager.LoadScene(SceneName.Character);
     }
 
     void CancelClick(){
-      ui.ShowMenu();
+      getUI().ShowMenu();
     }
 
   }
