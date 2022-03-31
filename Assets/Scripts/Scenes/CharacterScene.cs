@@ -5,7 +5,7 @@ namespace Openworld.Scenes
     protected override void Start()
     {
         base.Start();
-        uiManager.ShowMenu();
+      uiManager.CloseMenu();
     }
   }
 }

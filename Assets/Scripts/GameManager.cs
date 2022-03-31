@@ -83,9 +83,9 @@ namespace Openworld
     {
       menuButton.rootVisualElement.Q<Button>().clickable.clicked += ShowMenu;
       //temporarily forcing dev.  Remove this line to default to prod
-      communicator.SetIsDevUrl(true);
+      // communicator.SetIsDevUrl(true);
       // temporarily auto logging in.  Remove this line
-      //Login("eric@heimerman.org", "eric", () => { }, (RequestException ex) => { });
+      // Login("eric@heimerman.org", "eric", () => { }, (RequestException ex) => { });
     }
 
     public void Reset()

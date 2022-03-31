@@ -553,7 +553,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Openworld
+  m_text: 'Character
 
 '
   m_isRightToLeft: 0
