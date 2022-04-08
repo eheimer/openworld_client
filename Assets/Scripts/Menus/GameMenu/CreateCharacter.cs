@@ -23,9 +23,10 @@ namespace Openworld.Menus
       var me = GetVisualElement();
       communicator.CreateCharacter(gameManager.currentGame,
         me.Q<TextField>("name").text,
-        int.Parse(me.Q<TextField>("maxHp").text),
-        int.Parse(me.Q<TextField>("baseResist").text),
-        int.Parse(me.Q<TextField>("inventorySize").text),
+        int.Parse(me.Q<TextField>("strength").text),
+        int.Parse(me.Q<TextField>("dexterity").text),
+        int.Parse(me.Q<TextField>("intelligence").text),
+        int.Parse(me.Q<TextField>("movement").text),
         CreateSuccess, RequestException);
     }
 

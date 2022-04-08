@@ -6,9 +6,10 @@
                 <ui:Label text="Create Character" display-tooltip-when-elided="true" name="MenuTitle" class="menu-title" style="font-size: 40px;" />
                 <ui:VisualElement name="form-content" style="flex-grow: 1; width: 100%; align-items: center; justify-content: center;">
                     <ui:TextField picking-mode="Ignore" label="Character name:" name="name" class="text-field" />
-                    <ui:TextField picking-mode="Ignore" label="Max HP:" password="false" name="maxHp" class="text-field" />
-                    <ui:TextField picking-mode="Ignore" label="Base resist:" password="false" name="baseResist" class="text-field" />
-                    <ui:TextField picking-mode="Ignore" label="Inventory size:" password="false" name="inventorySize" class="text-field" />
+                    <ui:TextField picking-mode="Ignore" label="Strength:" password="false" name="strength" class="text-field" />
+                    <ui:TextField picking-mode="Ignore" label="Dexterity:" password="false" name="dexterity" class="text-field" />
+                    <ui:TextField picking-mode="Ignore" label="Intelligence:" password="false" name="intelligence" class="text-field" />
+                    <ui:TextField picking-mode="Ignore" label="Movement:" password="false" name="movement" class="text-field" />
                     <ui:VisualElement style="flex-grow: 1;" />
                     <ui:Button name="createcharacter-submit" text="Create" display-tooltip-when-elided="true" class="button" />
                     <ui:Button text="Cancel" display-tooltip-when-elided="true" name="createcharacter-cancel" class="button" />

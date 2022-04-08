@@ -5,13 +5,9 @@ using System;
 namespace Openworld.Models
 {
   [Serializable]
-  public class UpdateCharacterRequest
+  public class UpdateCharacterSkillRequest
   {
-    public int dexterity;
-    public int intelligence;
-    public int movement;
-    public string name;
-    public int strength;
+    public int level;
 
     public override string ToString(){
       return UnityEngine.JsonUtility.ToJson (this, true);
