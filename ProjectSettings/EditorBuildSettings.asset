@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Store.unity
     guid: c45dda99d53fe306098c8a5e21ca62d5
+  - enabled: 1
+    path: Assets/Scenes/Character.eric.unity
+    guid: b06c074d552075a419254decf15e36f4
   m_configObjects: {}

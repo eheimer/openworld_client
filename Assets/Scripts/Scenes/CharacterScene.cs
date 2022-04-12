@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Openworld.Scenes
 
 {
-  public class CharacterScene : BaseScene
+  public class CharacterScene : SwipableScene
   {
     public CharacterDetail character;
     protected override void Start()
