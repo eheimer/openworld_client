@@ -10,7 +10,10 @@ namespace Openworld.Scenes
     protected override void Start()
     {
       base.Start();
-      uiManager.CloseMenu();
+      if (uiManager != null)
+      {
+        uiManager.CloseMenu();
+      }
     }
 
     protected override void GetData()
