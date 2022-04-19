@@ -25,8 +25,6 @@ namespace Openworld.Scenes
     private List<Vector3> panelPositions = new List<Vector3>();
     private float spacing;
 
-    public UIManagerBase menu;
-
     protected override void Start()
     {
       base.Start();

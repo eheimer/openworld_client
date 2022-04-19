@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Openworld.Models;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace Openworld.Menus
@@ -42,7 +43,7 @@ namespace Openworld.Menus
       string[] data = ((Button)e.currentTarget).viewDataKey.Split('|');
       gameManager.currentGame = data[0];
       gameManager.GetPlayer().character = data[1];
-      gameManager.LoadScene(SceneName.Character);
+      SceneManager.LoadScene(SceneName.Character.name());
     }
 
     void CancelClick(){

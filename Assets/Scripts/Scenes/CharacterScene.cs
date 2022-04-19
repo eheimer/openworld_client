@@ -10,9 +10,9 @@ namespace Openworld.Scenes
     protected override void Start()
     {
       base.Start();
-      if (uiManager != null)
+      if (menu != null)
       {
-        uiManager.CloseMenu();
+        menu.CloseMenu();
       }
     }
 

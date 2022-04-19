@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Openworld.Models;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace Openworld.Menus
@@ -24,40 +25,34 @@ namespace Openworld.Menus
 
     void CharacterClick()
     {
-      //load the character scene
-      GetGameManager().LoadScene(SceneName.Character);
+      SceneManager.LoadScene(SceneName.Character.name());
     }
 
     void InventoryClick()
     {
-      //load the inventory scene
-      GetGameManager().LoadScene(SceneName.Character);
+      SceneManager.LoadScene(SceneName.Character.name());
       //switch to the inventory panel
     }
 
     void BattleClick()
     {
-      //load the battle scene
-      GetGameManager().LoadScene(SceneName.Battle);
+      SceneManager.LoadScene(SceneName.Battle.name());
     }
 
     void WorldMapClick()
     {
-      //load the map scene
-      GetGameManager().LoadScene(SceneName.WorldMap);
+      SceneManager.LoadScene(SceneName.WorldMap.name());
     }
 
     void StoreClick()
     {
-      //load the store scene
-      GetGameManager().LoadScene(SceneName.Store);
+      SceneManager.LoadScene(SceneName.Store.name());
     }
 
     void QuitClick()
     {
-      var gameManager = GetGameManager();
-      gameManager.currentGame = null;
-      gameManager.LoadScene(SceneName.Start);
+      GetGameManager().currentGame = null;
+      SceneManager.LoadScene(SceneName.Start.name());
     }
   }
 }

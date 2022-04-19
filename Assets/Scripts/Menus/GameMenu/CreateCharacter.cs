@@ -38,7 +38,7 @@ namespace Openworld.Menus
     }
 
     void CancelClick(){
-      getUI().ShowMenu();
+      getUI().CloseMenu();
     }
   }
 }

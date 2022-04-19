@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Openworld.Scenes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -12,26 +13,8 @@ namespace Openworld.Menus
   {
     [SerializeField]
     UIDocument mainMenu;
-    private GameManager gameManager;
-
-    protected virtual void Start()
-    {
-      if(GetGameManager() == null){
-        SceneManager.LoadScene(SceneName.Start.name());
-      } else {
-        GetGameManager().SetMenuManager(this);
-        CloseMenu();
-      }
-    }
-
-    protected GameManager GetGameManager(){
-      if(gameManager == null){
-        gameManager = FindObjectOfType<GameManager>();
-      }
-      return gameManager;
-    }
-
-    public void HideAllMenus()
+   
+   public void HideAllMenus()
     {
       foreach (var menu in FindObjectsOfType<UIDocument>())
       {
@@ -57,6 +40,8 @@ namespace Openworld.Menus
       HideAllMenus();
       if (MenuValidate())
       {
+        this.gameObject.SetActive(true);
+        //mainMenu.enabled = true;
         mainMenu.GetComponent<MenuBase>().Show();
       } else {
         InvalidMenu();
@@ -65,7 +50,7 @@ namespace Openworld.Menus
 
     public void CloseMenu(){
       HideAllMenus();
-      GetGameManager().ShowMenuButton();
+      FindObjectOfType<BaseScene>().ShowMenuButton();
     }
 
   }

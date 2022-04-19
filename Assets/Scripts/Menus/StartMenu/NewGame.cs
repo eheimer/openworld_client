@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Proyecto26;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace Openworld.Menus
@@ -33,7 +34,7 @@ namespace Openworld.Menus
       var gameManager = GetGameManager();
       var locParts = resp.GetHeader("location").Split('/');
       gameManager.currentGame = locParts[locParts.Length - 1];
-      gameManager.LoadScene(SceneName.Character);
+      SceneManager.LoadScene(SceneName.Character.name());
     }
 
     void CancelClick(){

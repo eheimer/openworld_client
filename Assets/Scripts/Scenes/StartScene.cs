@@ -14,7 +14,7 @@ namespace Openworld.Scenes
 
     protected override void ValidateFail()
     {
-      uiManager.ShowMenu();
+      menu.ShowMenu();
     }
 
   }

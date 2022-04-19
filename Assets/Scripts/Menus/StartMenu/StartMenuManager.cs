@@ -14,7 +14,7 @@ namespace Openworld.Menus
 
     protected override bool MenuValidate()
     {
-      var gameManager = GetGameManager();
+      var gameManager = FindObjectOfType<GameManager>();
       return gameManager != null && !string.IsNullOrEmpty(gameManager.GetAuthToken());
     }
 

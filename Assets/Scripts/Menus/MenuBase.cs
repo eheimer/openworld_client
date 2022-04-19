@@ -28,7 +28,7 @@ namespace Openworld.Menus
 
     protected UIManagerBase getUI(){
       if(ui == null){
-        ui = FindObjectOfType<UIManagerBase>();
+        ui = FindObjectOfType<UIManagerBase>(true);
       }
       return ui;
     }

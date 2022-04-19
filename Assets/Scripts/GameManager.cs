@@ -37,8 +37,6 @@ namespace Openworld
     [SerializeField] string authToken;
     [SerializeField] public string currentGame;
     [SerializeField] public string currentBattle;
-    [SerializeField] UIDocument menuButton;
-    [SerializeField] UIManagerBase menuManager;
 
     public Player GetPlayer()
     {
@@ -62,9 +60,6 @@ namespace Openworld
     {
       authToken = token;
     }
-    public void SetMenuManager(UIManagerBase menu){
-      menuManager = menu;
-    }
 
     void Awake()
     {
@@ -79,19 +74,17 @@ namespace Openworld
       }
     }
 
-    void Start()
-    {
-      menuButton.rootVisualElement.Q<Button>().clickable.clicked += ShowMenu;
+    public void Start(){
       //temporarily forcing dev.  Remove this line to default to prod
-      // communicator.SetIsDevUrl(true);
+      communicator.SetIsDevUrl(true);
       // temporarily auto logging in.  Remove this line
-      // Login("eric@heimerman.org", "eric", () => { }, (RequestException ex) => { });
+      Login("eric@heimerman.org", "eric", () => { FindObjectOfType<UIManagerBase>(true).CloseMenu(); }, (RequestException ex) => { });
     }
 
     public void Reset()
     {
       DestroyAll();
-      LoadScene(SceneName.Start);
+      SceneManager.LoadScene(SceneName.Start.name());
     }
 
     void DestroyAll()
@@ -114,21 +107,6 @@ namespace Openworld
         UnityEditor.EditorApplication.isPlaying = false;
       }
       #endif
-    }
-
-    public void LoadScene(SceneName sceneName)
-    {
-      SceneManager.LoadScene(sceneName.name());
-    }
-
-    public void ShowMenuButton()
-    {
-      menuButton.rootVisualElement.visible = true;
-    }
-
-    public void ShowMenu()
-    {
-      menuManager.ShowMenu();
     }
 
     public void Logout(){

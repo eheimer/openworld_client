@@ -1,13 +1,11 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Openworld.Menus;
 using Openworld.Models;
 using Proyecto26;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 namespace Openworld.Scenes
 {
@@ -17,13 +15,15 @@ namespace Openworld.Scenes
   {
     private GameManager gameManager;
 
-    protected UIManagerBase uiManager;
     [SerializeField] protected Selectable[] tabStops;
     [SerializeField] protected Selectable[] tabStop;
+    protected MenuButton menuButton;
+    protected UIManagerBase menu;
 
     protected virtual void Start()
     {
-      uiManager = FindObjectOfType<UIManagerBase>();
+      menuButton = FindObjectOfType<MenuButton>();
+      menu = FindObjectOfType<UIManagerBase>(true);
       gameManager = GetGameManager();
 
       if (gameManager == null || gameManager.GetCommunicator() == null || !Validate())
@@ -31,6 +31,7 @@ namespace Openworld.Scenes
         ValidateFail();
       } else
       {
+        menu.CloseMenu();
         GetData();
       }
     }
@@ -41,6 +42,12 @@ namespace Openworld.Scenes
       }
       return gameManager;
     }
+
+    public void ShowMenuButton()
+    {
+      menuButton.GetComponent<UIDocument>().rootVisualElement.visible = true;
+    }
+
 
     protected virtual bool Validate()
     {
@@ -53,7 +60,7 @@ namespace Openworld.Scenes
 
     protected virtual void ValidateFail() {
       try{
-        GetGameManager().LoadScene(SceneName.Start);
+        SceneManager.LoadScene(SceneName.Start.name());
       } catch(Exception e){
         Debug.Log("[BaseScene] ValidateFail: " + e.Message);
       }
