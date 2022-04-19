@@ -41,13 +41,16 @@ namespace Openworld.Scenes
         }
 
         // store the positions of each of the panels
-        var tPos = new Vector3(0 - Math.Abs(Screen.width - panelSizes[0].width) / 2, Math.Abs(Screen.height - panelSizes[0].height) / 2,0);
+        var tPos = GetPanelAdjustment(panelSizes[0]);
         var startPosition = panelHolder.transform.position + tPos;
         panelPositions.Add(startPosition);
 
         for (var i = 1; i < panels.Length; i++){
-          // calculate transform = previous panel's width plus spacing, plus adjustment for current panel's width vs screen width
-          tPos = new Vector3(0 - Math.Abs(Screen.width - panelSizes[i].width) / 2 - panelSizes[i-1].width + spacing/2,0,0);
+          var xAdj0 = GetPanelAdjustment(panelSizes[i - 1]).x;
+          var xAdj1 = GetPanelAdjustment(panelSizes[i]).x;
+          var w0 = panelSizes[i - 1].width;
+          tPos = new Vector3(-w0 - xAdj0 - spacing + xAdj1, 0, 0);
+
           var pos = panelPositions[i - 1] + tPos;
           Debug.Log(i + " : " + pos);
           panelPositions.Add(panelPositions[i - 1] + tPos);
@@ -118,6 +121,14 @@ namespace Openworld.Scenes
       {
         menu.CloseMenu();
       }
+    }
+
+    /*
+    ** Will get the x/y adjustment of the panel in order to center it on the screen
+    */
+    Vector3 GetPanelAdjustment(Rect panel){
+      var tPos = new Vector3((Screen.width - panel.width) / 2, (Screen.height - panel.height) / 2,0);
+      return tPos;
     }
   }
 }
