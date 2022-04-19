@@ -29,6 +29,7 @@ namespace Openworld.Menus
     protected UIManagerBase getUI(){
       if(ui == null){
         ui = FindObjectOfType<UIManagerBase>(true);
+        ui.gameObject.SetActive(true);
       }
       return ui;
     }

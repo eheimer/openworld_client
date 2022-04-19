@@ -31,7 +31,7 @@ namespace Openworld.Scenes
       if (panelHolder != null)
       {
         spacing = panelHolder.GetComponent<HorizontalLayoutGroup>().spacing;
-        var canvas = GetComponent<Canvas>();
+        var canvas = FindObjectOfType<Canvas>();
         //arrange the panels within the panelHolder
         foreach (GameObject panel in panels)
         {
@@ -43,7 +43,6 @@ namespace Openworld.Scenes
         // store the positions of each of the panels
         var tPos = new Vector3(0 - Math.Abs(Screen.width - panelSizes[0].width) / 2, Math.Abs(Screen.height - panelSizes[0].height) / 2,0);
         var startPosition = panelHolder.transform.position + tPos;
-        Debug.Log("0 : " + startPosition);
         panelPositions.Add(startPosition);
 
         for (var i = 1; i < panels.Length; i++){

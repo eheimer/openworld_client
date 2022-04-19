@@ -76,7 +76,7 @@ namespace Openworld
 
     public void Start(){
       //temporarily forcing dev.  Remove this line to default to prod
-      communicator.SetIsDevUrl(true);
+      //communicator.SetIsDevUrl(true);
       // temporarily auto logging in.  Remove this line
       Login("eric@heimerman.org", "eric", () => { FindObjectOfType<UIManagerBase>(true).CloseMenu(); }, (RequestException ex) => { });
     }
@@ -130,7 +130,7 @@ namespace Openworld
 
     // this is here, because we have to do it in two different places
     public void Login(string username, string password, Action FinalSuccess, Action<RequestException> Error){
-      communicator.Login(username, password, (resp)=> { LoginSuccess(resp, FinalSuccess, Error);}, Error);
+      communicator.Login(username.Trim(), password, (resp)=> { LoginSuccess(resp, FinalSuccess, Error);}, Error);
     }
 
     void LoginSuccess(LoginResponse resp, Action FinalSuccess, Action<RequestException> Error){
