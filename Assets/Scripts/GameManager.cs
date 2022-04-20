@@ -20,7 +20,7 @@ namespace Openworld
   static class SceneNameExtensions
   {
     private static string[] names = new string[] {
-      "Start", "WorldMap", "Character", "Battle", "Store"
+      "Start", "WorldMap", "Character.eric", "Battle", "Store"
     };
     public static string name(this SceneName scene)
     {
