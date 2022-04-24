@@ -12,6 +12,8 @@ using UnityEngine.UI;
 namespace Openworld.Scenes
 {
 
+  public enum PanelOrientation{ Horizontal,Vertical }
+
   public abstract class SwipableScene : BaseScene
   {
 
@@ -19,46 +21,34 @@ namespace Openworld.Scenes
     [SerializeField] float percentThreshold = 0.2f;
     [SerializeField] float easing = 0.5f;
     private int currentPage = 1;
-    [SerializeField] GameObject panelHolder;
     [SerializeField] GameObject[] panels;
-    private List<Rect> panelSizes = new List<Rect>();
-    private List<Vector3> panelPositions = new List<Vector3>();
+    [SerializeField] PanelOrientation orientation;
+    GameObject panelHolder;
     private float spacing;
+    private Rect canvas;
 
     protected override void Start()
     {
       base.Start();
+      panelHolder = orientation == PanelOrientation.Horizontal ? GameObject.Find("PanelHolder.Horizontal") : GameObject.Find("PanelHolder.Vertical");
+      canvas = FindObjectOfType<Canvas>().GetComponent<RectTransform>().rect;
       if (panelHolder != null)
       {
-        spacing = panelHolder.GetComponent<HorizontalLayoutGroup>().spacing;
-        var canvas = FindObjectOfType<Canvas>();
+        //panelHolder.GetComponent<RectTransform>().sizeDelta = new Vector2(canvas.width, canvas.height);
+        spacing = panelHolder.GetComponent<HorizontalOrVerticalLayoutGroup>().spacing;
         //arrange the panels within the panelHolder
         foreach (GameObject panel in panels)
         {
           var g = Instantiate(panel, panelHolder.transform);
           var r = g.GetComponent<RectTransform>();
-          panelSizes.Add(RectTransformUtility.PixelAdjustRect(r, canvas));
+          r.sizeDelta = new Vector2(canvas.width, canvas.height);
         }
 
         // store the positions of each of the panels
-        var tPos = GetPanelAdjustment(panelSizes[0]);
-        var startPosition = panelHolder.transform.position + tPos;
-        panelPositions.Add(startPosition);
-
-        for (var i = 1; i < panels.Length; i++){
-          var xAdj0 = GetPanelAdjustment(panelSizes[i - 1]).x;
-          var xAdj1 = GetPanelAdjustment(panelSizes[i]).x;
-          var w0 = panelSizes[i - 1].width;
-          tPos = new Vector3(-w0 - xAdj0 - spacing + xAdj1, 0, 0);
-
-          var pos = panelPositions[i - 1] + tPos;
-          Debug.Log(i + " : " + pos);
-          panelPositions.Add(panelPositions[i - 1] + tPos);
-        }
+        var startPosition = panelHolder.transform.position;
 
         //position the panelHolder to display the first panel
-        panelHolder.transform.position = panelPositions[0];
-        panelLocation = panelHolder.transform.position;
+        panelLocation = startPosition;
 
         //Add event handlers to the panel holder
         EventTrigger trigger = panelHolder.GetComponent<EventTrigger>();
@@ -81,13 +71,19 @@ namespace Openworld.Scenes
       {
         menu.HideAllMenus();
       }
-      float difference = data.pressPosition.x - data.position.x;
-      panelHolder.transform.position = panelLocation - new Vector3(difference, 0, 0);
+      float difference;
+      if(orientation == PanelOrientation.Horizontal){
+        difference = data.pressPosition.x - data.position.x;
+        panelHolder.transform.position = panelLocation - new Vector3(difference, 0, 0);
+      } else {
+        difference = data.pressPosition.y - data.position.y;
+        panelHolder.transform.position = panelLocation - new Vector3(0, difference, 0);
+      }
     }
 
     public void OnEndDrag(PointerEventData data)
     {
-      float percentage = (data.pressPosition.x - data.position.x) / Screen.width;
+      float percentage = orientation == PanelOrientation.Horizontal ? (data.pressPosition.x - data.position.x) / Screen.width : -(data.pressPosition.y - data.position.y) / Screen.height;
       if (Mathf.Abs(percentage) >= percentThreshold)
       {
         if (percentage > 0 && currentPage < panels.Length)
@@ -98,13 +94,24 @@ namespace Openworld.Scenes
         {
           currentPage--;
         }
-        Vector3 newLocation = panelPositions[currentPage - 1];
+        Vector3 newLocation = GetPanelLocation();
+        Debug.Log(panelHolder.transform.position);
+        Debug.Log(newLocation);
         StartCoroutine(SmoothMove(panelHolder.transform.position, newLocation, easing));
         panelLocation = newLocation;
       }
       else
       {
         StartCoroutine(SmoothMove(panelHolder.transform.position, panelLocation, easing));
+      }
+    }
+
+    Vector3 GetPanelLocation(){
+      //consider spacing as well
+      if(orientation == PanelOrientation.Horizontal){
+        return new Vector3(-(Screen.width * (currentPage - 1) - Screen.width/2), Screen.height/2, 0);
+      } else {
+        return new Vector3(Screen.width/2, (Screen.height * (currentPage - 1) + Screen.height/2), 0);
       }
     }
 
@@ -121,14 +128,6 @@ namespace Openworld.Scenes
       {
         menu.CloseMenu();
       }
-    }
-
-    /*
-    ** Will get the x/y adjustment of the panel in order to center it on the screen
-    */
-    Vector3 GetPanelAdjustment(Rect panel){
-      var tPos = new Vector3((Screen.width - panel.width) / 2, (Screen.height - panel.height) / 2,0);
-      return tPos;
     }
   }
 }
