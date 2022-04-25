@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="MenuStyles.uss" />
     <ui:VisualElement style="flex-grow: 1;">
-        <ui:Button display-tooltip-when-elided="true" class="menu-button" />
+        <ui:Button display-tooltip-when-elided="true" class="menu-button" style="width: 55px; height: 55px;" />
     </ui:VisualElement>
 </ui:UXML>
