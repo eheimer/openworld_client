@@ -3,7 +3,22 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - character.mana
+  - character.castSpeed
+  - character.defChance
+  - character.dexterity
+  - character.healSpeed
+  - character.hitChance
+  - character.hp
+  - character.intelligence
+  - character.movement
+  - character.parry
+  - character.name
+  - character.title
+  - character.stamina
+  - character.strength
+  - character.swingSpeed
   layers:
   - Default
   - TransparentFX

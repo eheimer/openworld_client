@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 100600839047301552}
   - component: {fileID: 100600839047301553}
   - component: {fileID: 983999756630251613}
+  - component: {fileID: 4581867502839185632}
   m_Layer: 5
   m_Name: CharacterOverview
   m_TagString: Untagged
@@ -97,6 +98,18 @@ MonoBehaviour:
   m_FlexibleWidth: 1
   m_FlexibleHeight: 1
   m_LayoutPriority: 1
+--- !u!114 &4581867502839185632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100600839047301559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aab8859c32246decb3ffd66192f49f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &207954532126906875
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,7 +506,7 @@ GameObject:
   - component: {fileID: 7021633635431187313}
   m_Layer: 5
   m_Name: CharacterName
-  m_TagString: Untagged
+  m_TagString: character.name
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1208,7 +1221,7 @@ GameObject:
   - component: {fileID: 2054673509409065764}
   m_Layer: 5
   m_Name: Image
-  m_TagString: Untagged
+  m_TagString: character.hp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1261,10 +1274,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 5e95bb8785e0649cd9fd029cb753c18d, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -1745,7 +1758,7 @@ GameObject:
   - component: {fileID: 6953483067642906179}
   m_Layer: 5
   m_Name: Image
-  m_TagString: Untagged
+  m_TagString: character.mana
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1895,7 +1908,7 @@ GameObject:
   - component: {fileID: 4875726135185083523}
   m_Layer: 5
   m_Name: CharacterTitle
-  m_TagString: Untagged
+  m_TagString: character.title
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2495,6 +2508,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Cast
       objectReference: {fileID: 0}
+    - target: {fileID: 4915082340535010623, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
+      propertyPath: m_TagString
+      value: character.castSpeed
+      objectReference: {fileID: 0}
     - target: {fileID: 7825817800902368515, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2608,6 +2625,10 @@ PrefabInstance:
     - target: {fileID: 1170317078768647138, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
       propertyPath: m_text
       value: Parry
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915082340535010623, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
+      propertyPath: m_TagString
+      value: character.parry
       objectReference: {fileID: 0}
     - target: {fileID: 7825817800902368515, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
       propertyPath: m_Pivot.x
@@ -2723,6 +2744,10 @@ PrefabInstance:
       propertyPath: m_text
       value: DC
       objectReference: {fileID: 0}
+    - target: {fileID: 4915082340535010623, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
+      propertyPath: m_TagString
+      value: character.defChance
+      objectReference: {fileID: 0}
     - target: {fileID: 7825817800902368515, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2836,6 +2861,10 @@ PrefabInstance:
     - target: {fileID: 1170317078768647138, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
       propertyPath: m_text
       value: HC
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915082340535010623, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
+      propertyPath: m_TagString
+      value: character.hitChance
       objectReference: {fileID: 0}
     - target: {fileID: 7825817800902368515, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
       propertyPath: m_Pivot.x
@@ -2951,6 +2980,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Swing
       objectReference: {fileID: 0}
+    - target: {fileID: 4915082340535010623, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
+      propertyPath: m_TagString
+      value: character.swingSpeed
+      objectReference: {fileID: 0}
     - target: {fileID: 7825817800902368515, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3064,6 +3097,10 @@ PrefabInstance:
     - target: {fileID: 1170317078768647138, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
       propertyPath: m_text
       value: Heal
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915082340535010623, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
+      propertyPath: m_TagString
+      value: character.healSpeed
       objectReference: {fileID: 0}
     - target: {fileID: 7825817800902368515, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
       propertyPath: m_Pivot.x
@@ -3195,6 +3232,10 @@ PrefabInstance:
       propertyPath: m_text
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 4915082340535010623, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
+      propertyPath: m_TagString
+      value: character.hp
+      objectReference: {fileID: 0}
     - target: {fileID: 7825817800902368515, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3304,6 +3345,10 @@ PrefabInstance:
     - target: {fileID: 3777573068642308735, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
       propertyPath: m_text
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915082340535010623, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
+      propertyPath: m_TagString
+      value: character.mana
       objectReference: {fileID: 0}
     - target: {fileID: 7825817800902368515, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
       propertyPath: m_Pivot.x
@@ -3426,6 +3471,10 @@ PrefabInstance:
     - target: {fileID: 1170317078768647138, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
       propertyPath: m_fontSizeMin
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915082340535010623, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
+      propertyPath: m_TagString
+      value: character.stamina
       objectReference: {fileID: 0}
     - target: {fileID: 4956090059577649228, guid: 086c948c0aa2a25bbb84481685bc1f04, type: 3}
       propertyPath: m_SizeDelta.x

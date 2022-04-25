@@ -6,6 +6,7 @@ namespace Openworld.Scenes
 {
   public class CharacterScene : SwipableScene
   {
+    private CharacterOverviewDataMap binder;
     public CharacterDetail character;
     protected override void Start()
     {
@@ -14,6 +15,12 @@ namespace Openworld.Scenes
       {
         menu.CloseMenu();
       }
+      binder = FindObjectOfType<CharacterOverviewDataMap>();
+    }
+
+    protected void Update(){
+      //update all of the data controls
+
     }
 
     protected override void GetData()
@@ -28,6 +35,7 @@ namespace Openworld.Scenes
         {
           Debug.Log(resp);
           this.character = resp;
+          binder.SetCharacter(this.character);
         }, RequestException);
       }
     }
