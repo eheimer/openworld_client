@@ -5,13 +5,14 @@ using System;
 namespace Openworld.Models
 {
   [Serializable]
-  public class PublicCharacter
+  public class PublicCharacter : ObservableObject
   {
     public string id;
     public string name;
 
-    public override string ToString(){
-      return UnityEngine.JsonUtility.ToJson (this, true);
-    } 
+    public override string ToString()
+    {
+      return UnityEngine.JsonUtility.ToJson(this, true);
+    }
   }
 }

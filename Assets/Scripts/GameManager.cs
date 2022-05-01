@@ -38,6 +38,7 @@ namespace Openworld
     [SerializeField] public string currentGame;
     [SerializeField] public string currentBattle;
 
+
     public Player GetPlayer()
     {
       return player;
@@ -47,6 +48,9 @@ namespace Openworld
       player.playerId = pr.id;
       player.playerName = pr.name;
     }
+
+    private CharacterDetail _character;
+    public CharacterDetail character{ get; set; }
 
     public Communicator GetCommunicator()
     {
@@ -76,7 +80,7 @@ namespace Openworld
 
     public void Start(){
       //temporarily forcing dev.  Remove this line to default to prod
-      //communicator.SetIsDevUrl(true);
+      communicator.SetIsDevUrl(true);
       // temporarily auto logging in.  Remove this line
       Login("eric@heimerman.org", "eric", () => { FindObjectOfType<UIManagerBase>(true).CloseMenu(); }, (RequestException ex) => { });
     }
