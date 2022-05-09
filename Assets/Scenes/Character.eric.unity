@@ -151,6 +151,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1989132700}
   m_RootOrder: 1
@@ -206,6 +207,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 639459354135603299, guid: 3b3e169fbe23ce69da0270b3f6305d3a, type: 3}
+      propertyPath: sourceAsset
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: 1817e3872ff92fad2be76a310d925dae, type: 3}
     - target: {fileID: 3286882585540248418, guid: 3b3e169fbe23ce69da0270b3f6305d3a, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -262,8 +267,40 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 3286882587485071103, guid: 3b3e169fbe23ce69da0270b3f6305d3a, type: 3}
+      propertyPath: mainMenu
+      value: 
+      objectReference: {fileID: 698032604}
+    - target: {fileID: 3286882587485071103, guid: 3b3e169fbe23ce69da0270b3f6305d3a, type: 3}
+      propertyPath: createCharacterForm
+      value: 
+      objectReference: {fileID: 698032603}
+    m_RemovedComponents:
+    - {fileID: 3286882585540248417, guid: 3b3e169fbe23ce69da0270b3f6305d3a, type: 3}
+    - {fileID: 3286882587019436724, guid: 3b3e169fbe23ce69da0270b3f6305d3a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3b3e169fbe23ce69da0270b3f6305d3a, type: 3}
+--- !u!114 &698032603 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4887776430469989381, guid: 3b3e169fbe23ce69da0270b3f6305d3a, type: 3}
+  m_PrefabInstance: {fileID: 698032602}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &698032604 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 639459354135603299, guid: 3b3e169fbe23ce69da0270b3f6305d3a, type: 3}
+  m_PrefabInstance: {fileID: 698032602}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &771398565
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,6 +329,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1989132700}
   m_RootOrder: 0
@@ -379,38 +417,6 @@ MonoBehaviour:
   - {fileID: 1373013126904768473, guid: 89746aa5e004e81cc99df6bc095f9a51, type: 3}
   - {fileID: 3489932607456458734, guid: dabceb1d0404f61bd8ac998ec8335036, type: 3}
   orientation: 0
-  character:
-    id: 
-    name: 
-    castSpeed: 0
-    defChance: 0
-    dexterity: 0
-    healSpeed: 0
-    hitChance: 0
-    hp: 0
-    intelligence: 0
-    inventory:
-      armor: []
-      capacity: 0
-      gold: 0
-      id: 
-      jewelry: []
-      spellbooks: []
-      weapons: []
-    inventorySize: 0
-    mana: 0
-    movement: 0
-    parry: 0
-    player: 
-    resistC: 0
-    resistE: 0
-    resistF: 0
-    resistP: 0
-    resistPh: 0
-    skills: []
-    stamina: 0
-    strength: 0
-    swingSpeed: 0
 --- !u!4 &1083324279
 Transform:
   m_ObjectHideFlags: 0
@@ -421,75 +427,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1262849839
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1262849842}
-  - component: {fileID: 1262849841}
-  - component: {fileID: 1262849840}
-  m_Layer: 0
-  m_Name: EventSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1262849840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1262849839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
---- !u!114 &1262849841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1262849839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!4 &1262849842
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1262849839}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1442087074
 GameObject:
@@ -570,6 +511,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -666,6 +608,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 771398566}
   - {fileID: 393193102}
