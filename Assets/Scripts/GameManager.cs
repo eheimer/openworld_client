@@ -6,6 +6,7 @@ using Openworld.Models;
 using Proyecto26;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
@@ -31,6 +32,7 @@ namespace Openworld
   public class GameManager : MonoBehaviour
   {
     public static GameManager instance;
+    [SerializeField] bool localServer;
     [SerializeField] public bool debugApi;
     [SerializeField] Player player;
     [SerializeField] Communicator communicator;
@@ -79,8 +81,18 @@ namespace Openworld
     }
 
     public void Start(){
+      // Attempting to fix the click handling for UI Toolkit
+      // I don't feel real good about this, but the event handling broke with the
+      // recent upgrade to the 2021 editor version.  Disabling the PanelRaycaster
+      // fixes it, so that the UI Toolkit click events and the gameobject swipe
+      // events both work.  Just noting here that at some point this might cause
+      // other weird errors, and then we'll have to find a better solution
+      var es = FindObjectOfType<EventSystem>();
+      es.gameObject.GetComponentInChildren<PanelRaycaster>().enabled = false;
+
+      EventSystem.SetUITookitEventSystemOverride(es, false, false);
       //temporarily forcing dev.  Remove this line to default to prod
-      communicator.SetIsDevUrl(true);
+      communicator.SetIsDevUrl(this.localServer);
       // temporarily auto logging in.  Remove this line
       Login("eric@heimerman.org", "eric", () => { FindObjectOfType<UIManagerBase>(true).CloseMenu(); }, (RequestException ex) => { });
     }

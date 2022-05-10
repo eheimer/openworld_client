@@ -1005,6 +1005,10 @@ PrefabInstance:
       value: https://www.openworld-game.com
       objectReference: {fileID: 0}
     - target: {fileID: 6353949551885875113, guid: ce1e9dc542a70ebbbba67bd4d5ab8211, type: 3}
+      propertyPath: localServer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6353949551885875113, guid: ce1e9dc542a70ebbbba67bd4d5ab8211, type: 3}
       propertyPath: menuManager
       value: 
       objectReference: {fileID: 1456642530}
