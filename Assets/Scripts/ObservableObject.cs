@@ -28,7 +28,7 @@ namespace Openworld
     /// <summary>
     /// A base class for objects of which the properties must be observable.
     /// </summary>
-    public class ObservableObject : INotifyPropertyChanged, INotifyPropertyChanging
+    public class ObservableObject : SerializableObject, INotifyPropertyChanged, INotifyPropertyChanging
     {
         /// <summary>
         /// Occurs after a property value changes.
