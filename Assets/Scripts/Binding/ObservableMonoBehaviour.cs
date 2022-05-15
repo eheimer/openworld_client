@@ -27,80 +27,17 @@ namespace Openworld.Binding
   /// <summary>
   /// A base class for objects of which the properties must be observable.
   /// </summary>
-  public class ObservableObject : SerializableObject, IObservable
+  public class ObservableMonoBehaviour : MonoBehaviour, IObservable
   {
-    /// <summary>
-    /// Occurs after a property value changes.
-    /// </summary>
     public event PropertyChangedEventHandler PropertyChanged;
-
-    /// <summary>
-    /// Provides access to the PropertyChanged event handler to derived classes.
-    /// </summary>
-    protected PropertyChangedEventHandler PropertyChangedHandler
+    protected PropertyChangedEventHandler PropertyChangedHandler()
     {
-      get
-      {
-        return PropertyChanged;
-      }
+      return PropertyChanged;
     }
-
-    /// <summary>
-    /// Occurs before a property value changes.
-    /// </summary>
     public event PropertyChangingEventHandler PropertyChanging;
-
-    /// <summary>
-    /// Provides access to the PropertyChanging event handler to derived classes.
-    /// </summary>
-    protected PropertyChangingEventHandler PropertyChangingHandler
+    protected PropertyChangingEventHandler PropertyChangingHandler()
     {
-      get
-      {
-        return PropertyChanging;
-      }
-    }
-
-    /// <summary>
-    /// Verifies that a property name exists in this ViewModel. This method
-    /// can be called before the property is used, for instance before
-    /// calling RaisePropertyChanged. It avoids errors when a property name
-    /// is changed but some places are missed.
-    /// </summary>
-    /// <remarks>This method is only active in DEBUG mode.</remarks>
-    /// <param name="propertyName">The name of the property that will be
-    /// checked.</param>
-    [Conditional("DEBUG")]
-    [DebuggerStepThrough]
-    public void VerifyPropertyName(string propertyName)
-    {
-      var myType = GetType();
-
-      var info = myType.GetTypeInfo();
-
-      if (!string.IsNullOrEmpty(propertyName)
-          && info.GetDeclaredProperty(propertyName) == null)
-      {
-        // Check base types
-        var found = false;
-
-        while (info.BaseType != typeof(System.Object))
-        {
-          info = info.BaseType.GetTypeInfo();
-
-          if (info.GetDeclaredProperty(propertyName) != null)
-          {
-            found = true;
-            break;
-          }
-        }
-
-        if (!found)
-        {
-          throw new ArgumentException("Property not found", propertyName);
-        }
-      }
-
+      return PropertyChanging;
     }
 
     /// <summary>
@@ -114,7 +51,7 @@ namespace Openworld.Binding
     public virtual void RaisePropertyChanging(
         [CallerMemberName] string propertyName = null)
     {
-      VerifyPropertyName(propertyName);
+      //VerifyPropertyName(propertyName);
 
       var handler = PropertyChanging;
       if (handler != null)
@@ -134,7 +71,7 @@ namespace Openworld.Binding
     public virtual void RaisePropertyChanged(
         [CallerMemberName] string propertyName = null)
     {
-      VerifyPropertyName(propertyName);
+      //VerifyPropertyName(propertyName);
 
       var handler = PropertyChanged;
       if (handler != null)

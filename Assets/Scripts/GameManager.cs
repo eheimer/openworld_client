@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Openworld.Binding;
 using Openworld.Menus;
 using Openworld.Models;
 using Proyecto26;
@@ -29,7 +30,7 @@ namespace Openworld
     }
   }
 
-  public class GameManager : MonoBehaviour
+  public class GameManager : ObservableMonoBehaviour
   {
     public static GameManager instance;
     [SerializeField] bool localServer;
@@ -52,7 +53,15 @@ namespace Openworld
     }
 
     private CharacterDetail _character;
-    public CharacterDetail character{ get; set; }
+    public CharacterDetail character{
+      get { return _character; }
+      set
+      {
+        //remove all handlers from current _character
+        if(_character != null) _character.RemoveAllHandlers();
+        Set(ref _character, value);
+      }
+    }
 
     public Communicator GetCommunicator()
     {
