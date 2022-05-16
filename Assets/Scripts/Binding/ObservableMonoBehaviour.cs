@@ -16,7 +16,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -25,7 +24,7 @@ using UnityEngine;
 namespace Openworld.Binding
 {
   /// <summary>
-  /// A base class for objects of which the properties must be observable.
+  /// An ObservableMonoBehaviour is a Unity MonoBehaviour that is observable
   /// </summary>
   public class ObservableMonoBehaviour : MonoBehaviour, IObservable
   {
