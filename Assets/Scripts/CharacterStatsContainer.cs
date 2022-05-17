@@ -22,15 +22,12 @@ namespace Openworld
     }
 
     StatDef[] stats = {
-      // new StatDef() { name = "Mana", statField = "mana", showSubStat = true, subStatField = "manaReplenish" },
-      // new StatDef() { name = "HP", statField = "hp",  showSubStat = true,subStatField = "hpReplenish" },
-      // new StatDef() { name = "Stamina", statField = "stamina",  showSubStat = true,subStatField = "staminaReplenish" },
-      new StatDef() { name = "Mana", statField = "mana", showSubStat = true, subStatField = "intelligence" },
-      new StatDef() { name = "HP", statField = "hp",  showSubStat = true,subStatField = "strength" },
-      new StatDef() { name = "Stamina", statField = "stamina",  showSubStat = true,subStatField = "dexterity" },
-      // new StatDef() { name = "Hit Ch", statField = "hitChance"},
-      // new StatDef() { name = "Def Ch", statField = "defChance"},
-      // new StatDef() { name = "Parry", statField = "parry"},
+      new StatDef() { name = "Mana", statField = "mana", showSubStat = true, subStatField = "manaReplenish" },
+      new StatDef() { name = "HP", statField = "hp",  showSubStat = true,subStatField = "hpReplenish" },
+      new StatDef() { name = "Stamina", statField = "stamina",  showSubStat = true,subStatField = "staminaReplenish" },
+      new StatDef() { name = "Hit Ch", statField = "hitChance"},
+      new StatDef() { name = "Def Ch", statField = "defChance"},
+      new StatDef() { name = "Parry", statField = "parry"},
       new StatDef() { name = "Swing", statField = "swingSpeed"},
       new StatDef() { name = "Cast", statField = "castSpeed"},
       new StatDef() { name = "Heal", statField = "healSpeed"},

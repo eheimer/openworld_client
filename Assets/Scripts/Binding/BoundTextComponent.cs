@@ -15,7 +15,10 @@ namespace Openworld.Binding
     }
 
     protected override void UpdateBindingTarget(){
-      TargetProperty.SetValue(TargetComponent, SourcePropertyValue.ToString());
+      if (TargetProperty != null && SourcePropertyValue != null)
+      {
+        TargetProperty.SetValue(TargetComponent, SourcePropertyValue.ToString());
+      }
     }
   }
 }

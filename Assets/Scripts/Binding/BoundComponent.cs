@@ -54,7 +54,10 @@ namespace Openworld.Binding
     }
 
     protected virtual void UpdateBindingTarget(){
-      TargetProperty.SetValue(TargetComponent, SourcePropertyValue);
+      if (TargetProperty != null)
+      {
+        TargetProperty.SetValue(TargetComponent, SourcePropertyValue);
+      }
     }
     #endregion
 
@@ -133,7 +136,11 @@ namespace Openworld.Binding
     }
 
     private void UpdateBindingSourcePropertyValue(){
-      SourcePropertyValue = BindingSource.GetType().GetProperty(bindingSourceProperty, BindingFlags.Public | BindingFlags.Instance).GetValue(BindingSource);
+      var sourceProperty = BindingSource.GetType().GetProperty(bindingSourceProperty, BindingFlags.Public | BindingFlags.Instance);
+      if (sourceProperty != null)
+      {
+        SourcePropertyValue = sourceProperty.GetValue(BindingSource);
+      }
       UpdateBindingTarget();
     }
   }
