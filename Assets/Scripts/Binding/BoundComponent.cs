@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,10 +20,15 @@ namespace Openworld.Binding
     #region UNITY LIFECYCLE METHODS
     protected virtual void Start()
     {
-      BindingProvider = GetBindingProvider();
-      BindingSource = GetBindingSource();
-      TargetComponent = gameObject.GetComponent(BindingTargetComponentType);
-      TargetProperty = TargetComponent.GetType().GetProperty(BindingTargetProperty);
+      try
+      {
+        BindingProvider = GetBindingProvider();
+        BindingSource = GetBindingSource();
+        TargetComponent = gameObject.GetComponentInChildren(BindingTargetComponentType);
+        TargetProperty = TargetComponent.GetType().GetProperty(BindingTargetProperty);
+      }catch(Exception ex){
+        Debug.Log("Error configuring binding in " + this.GetType());
+      }
     }
     #endregion
 
