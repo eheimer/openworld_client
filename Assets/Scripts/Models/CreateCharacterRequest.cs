@@ -3,10 +3,8 @@
 using System;
 using Openworld.Binding;
 
-namespace Openworld.Models
-{
-  public class CreateCharacterRequest : ObservableObject
-  {
+namespace Openworld.Models {
+  public class CreateCharacterRequest : ObservableObject {
     private int _dexterity;
     public int dexterity {
       get => _dexterity;
@@ -17,12 +15,6 @@ namespace Openworld.Models
     public int intelligence {
       get => _intelligence;
       set => Set(ref _intelligence, value);
-    }
-
-    private int _movement;
-    public int movement {
-      get => _movement;
-      set => Set(ref _movement, value);
     }
 
     private string _name;
