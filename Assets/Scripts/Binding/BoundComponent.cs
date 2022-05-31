@@ -53,6 +53,10 @@ namespace Openworld.Binding
       return BindingProvider.GetBindingSource();
     }
 
+    public virtual PropertyInfo GetBindingSourceProperty(){
+      return BindingSource.GetType().GetProperty(bindingSourceProperty, BindingFlags.Public | BindingFlags.Instance);
+    }
+
     protected virtual void UpdateBindingTarget(){
       if (TargetProperty != null)
       {
@@ -136,7 +140,7 @@ namespace Openworld.Binding
     }
 
     private void UpdateBindingSourcePropertyValue(){
-      var sourceProperty = BindingSource.GetType().GetProperty(bindingSourceProperty, BindingFlags.Public | BindingFlags.Instance);
+      var sourceProperty = GetBindingSourceProperty();
       if (sourceProperty != null)
       {
         SourcePropertyValue = sourceProperty.GetValue(BindingSource);
