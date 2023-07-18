@@ -1018,6 +1018,10 @@ PrefabInstance:
       propertyPath: menuManager
       value: 
       objectReference: {fileID: 1456642530}
+    - target: {fileID: 6353949551885875113, guid: ce1e9dc542a70ebbbba67bd4d5ab8211, type: 3}
+      propertyPath: spinnerPrefab
+      value: 
+      objectReference: {fileID: 3293445524094877019, guid: 648c2d74f7703ac9185993d9811c06e6, type: 3}
     - target: {fileID: 6826094310957169182, guid: ce1e9dc542a70ebbbba67bd4d5ab8211, type: 3}
       propertyPath: apiPath
       value: 

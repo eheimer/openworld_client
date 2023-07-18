@@ -215,6 +215,7 @@ MonoBehaviour:
   authToken: 
   currentGame: 
   currentBattle: 
+  spinnerPrefab: {fileID: 3293445524094877019, guid: 648c2d74f7703ac9185993d9811c06e6, type: 3}
 --- !u!1 &5434065356078307912
 GameObject:
   m_ObjectHideFlags: 0

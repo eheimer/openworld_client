@@ -40,7 +40,12 @@ namespace Openworld
     [SerializeField] string authToken;
     [SerializeField] public string currentGame;
     [SerializeField] public string currentBattle;
+    [SerializeField] GameObject spinnerPrefab;
 
+    public GameObject GetSpinner()
+    {
+      return spinnerPrefab;
+    }
 
     public Player GetPlayer()
     {
@@ -185,10 +190,10 @@ namespace Openworld
     void LoginSuccess(LoginResponse resp, Action FinalSuccess, Action<RequestException> Error)
     {
       SetToken(resp.token);
-      communicator.GetPlayer(resp.player, (resp) => { GetPlayerSuccess(resp, FinalSuccess, Error); }, Error);
+      communicator.GetPlayerDetail(resp.player, (resp) => { GetPlayerSuccess(resp, FinalSuccess, Error); }, Error);
     }
 
-    void GetPlayerSuccess(PlayerResponse resp, Action FinalSuccess, Action<RequestException> Error)
+    void GetPlayerSuccess(PlayerDetailResponse resp, Action FinalSuccess, Action<RequestException> Error)
     {
       // cast resp to PlayerDetailResponse if possible, and pass to SetPlayer
       if (resp is PlayerDetailResponse)
