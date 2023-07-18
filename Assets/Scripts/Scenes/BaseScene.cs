@@ -29,39 +29,52 @@ namespace Openworld.Scenes
       if (gameManager == null || gameManager.GetCommunicator() == null || !Validate())
       {
         ValidateFail();
-      } else
+      }
+      else
       {
         menu.CloseMenu();
         GetData();
       }
     }
 
-    protected GameManager GetGameManager(){
-      if(gameManager == null){
+    protected GameManager GetGameManager()
+    {
+      if (gameManager == null)
+      {
         gameManager = FindObjectOfType<GameManager>();
       }
       return gameManager;
     }
 
+    public UIDocument GetMenuButton()
+    {
+      return menuButton.GetComponent<UIDocument>();
+    }
+
     public void ShowMenuButton()
     {
-      menuButton.GetComponent<UIDocument>().rootVisualElement.visible = true;
+      if (menuButton != null)
+      {
+        menuButton.GetComponent<UIDocument>().rootVisualElement.visible = true;
+      }
     }
 
 
     protected virtual bool Validate()
     {
-      // By default, we only validate authorization and currentGame.  
-      // But this should only fail if the current scene is not Start
-      var gameManager = GetGameManager();
-      if(SceneManager.GetActiveScene().name == "Start") return true;
+      if (SceneManager.GetActiveScene().name == "Start") return true;
+      // If we're on any scene other than Start, we should absolutely have an auth token and a current game.
       return !string.IsNullOrEmpty(gameManager.GetAuthToken()) && !string.IsNullOrEmpty(gameManager.currentGame);
     }
 
-    protected virtual void ValidateFail() {
-      try{
+    protected virtual void ValidateFail()
+    {
+      try
+      {
         SceneManager.LoadScene(SceneName.Start.name());
-      } catch(Exception e){
+      }
+      catch (Exception e)
+      {
         Debug.Log("[BaseScene] ValidateFail: " + e.Message);
       }
     }

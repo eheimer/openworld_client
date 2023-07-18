@@ -3,30 +3,43 @@
 using System;
 using Openworld.Binding;
 
-namespace Openworld.Models {
-  public class CreateCharacterRequest : ObservableObject {
+namespace Openworld.Models
+{
+  public class CreateCharacterRequest : ObservableObject
+  {
     private int _dexterity;
-    public int dexterity {
+    public int dexterity
+    {
       get => _dexterity;
       set => Set(ref _dexterity, value);
     }
 
     private int _intelligence;
-    public int intelligence {
+    public int intelligence
+    {
       get => _intelligence;
       set => Set(ref _intelligence, value);
     }
 
     private string _name;
-    public string name {
+    public string name
+    {
       get => _name;
       set => Set(ref _name, value);
     }
 
     private int _strength;
-    public int strength {
+    public int strength
+    {
       get => _strength;
       set => Set(ref _strength, value);
+    }
+
+    private int _raceId;
+    public int raceId
+    {
+      get => _raceId;
+      set => Set(ref _raceId, value);
     }
   }
 }

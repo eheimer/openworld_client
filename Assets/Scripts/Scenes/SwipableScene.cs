@@ -12,7 +12,7 @@ using UnityEngine.UI;
 namespace Openworld.Scenes
 {
 
-  public enum PanelOrientation{ Horizontal,Vertical }
+  public enum PanelOrientation { Horizontal, Vertical }
 
   public abstract class SwipableScene : BaseScene
   {
@@ -21,7 +21,8 @@ namespace Openworld.Scenes
     [SerializeField] float percentThreshold = 0.2f;
     [SerializeField] float easing = 0.5f;
     private int currentPage = 1;
-    [SerializeField] GameObject[] panels;
+    [SerializeField]
+    protected GameObject[] panels;
     [SerializeField] PanelOrientation orientation;
     GameObject panelHolder;
     private float spacing;
@@ -30,8 +31,16 @@ namespace Openworld.Scenes
     protected override void Start()
     {
       base.Start();
+      if (menu != null)
+      {
+        // these event handlers show and hide the panelHolder when the menu is closed and opened
+        menu.OnMenuOpen += HandleMenuOpen;
+        menu.OnMenuClose += HandleMenuClose;
+      }
+
       panelHolder = orientation == PanelOrientation.Horizontal ? GameObject.Find("PanelHolder.Horizontal") : GameObject.Find("PanelHolder.Vertical");
       canvas = FindObjectOfType<Canvas>().GetComponent<RectTransform>().rect;
+
       if (panelHolder != null)
       {
         //panelHolder.GetComponent<RectTransform>().sizeDelta = new Vector2(canvas.width, canvas.height);
@@ -69,13 +78,16 @@ namespace Openworld.Scenes
     {
       if (menu != null)
       {
-        menu.HideAllMenus();
+        menu.HideAllDocuments();
       }
       float difference;
-      if(orientation == PanelOrientation.Horizontal){
+      if (orientation == PanelOrientation.Horizontal)
+      {
         difference = data.pressPosition.x - data.position.x;
         panelHolder.transform.position = panelLocation - new Vector3(difference, 0, 0);
-      } else {
+      }
+      else
+      {
         difference = data.pressPosition.y - data.position.y;
         panelHolder.transform.position = panelLocation - new Vector3(0, difference, 0);
       }
@@ -95,8 +107,6 @@ namespace Openworld.Scenes
           currentPage--;
         }
         Vector3 newLocation = GetPanelLocation();
-        Debug.Log(panelHolder.transform.position);
-        Debug.Log(newLocation);
         StartCoroutine(SmoothMove(panelHolder.transform.position, newLocation, easing));
         panelLocation = newLocation;
       }
@@ -106,12 +116,16 @@ namespace Openworld.Scenes
       }
     }
 
-    Vector3 GetPanelLocation(){
+    Vector3 GetPanelLocation()
+    {
       //consider spacing as well
-      if(orientation == PanelOrientation.Horizontal){
-        return new Vector3(-(Screen.width * (currentPage - 1) - Screen.width/2), Screen.height/2, 0);
-      } else {
-        return new Vector3(Screen.width/2, (Screen.height * (currentPage - 1) + Screen.height/2), 0);
+      if (orientation == PanelOrientation.Horizontal)
+      {
+        return new Vector3(-(Screen.width * (currentPage - 1) - Screen.width / 2), Screen.height / 2, 0);
+      }
+      else
+      {
+        return new Vector3(Screen.width / 2, (Screen.height * (currentPage - 1) + Screen.height / 2), 0);
       }
     }
 
@@ -127,6 +141,28 @@ namespace Openworld.Scenes
       if (menu != null)
       {
         menu.CloseMenu();
+      }
+    }
+
+
+    protected virtual void HandleMenuOpen(object sender, EventArgs a)
+    {
+      //hide the panelHolder
+      panelHolder.SetActive(false);
+    }
+
+    protected virtual void HandleMenuClose(object sender, EventArgs a)
+    {
+      //show the panelHolder
+      panelHolder.SetActive(true);
+    }
+
+    private void OnDestroy()
+    {
+      if (menu != null)
+      {
+        menu.OnMenuOpen -= HandleMenuOpen;
+        menu.OnMenuClose -= HandleMenuClose;
       }
     }
   }

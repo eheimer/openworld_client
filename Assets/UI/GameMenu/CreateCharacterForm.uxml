@@ -9,6 +9,7 @@
                     <ui:TextField picking-mode="Ignore" label="Strength:" password="false" name="strength" class="text-field" />
                     <ui:TextField picking-mode="Ignore" label="Dexterity:" password="false" name="dexterity" class="text-field" />
                     <ui:TextField picking-mode="Ignore" label="Intelligence:" password="false" name="intelligence" class="text-field" />
+                    <ui:DropdownField label="Race:" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="race" class="text-field" />
                     <ui:VisualElement style="flex-grow: 1;" />
                     <ui:Button name="createcharacter-submit" text="Create" display-tooltip-when-elided="true" class="button" />
                     <ui:Button text="Cancel" display-tooltip-when-elided="true" name="createcharacter-cancel" class="button" />
