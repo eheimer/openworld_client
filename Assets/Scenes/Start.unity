@@ -685,7 +685,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1456642530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -921,6 +921,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -950,6 +951,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 774168424388035205, guid: ce1e9dc542a70ebbbba67bd4d5ab8211, type: 3}
@@ -1010,14 +1012,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6353949551885875113, guid: ce1e9dc542a70ebbbba67bd4d5ab8211, type: 3}
       propertyPath: localServer
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6353949551885875113, guid: ce1e9dc542a70ebbbba67bd4d5ab8211, type: 3}
       propertyPath: menuManager
       value: 
       objectReference: {fileID: 1456642530}
+    - target: {fileID: 6353949551885875113, guid: ce1e9dc542a70ebbbba67bd4d5ab8211, type: 3}
+      propertyPath: spinnerPrefab
+      value: 
+      objectReference: {fileID: 3293445524094877019, guid: 648c2d74f7703ac9185993d9811c06e6, type: 3}
+    - target: {fileID: 6826094310957169182, guid: ce1e9dc542a70ebbbba67bd4d5ab8211, type: 3}
+      propertyPath: apiPath
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5528078378915443131, guid: ce1e9dc542a70ebbbba67bd4d5ab8211, type: 3}
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: ce1e9dc542a70ebbbba67bd4d5ab8211, type: 3}
 --- !u!1 &1705084246 stripped
 GameObject:

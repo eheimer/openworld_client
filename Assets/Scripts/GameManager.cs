@@ -11,12 +11,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-namespace Openworld 
+namespace Openworld
 {
 
   public enum SceneName
   {
-    Start,WorldMap,Character,Battle,Store
+    Start, WorldMap, Character, Battle, Store
   }
 
   static class SceneNameExtensions
@@ -40,7 +40,12 @@ namespace Openworld
     [SerializeField] string authToken;
     [SerializeField] public string currentGame;
     [SerializeField] public string currentBattle;
+    [SerializeField] GameObject spinnerPrefab;
 
+    public GameObject GetSpinner()
+    {
+      return spinnerPrefab;
+    }
 
     public Player GetPlayer()
     {
@@ -48,17 +53,19 @@ namespace Openworld
     }
     public void SetPlayer(PlayerDetailResponse pr)
     {
+      Debug.Log("SetPlayer: " + pr.username + ", " + pr.id);
       player.playerId = pr.id;
-      player.playerName = pr.name;
+      player.playerName = pr.username;
     }
 
     private CharacterDetail _character;
-    public CharacterDetail character{
+    public CharacterDetail character
+    {
       get { return _character; }
       set
       {
         //remove all handlers from current _character
-        if(_character != null) _character.RemoveAllHandlers();
+        if (_character != null) _character.RemoveAllHandlers();
         Set(ref _character, value);
       }
     }
@@ -89,7 +96,8 @@ namespace Openworld
       }
     }
 
-    public void Start(){
+    public void Start()
+    {
       // Attempting to fix the click handling for UI Toolkit
       // I don't feel real good about this, but the event handling broke with the
       // recent upgrade to the 2021 editor version.  Disabling the PanelRaycaster
@@ -100,10 +108,29 @@ namespace Openworld
       es.gameObject.GetComponentInChildren<PanelRaycaster>().enabled = false;
 
       EventSystem.SetUITookitEventSystemOverride(es, false, false);
-      //temporarily forcing dev.  Remove this line to default to prod
       communicator.SetIsDevUrl(this.localServer);
-      // temporarily auto logging in.  Remove this line
-      Login("eric@heimerman.org", "eric", () => { FindObjectOfType<UIManagerBase>(true).CloseMenu(); }, (RequestException ex) => { });
+      if (this.localServer)
+      {
+        Login("eric", "password", () =>
+        {
+          // if success, close the menu
+          FindObjectOfType<UIManagerBase>(true).CloseMenu();
+        }, (RequestException ex) =>
+        {
+          // if login fails, we try to register a new user
+          if (ex.StatusCode == 404)
+          {
+            communicator.Register("eric@test.com", "password", "eric", (req) =>
+            {
+              // if registration succeeds, try to log in again
+              Login("eric", "password", () =>
+              {
+                FindObjectOfType<UIManagerBase>(true).CloseMenu();
+              }, (RequestException ex) => { });
+            }, (RequestException ex) => { });
+          }
+        });
+      }
     }
 
     public void Reset()
@@ -126,15 +153,16 @@ namespace Openworld
     {
       // Quit game
       Application.Quit();
-      #if UNITY_EDITOR
-      if(EditorApplication.isPlaying) 
+#if UNITY_EDITOR
+      if (EditorApplication.isPlaying)
       {
         UnityEditor.EditorApplication.isPlaying = false;
       }
-      #endif
+#endif
     }
 
-    public void Logout(){
+    public void Logout()
+    {
       SetPlayer(new PlayerDetailResponse());
       SetToken("");
     }
@@ -154,17 +182,25 @@ namespace Openworld
     }
 
     // this is here, because we have to do it in two different places
-    public void Login(string username, string password, Action FinalSuccess, Action<RequestException> Error){
-      communicator.Login(username.Trim(), password, (resp)=> { LoginSuccess(resp, FinalSuccess, Error);}, Error);
+    public void Login(string username, string password, Action FinalSuccess, Action<RequestException> Error)
+    {
+      communicator.Login(username.Trim(), password, (resp) => { LoginSuccess(resp, FinalSuccess, Error); }, Error);
     }
 
-    void LoginSuccess(LoginResponse resp, Action FinalSuccess, Action<RequestException> Error){
+    void LoginSuccess(LoginResponse resp, Action FinalSuccess, Action<RequestException> Error)
+    {
       SetToken(resp.token);
-      communicator.GetPlayerDetail(resp.player, (resp) => { PlayerDetailSuccess(resp, FinalSuccess, Error); }, Error);
+      communicator.GetPlayerDetail(resp.player, (resp) => { GetPlayerSuccess(resp, FinalSuccess, Error); }, Error);
     }
 
-    void PlayerDetailSuccess(PlayerDetailResponse resp, Action FinalSuccess, Action<RequestException> Error){
-      SetPlayer(resp);
+    void GetPlayerSuccess(PlayerDetailResponse resp, Action FinalSuccess, Action<RequestException> Error)
+    {
+      // cast resp to PlayerDetailResponse if possible, and pass to SetPlayer
+      if (resp is PlayerDetailResponse)
+      {
+        SetPlayer(resp as PlayerDetailResponse);
+      }
+
       FinalSuccess();
     }
   }

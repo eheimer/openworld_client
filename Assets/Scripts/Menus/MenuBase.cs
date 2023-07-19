@@ -19,33 +19,40 @@ namespace Openworld.Menus
       RegisterButtonHandlers();
     }
 
-    protected GameManager GetGameManager(){
-      if(gameManager == null){
+    protected GameManager GetGameManager()
+    {
+      if (gameManager == null)
+      {
         gameManager = FindObjectOfType<GameManager>();
       }
       return gameManager;
     }
 
-    protected UIManagerBase getUI(){
-      if(ui == null){
+    protected UIManagerBase getUI()
+    {
+      if (ui == null)
+      {
         ui = FindObjectOfType<UIManagerBase>(true);
         ui.gameObject.SetActive(true);
       }
       return ui;
     }
 
-    protected VisualElement GetVisualElement(){
-      if(me == null){
+    protected VisualElement GetVisualElement()
+    {
+      if (me == null)
+      {
         me = this.GetComponent<UIDocument>().rootVisualElement;
       }
       return me;
     }
 
-    public virtual void Show(){
-      getUI().HideAllMenus();
+    public virtual void Show()
+    {
+      getUI().HideAllDocuments();
       Prep();
       GetData();
-      GetVisualElement().visible = true;
+      getUI().ShowDocument(this.GetComponent<UIDocument>());
     }
 
     protected virtual void Prep() { }
@@ -53,7 +60,8 @@ namespace Openworld.Menus
     protected virtual void RegisterButtonHandlers() { }
     protected virtual void GetData() { }
 
-    protected virtual void HandleClick(string selector, Action method){
+    protected virtual void HandleClick(string selector, Action method)
+    {
       GetVisualElement().Q<Button>(selector).clickable.clicked += method;
     }
 

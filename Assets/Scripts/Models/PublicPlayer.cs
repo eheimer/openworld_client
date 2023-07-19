@@ -8,21 +8,24 @@ namespace Openworld.Models
   public class PublicPlayer : ObservableObject
   {
     private string _id;
-    public string id {
+    public string id
+    {
       get => _id;
       set => Set(ref _id, value);
     }
 
     private DateTime _lastSeenAt;
-    public DateTime lastSeenAt {
+    public DateTime lastSeenAt
+    {
       get => _lastSeenAt;
       set => Set(ref _lastSeenAt, value);
     }
 
-    private string _name;
-    public string name {
-      get => _name;
-      set => Set(ref _name, value);
+    private string _username;
+    public string username
+    {
+      get => _username;
+      set => Set(ref _username, value);
     }
   }
 }

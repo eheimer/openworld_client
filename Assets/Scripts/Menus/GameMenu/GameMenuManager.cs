@@ -10,17 +10,17 @@ namespace Openworld.Menus
   {
 
     [SerializeField]
-    UIDocument createCharacterForm;
+    MenuBase createCharacterForm;
 
     protected override bool MenuValidate()
     {
       var gameManager = FindObjectOfType<GameManager>();
-      return gameManager != null && !string.IsNullOrEmpty(gameManager.GetPlayer().character);
+      return gameManager != null && gameManager.character != null;
     }
 
     protected override void InvalidMenu()
     {
-      createCharacterForm.GetComponent<MenuBase>().Show();
+      createCharacterForm.Show();
     }
   }
 }
