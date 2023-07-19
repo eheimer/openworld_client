@@ -29,6 +29,7 @@ namespace Openworld.Scenes
       var gameManager = GetGameManager();
       //add the spinner to the canvas
       var spinner = Instantiate(gameManager.GetSpinner(), FindObjectOfType<Canvas>().transform) as GameObject;
+
       var communicator = gameManager.GetCommunicator();
       var player = gameManager.GetPlayer();
 
@@ -37,7 +38,7 @@ namespace Openworld.Scenes
       {
         GetGameManager().GetCommunicator().GetCharacterDetail(player.character, (CharacterDetailResponse resp) =>
         {
-          //Destroy(spinner);
+          Destroy(spinner);
           gameManager.character = resp;
         }, RequestException);
       }
