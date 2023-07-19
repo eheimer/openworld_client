@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Openworld.Scenes
 
 {
-  public class CharacterScene : SwipableScene
+  public class CharacterScene : SwipableScene//, IUpdatable
   {
     protected RacesResponse[] races;
 
@@ -22,12 +22,6 @@ namespace Openworld.Scenes
         //showing the menu will prompt the user to create a character
         menu.ShowMenu();
       }
-    }
-
-    protected void Update()
-    {
-      //update all of the data controls
-
     }
 
     protected override void GetData()

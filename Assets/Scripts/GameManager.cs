@@ -111,11 +111,7 @@ namespace Openworld
       communicator.SetIsDevUrl(this.localServer);
       if (this.localServer)
       {
-        Login("eric", "password", () =>
-        {
-          // if success, close the menu
-          FindObjectOfType<UIManagerBase>(true).CloseMenu();
-        }, (RequestException ex) =>
+        Login("eric", "password", LoginSuccess, (RequestException ex) =>
         {
           // if login fails, we try to register a new user
           if (ex.StatusCode == 404)
@@ -123,14 +119,16 @@ namespace Openworld
             communicator.Register("eric@test.com", "password", "eric", (req) =>
             {
               // if registration succeeds, try to log in again
-              Login("eric", "password", () =>
-              {
-                FindObjectOfType<UIManagerBase>(true).CloseMenu();
-              }, (RequestException ex) => { });
+              Login("eric", "password", LoginSuccess, (RequestException ex) => { });
             }, (RequestException ex) => { });
           }
         });
       }
+    }
+
+    void LoginSuccess()
+    {
+      FindObjectOfType<UIManagerBase>(true).ShowMenu();
     }
 
     public void Reset()
@@ -190,17 +188,12 @@ namespace Openworld
     void LoginSuccess(LoginResponse resp, Action FinalSuccess, Action<RequestException> Error)
     {
       SetToken(resp.token);
-      communicator.GetPlayerDetail(resp.player, (resp) => { GetPlayerSuccess(resp, FinalSuccess, Error); }, Error);
+      communicator.GetPlayerDetail(resp.player, (resp) => { PlayerDetailSuccess(resp, FinalSuccess, Error); }, Error);
     }
 
-    void GetPlayerSuccess(PlayerDetailResponse resp, Action FinalSuccess, Action<RequestException> Error)
+    void PlayerDetailSuccess(PlayerDetailResponse resp, Action FinalSuccess, Action<RequestException> Error)
     {
-      // cast resp to PlayerDetailResponse if possible, and pass to SetPlayer
-      if (resp is PlayerDetailResponse)
-      {
-        SetPlayer(resp as PlayerDetailResponse);
-      }
-
+      SetPlayer(resp);
       FinalSuccess();
     }
   }
