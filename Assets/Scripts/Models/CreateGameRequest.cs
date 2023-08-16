@@ -7,14 +7,9 @@ namespace Openworld.Models
 {
   public class CreateGameRequest : ObservableObject
   {
-    private int _maxPlayers;
-    public int maxPlayers {
-      get => _maxPlayers;
-      set => Set(ref _maxPlayers, value);
-    }
-
     private string _name;
-    public string name {
+    public string name
+    {
       get => _name;
       set => Set(ref _name, value);
     }

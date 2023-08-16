@@ -15,13 +15,17 @@ namespace Openworld.Binding
     public void Initialize(bool showStatName, string statName, string statBindField, bool showSubStat, string subStatBindField)
     {
       stat.GetComponentInChildren<BoundComponent>().bindingSourceProperty = statBindField;
-      if(showSubStat){
-          subStat.GetComponentInChildren<BoundComponent>().bindingSourceProperty = subStatBindField;
+      if (showSubStat)
+      {
+        subStat.GetComponentInChildren<BoundComponent>().bindingSourceProperty = subStatBindField;
       }
 
       statNameTarget.gameObject.SetActive(showStatName);
       statNameTarget.text = statName;
-      subStat.SetActive(showSubStat);
+      if (subStat != null)
+      {
+        subStat.SetActive(showSubStat);
+      }
     }
   }
 }

@@ -1,12 +1,14 @@
+
 using System;
 using System.Collections.ObjectModel;
 using Openworld.Models;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Openworld.Scenes
 
 {
-  public class CharacterScene : SwipableScene//, IUpdatable
+  public class CharacterScene : BaseScene//, IUpdatable
   {
     protected RacesResponse[] races;
 
@@ -24,7 +26,7 @@ namespace Openworld.Scenes
       }
     }
 
-    protected override void GetData()
+    protected override async void GetData()
     {
       var gameManager = GetGameManager();
       //add the spinner to the canvas
@@ -36,11 +38,12 @@ namespace Openworld.Scenes
       //get the character detail from the server and put it on the gameManager
       if (!String.IsNullOrEmpty(player.character))
       {
-        GetGameManager().GetCommunicator().GetCharacterDetail(player.character, (CharacterDetailResponse resp) =>
+        communicator.GetCharacterDetail(player.character, (CharacterDetailResponse resp) =>
         {
           Destroy(spinner);
           gameManager.character = resp;
         }, RequestException);
+        Debug.Log("fetching character detail");
       }
     }
   }

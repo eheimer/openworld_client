@@ -14,6 +14,7 @@ namespace Openworld.Binding
   ** to a target, usually a property of this component
   **/
   public abstract class BoundComponent : MonoBehaviour
+  //public abstract class BoundComponent : MonoBehaviour
   {
     [SerializeField] public string bindingSourceProperty; // the property on the bindingSource that we want to observe
 
@@ -23,10 +24,14 @@ namespace Openworld.Binding
       try
       {
         BindingProvider = GetBindingProvider();
+        if (BindingProvider != null) { Debug.Log("Got a binding provider"); }
+        else { Debug.Log("No binding provider found"); }
         BindingSource = GetBindingSource();
         TargetComponent = gameObject.GetComponentInChildren(BindingTargetComponentType);
         TargetProperty = TargetComponent.GetType().GetProperty(BindingTargetProperty);
-      }catch(Exception ex){
+      }
+      catch (Exception ex)
+      {
         Debug.Log("Error configuring binding in " + this.GetType());
       }
     }
@@ -53,11 +58,13 @@ namespace Openworld.Binding
       return BindingProvider.GetBindingSource();
     }
 
-    public virtual PropertyInfo GetBindingSourceProperty(){
+    public virtual PropertyInfo GetBindingSourceProperty()
+    {
       return BindingSource.GetType().GetProperty(bindingSourceProperty, BindingFlags.Public | BindingFlags.Instance);
     }
 
-    protected virtual void UpdateBindingTarget(){
+    protected virtual void UpdateBindingTarget()
+    {
       if (TargetProperty != null)
       {
         TargetProperty.SetValue(TargetComponent, SourcePropertyValue);
@@ -70,7 +77,7 @@ namespace Openworld.Binding
     protected UnityEngine.Component TargetComponent { get; set; } // the component that contains the property that we want to bind
     protected PropertyInfo TargetProperty { get; set; } // the property that we want to bind
     public System.Type BindingTargetComponentType { get; set; }
-    public string BindingTargetProperty{ get; set; }
+    public string BindingTargetProperty { get; set; }
     private IBindingProvider _bindingProvider;
     protected IBindingProvider BindingProvider
     {
@@ -139,7 +146,8 @@ namespace Openworld.Binding
       }
     }
 
-    private void UpdateBindingSourcePropertyValue(){
+    private void UpdateBindingSourcePropertyValue()
+    {
       var sourceProperty = GetBindingSourceProperty();
       if (sourceProperty != null)
       {

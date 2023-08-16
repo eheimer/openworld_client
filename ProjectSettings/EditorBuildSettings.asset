@@ -8,16 +8,28 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Start.unity
     guid: ffa4e536d8a754024a9b2c162d57c824
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/WorldMap.unity
     guid: 01915f90eecaebcec9e8ff7ecfbe5d6a
+  - enabled: 0
+    path: Assets/Scenes/mobile/Battle.unity
+    guid: 422a62b0c7d0d02658bac1e9df054ff2
+  - enabled: 0
+    path: Assets/Scenes/mobile/Store.unity
+    guid: c45dda99d53fe306098c8a5e21ca62d5
+  - enabled: 0
+    path: Assets/Scenes/mobile/Character.eric.unity
+    guid: b06c074d552075a419254decf15e36f4
   - enabled: 1
     path: Assets/Scenes/Battle.unity
-    guid: 422a62b0c7d0d02658bac1e9df054ff2
+    guid: c4a2b0e388d1673438459906b97a1f3f
   - enabled: 1
-    path: Assets/Scenes/Store.unity
-    guid: c45dda99d53fe306098c8a5e21ca62d5
+    path: Assets/Scenes/Character.unity
+    guid: 4cfee3036e14d584985a6732506bdfed
   - enabled: 1
-    path: Assets/Scenes/Character.eric.unity
-    guid: b06c074d552075a419254decf15e36f4
+    path: Assets/Scenes/Inventory.unity
+    guid: e6b1b7a8ace583c4b92a673358ac821e
+  - enabled: 1
+    path: Assets/Scenes/Terrain Generator.unity
+    guid: b1f43f2401d40044ab37595089850709
   m_configObjects: {}

@@ -6,8 +6,9 @@ using UnityEngine.UI;
 
 namespace Openworld.Binding
 {
-  public enum StatusBarStyle{
-      Health,Mana,Stamina,Sleep,Hunger
+  public enum StatusBarStyle
+  {
+    Health, Mana, Stamina, Sleep, Hunger
   }
   public class BoundStatusBar : BoundComponent
   {
@@ -22,13 +23,16 @@ namespace Openworld.Binding
     [SerializeField] StatusBarStyle style;
     [SerializeField] bool showLabel;
 
-    public BoundStatusBar(){
+    public BoundStatusBar()
+    {
       BindingTargetComponentType = typeof(Image);
       BindingTargetProperty = "fillAmount";
     }
     protected override void Start()
     {
+      Debug.Log("initializing binding");
       base.Start();
+      Debug.Log("base initialization complete");
       var text = gameObject.GetComponentInChildren<TMP_Text>();
       text.text = style.ToString();
       text.gameObject.SetActive(showLabel);
@@ -39,5 +43,14 @@ namespace Openworld.Binding
       var sprite = Resources.Load<Sprite>("StatusBarSprites/" + statusMap[style]);
       (TargetComponent as Image).sprite = sprite;
     }
+
+    protected override void UpdateBindingTarget()
+    {
+      if (TargetProperty != null)
+      {
+        TargetProperty.SetValue(TargetComponent, SourcePropertyValue);
+      }
+    }
+
   }
 }

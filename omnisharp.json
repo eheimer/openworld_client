@@ -1,5 +1,8 @@
 {
+    
     "FormattingOptions": {
+        "TabSize": 4,
+        "UseTabs": false,
         "NewLinesForBracesInLambdaExpressionBody": false,
         "NewLinesForBracesInAnonymousMethods": false,
         "NewLinesForBracesInAnonymousTypes": false,

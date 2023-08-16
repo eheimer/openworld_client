@@ -9,8 +9,8 @@
 
 .button {
     width: 70%;
-    font-size: 40px;
-    background-image: url('/Assets/Assets/buttons/Orange.png');
+    font-size: 25px;
+    background-image: url('project://database/Assets/Assets/buttons/Orange.png?fileID=21300000&guid=ff463ce3a2d7aa644b0e743478837663&type=3#Orange');
     color: rgb(0, 0, 0);
     padding-top: 10px;
     padding-bottom: 10px;
@@ -18,29 +18,29 @@
     background-color: rgba(88, 88, 88, 0);
     margin-top: 10px;
     margin-bottom: 10px;
-    -unity-font: url('/Assets/Fonts/Happy Hell.ttf');
+    -unity-font: url('project://database/Assets/Fonts/Happy%20Hell.ttf?fileID=12800000&guid=3f9dc48ba3426be4f8893f3c85b64858&type=3#Happy Hell');
 }
 
 .text-field {
     flex-direction: column;
     width: 80%;
-    font-size: 30px;
+    font-size: 15px;
     margin-top: 10px;
     margin-bottom: 10px;
     color: rgb(221, 221, 221);
 }
 
 .toggle {
-    font-size: 25px;
+    font-size: 15px;
     color: rgb(221, 221, 221);
 }
 
 .button:hover {
-    background-image: url('/Assets/Assets/buttons/Orange_Highlighted.png');
+    background-image: url('project://database/Assets/Assets/buttons/Orange_Highlighted.png?fileID=21300000&guid=42fbe957875b4274c89273cb09e0f884&type=3#Orange_Highlighted');
 }
 
 .button:active {
-    background-image: url('/Assets/Assets/buttons/Orange_Selected.png');
+    background-image: url('project://database/Assets/Assets/buttons/Orange_Selected.png?fileID=21300000&guid=3dd872e8bef9a1445b1ea0b69601b7fc&type=3#Orange_Selected');
 }
 
 .text-field #unity-text-input {
@@ -48,7 +48,7 @@
 }
 
 .menu-button {
-    background-image: url('/Assets/Assets/ButtonsAndWords/Menu_Orange.png');
+    background-image: url('project://database/Assets/Assets/ButtonsAndWords/Menu_Orange.png?fileID=21300000&guid=99db22144e6e243d689a93a60af4882f&type=3#Menu_Orange');
     position: absolute;
     right: 0;
     width: 90px;
@@ -57,11 +57,11 @@
 }
 
 .menu-button:hover {
-    background-image: url('/Assets/Assets/ButtonsAndWords/Menu_Orange_Highlighted.png');
+    background-image: url('project://database/Assets/Assets/ButtonsAndWords/Menu_Orange_Highlighted.png?fileID=21300000&guid=7bed2a79687004909b67529af329bbac&type=3#Menu_Orange_Highlighted');
 }
 
 .menu-button:active {
-    background-image: url('/Assets/Assets/ButtonsAndWords/Menu_Orange_Selected.png');
+    background-image: url('project://database/Assets/Assets/ButtonsAndWords/Menu_Orange_Selected.png?fileID=21300000&guid=ab2e5022af852430fae3b9b9bd463132&type=3#Menu_Orange_Selected');
 }
 
 .menu-padding {

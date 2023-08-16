@@ -19,25 +19,26 @@ namespace Openworld.Menus
     {
       var me = GetVisualElement();
       me.Q<TextField>("name").value = "";
-      me.Q<TextField>("players").value = ""; 
     }
 
-    void CreateGame(){
+    void CreateGame()
+    {
       var me = GetVisualElement();
       GetGameManager().GetCommunicator().CreateGame(
           me.Q<TextField>("name").value,
-          Int32.Parse(me.Q<TextField>("players").value),
           CreateSuccess, RequestException);
     }
 
-    void CreateSuccess(ResponseHelper resp){
+    void CreateSuccess(ResponseHelper resp)
+    {
       var gameManager = GetGameManager();
       var locParts = resp.GetHeader("location").Split('/');
       gameManager.currentGame = locParts[locParts.Length - 1];
       SceneManager.LoadScene(SceneName.Character.name());
     }
 
-    void CancelClick(){
+    void CancelClick()
+    {
       getUI().ShowMenu();
     }
   }

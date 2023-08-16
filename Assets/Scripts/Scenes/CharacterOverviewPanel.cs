@@ -8,14 +8,17 @@ namespace Openworld.Scenes
 {
   public class CharacterOverviewPanel : ObservableMonoBehaviour, IBindingProvider
   {
-    void Start(){
+    void Start()
+    {
       GameManager gm = FindObjectOfType<GameManager>();
-      if(gm != null){
+      if (gm != null)
+      {
         gm.PropertyChanged += GameManagerPropertyChanged;
       }
     }
 
-    private void GameManagerPropertyChanged(object sender, PropertyChangedEventArgs args){
+    private void GameManagerPropertyChanged(object sender, PropertyChangedEventArgs args)
+    {
       Debug.Log("CharacterOverviewPanel gameManager changed: " + args.PropertyName);
       if (args.PropertyName == "character")
       {

@@ -15,7 +15,5 @@ namespace Openworld
     /// </summary>
     /// <param name="message">the event message </param>
     void UpdateStart(string message);
-
-
   }
 }

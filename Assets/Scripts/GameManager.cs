@@ -16,13 +16,13 @@ namespace Openworld
 
   public enum SceneName
   {
-    Start, WorldMap, Character, Battle, Store
+    Start, Character, Battle, Inventory, Terrain
   }
 
   static class SceneNameExtensions
   {
     private static string[] names = new string[] {
-      "Start", "WorldMap", "Character.eric", "Battle", "Store"
+      "Start", "Character", "Battle", "Inventory" , "Terrain Generator"
     };
     public static string name(this SceneName scene)
     {
@@ -170,7 +170,7 @@ namespace Openworld
 #if UNITY_EDITOR
       EditorUtility.DisplayDialog(title, message, "Ok");
 #else
-		    Debug.Log(message);
+      Debug.Log(message);
 #endif
     }
 

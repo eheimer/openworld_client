@@ -18,8 +18,8 @@ namespace Openworld.Menus
       HandleClick("character-button", CharacterClick);
       HandleClick("inventory-button", InventoryClick);
       HandleClick("battle-button", BattleClick);
-      HandleClick("map-button", WorldMapClick);
-      HandleClick("store-button", StoreClick);
+      // HandleClick("map-button", WorldMapClick);
+      // HandleClick("store-button", StoreClick);
       HandleClick("quit-button", QuitClick);
     }
 
@@ -30,8 +30,7 @@ namespace Openworld.Menus
 
     void InventoryClick()
     {
-      SceneManager.LoadScene(SceneName.Character.name());
-      //switch to the inventory panel
+      SceneManager.LoadScene(SceneName.Inventory.name());
     }
 
     void BattleClick()
@@ -39,15 +38,15 @@ namespace Openworld.Menus
       SceneManager.LoadScene(SceneName.Battle.name());
     }
 
-    void WorldMapClick()
-    {
-      SceneManager.LoadScene(SceneName.WorldMap.name());
-    }
+    // void WorldMapClick()
+    // {
+    //   SceneManager.LoadScene(SceneName.WorldMap.name());
+    // }
 
-    void StoreClick()
-    {
-      SceneManager.LoadScene(SceneName.Store.name());
-    }
+    // void StoreClick()
+    // {
+    //   SceneManager.LoadScene(SceneName.Store.name());
+    // }
 
     void QuitClick()
     {
