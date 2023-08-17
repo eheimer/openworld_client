@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Openworld.Models;
 using Proyecto26;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -29,12 +30,11 @@ namespace Openworld.Menus
           CreateSuccess, RequestException);
     }
 
-    void CreateSuccess(ResponseHelper resp)
+    void CreateSuccess(Game resp)
     {
       var gameManager = GetGameManager();
-      var locParts = resp.GetHeader("location").Split('/');
-      gameManager.currentGame = locParts[locParts.Length - 1];
-      SceneManager.LoadScene(SceneName.Character.name());
+      gameManager.currentGame = resp.id;
+      getUI().ShowMenu();
     }
 
     void CancelClick()

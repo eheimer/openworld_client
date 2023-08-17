@@ -34,11 +34,9 @@ namespace Openworld.Menus
         CreateSuccess, RequestException);
     }
 
-    void CreateSuccess(ResponseHelper resp)
+    void CreateSuccess(CharacterDetail resp)
     {
-      var locParts = resp.GetHeader("location").Split('/');
-      GetGameManager().GetPlayer().character = locParts[locParts.Length - 1];
-      //show the character scene
+      GetGameManager().character = resp;
       getUI().CloseMenu();
     }
 

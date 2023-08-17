@@ -8,25 +8,22 @@ namespace Openworld.Models
   public class Game : ObservableObject
   {
     private string _id;
-    public string id {
+    public string id
+    {
       get => _id;
       set => Set(ref _id, value);
     }
 
-    private int _maxPlayers;
-    public int maxPlayers {
-      get => _maxPlayers;
-      set => Set(ref _maxPlayers, value);
-    }
-
     private string _name;
-    public string name {
+    public string name
+    {
       get => _name;
       set => Set(ref _name, value);
     }
 
-    private string _owner;
-    public string owner {
+    private PublicPlayer _owner;
+    public PublicPlayer owner
+    {
       get => _owner;
       set => Set(ref _owner, value);
     }
