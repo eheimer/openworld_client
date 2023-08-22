@@ -26,7 +26,7 @@ namespace Openworld.Scenes
       }
     }
 
-    protected override async void GetData()
+    protected override void GetData()
     {
       var gameManager = GetGameManager();
       //add the spinner to the canvas

@@ -174,6 +174,24 @@ namespace Openworld
 #endif
     }
 
+    public void LogWarning(string title, string message)
+    {
+#if UNITY_EDITOR
+      EditorUtility.DisplayDialog(title, message, "Ok");
+#else
+      Debug.LogWarning(message);
+#endif
+    }
+
+    public void LogError(string title, string message)
+    {
+#if UNITY_EDITOR
+      LogMessage(title, message);
+#else
+      Debug.LogError(message);
+#endif
+    }
+
     public void LogMessage(string message)
     {
       LogMessage("", message);

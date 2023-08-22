@@ -9,8 +9,6 @@ using UnityEngine.UIElements;
 
 namespace Openworld.Scenes
 {
-
-
   public abstract class BaseScene : MonoBehaviour
   {
     private GameManager gameManager;
@@ -20,13 +18,27 @@ namespace Openworld.Scenes
     protected MenuButton menuButton;
     protected UIManagerBase menu;
 
+    private void Awake()
+    {
+
+    }
+
+    private void OnEnable()
+    {
+      // this check is here to ensure that the start scene is always loaded first to initialize the game manager
+      if (GetGameManager() == null)
+      {
+        SceneManager.LoadScene(SceneName.Start.name());
+      }
+    }
+
     protected virtual void Start()
     {
       menuButton = FindObjectOfType<MenuButton>();
       menu = FindObjectOfType<UIManagerBase>(true);
       gameManager = GetGameManager();
 
-      if (gameManager == null || gameManager.GetCommunicator() == null || !Validate())
+      if (!Validate())
       {
         ValidateFail();
       }
@@ -59,12 +71,20 @@ namespace Openworld.Scenes
       }
     }
 
-
     protected virtual bool Validate()
     {
-      if (SceneManager.GetActiveScene().name == "Start") return true;
-      // If we're on any scene other than Start, we should absolutely have an auth token and a current game.
-      return !string.IsNullOrEmpty(gameManager.GetAuthToken()) && !string.IsNullOrEmpty(gameManager.currentGame);
+      try
+      {
+        if (SceneManager.GetActiveScene().name == "Start") return true;
+        // If we're on any scene other than Start, we should absolutely have an auth token and a current game.
+        return !string.IsNullOrEmpty(gameManager.GetAuthToken()) && !string.IsNullOrEmpty(gameManager.currentGame);
+      }
+      catch (Exception e)
+      {
+        // if anything inside the try fails, validation fails
+        Warn("Validate", e.Message);
+        return false;
+      }
     }
 
     protected virtual void ValidateFail()
@@ -72,21 +92,65 @@ namespace Openworld.Scenes
       try
       {
         SceneManager.LoadScene(SceneName.Start.name());
+        Info("ValidateFail", "Validation failed");
       }
       catch (Exception e)
       {
-        Debug.Log("[BaseScene] ValidateFail: " + e.Message);
+        Error("ValidateFail", e.Message);
       }
     }
 
     public virtual void RequestException(RequestException err)
     {
-      Error(UnityEngine.JsonUtility.FromJson<FailResponse>(err.Response).error.message);
+      Error("RequestException", UnityEngine.JsonUtility.FromJson<FailResponse>(err.Response).error.message);
     }
 
-    protected virtual void Error(string message)
+    protected void Info(string method, string message) { Log(LogType.Info, method, message); }
+    protected void Warn(string method, string message) { Log(LogType.Warning, method, message); }
+    protected void Error(string method, string message) { Log(LogType.Error, method, message); }
+
+    private void Log(LogType logType, string method, string message)
     {
-      GetGameManager().LogMessage("Scene load error:", message);
+      switch (logType)
+      {
+        case LogType.Info:
+          if (GetGameManager() != null)
+          {
+            GetGameManager().LogMessage("[" + this.GetType().Name + "] [" + method + "]:", message);
+          }
+          else
+          {
+            Debug.Log("[" + this.GetType().Name + "] [" + method + "]: " + message);
+          }
+          break;
+        case LogType.Warning:
+          if (GetGameManager() != null)
+          {
+            GetGameManager().LogWarning("[" + this.GetType().Name + "] [" + method + "] warning: ", message);
+          }
+          else
+          {
+            Debug.LogWarning("[" + this.GetType().Name + "] [" + method + "] warning: " + message);
+          }
+          break;
+        case LogType.Error:
+          if (GetGameManager() != null)
+          {
+            GetGameManager().LogError("[" + this.GetType().Name + "] [" + method + "] error: ", message);
+          }
+          else
+          {
+            Debug.LogError("[" + this.GetType().Name + "] [" + method + "] error: " + message);
+          }
+          break;
+      }
+    }
+
+    enum LogType
+    {
+      Info,
+      Warning,
+      Error
     }
 
     protected virtual void GetData() { }
