@@ -1,10 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Openworld.Models;
-using Proyecto26;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace Openworld.Menus
@@ -27,19 +21,18 @@ namespace Openworld.Menus
       var me = GetVisualElement();
       GetGameManager().GetCommunicator().CreateGame(
           me.Q<TextField>("name").value,
-          CreateSuccess, RequestException);
+          CreateSuccess, (ex) => RaiseFail(ex));
     }
 
     void CreateSuccess(Game resp)
     {
-      var gameManager = GetGameManager();
-      gameManager.currentGame = resp.id;
-      getUI().ShowMenu();
+      GetGameManager().currentGame = resp.id;
+      RaiseSuccess();
     }
 
     void CancelClick()
     {
-      getUI().ShowMenu();
+      RaiseFail(null);
     }
   }
 }

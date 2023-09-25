@@ -10,6 +10,8 @@ namespace Openworld.Menus
 {
   public abstract class FormBase : MenuBase
   {
+    public event Action FormSuccess;
+    public event Action<Exception> FormFail;
 
     protected abstract void ClearForm();
 
@@ -22,5 +24,16 @@ namespace Openworld.Menus
     {
       GetVisualElement().Q<Button>(selector).clickable.clicked += method;
     }
+
+    protected void RaiseSuccess()
+    {
+      FormSuccess?.Invoke();
+    }
+
+    protected void RaiseFail(Exception ex)
+    {
+      FormFail?.Invoke(ex);
+    }
+
   }
 }

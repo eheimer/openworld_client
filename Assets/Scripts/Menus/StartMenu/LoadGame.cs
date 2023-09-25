@@ -7,10 +7,12 @@ using UnityEngine.UIElements;
 
 namespace Openworld.Menus
 {
-  public class LoadGame : MenuBase
+  public class LoadGame : FormBase
   {
     [SerializeField]
     protected VisualTreeAsset gameItem;
+
+    protected override void ClearForm() { }
 
     protected override void RegisterButtonHandlers()
     {
@@ -19,11 +21,16 @@ namespace Openworld.Menus
 
     protected override void GetData()
     {
-      GetGameManager().GetCommunicator().GetGames(GetDataSuccess, RequestException);
+      GetGameManager().GetCommunicator().GetGames(GetDataSuccess, RaiseFail);
     }
 
     void GetDataSuccess(GamesResponse[] games)
     {
+      if (games.Length == 0)
+      {
+        RaiseFail(new NoGamesException());
+        return;
+      }
       var container = GetVisualElement().Q<VisualElement>("unity-content-container");
       container.Clear();
       foreach (var item in games)
@@ -44,12 +51,17 @@ namespace Openworld.Menus
       string[] data = ((Button)e.currentTarget).viewDataKey.Split('|');
       gameManager.currentGame = data[0];
       gameManager.GetPlayer().character = data[1];
-      SceneManager.LoadScene(SceneName.Character.name());
+      RaiseSuccess();
+    }
+
+    void NewGameClick()
+    {
+      RaiseFail(new NewGameException());
     }
 
     void CancelClick()
     {
-      getUI().ShowMenu();
+      RaiseFail(null);
     }
 
   }

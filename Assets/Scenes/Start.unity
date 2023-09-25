@@ -699,7 +699,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenu: {fileID: 674950121}
-  loginForm: {fileID: 1470960061}
+  loginForm: {fileID: 1470960060}
+  registerForm: {fileID: 1143776360}
+  loadGameForm: {fileID: 1583364908}
+  newGameForm: {fileID: 123385627}
 --- !u!4 &1456642531
 Transform:
   m_ObjectHideFlags: 0
@@ -765,7 +768,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ee1a6868f6b9c41e8a7538549712f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  registerForm: {fileID: 1143776361}
 --- !u!114 &1470960061
 MonoBehaviour:
   m_ObjectHideFlags: 0
