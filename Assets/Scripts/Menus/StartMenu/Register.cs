@@ -11,7 +11,8 @@ namespace Openworld.Menus
     private string email;
     private string pass;
 
-    protected override void RegisterButtonHandlers(){
+    protected override void RegisterButtonHandlers()
+    {
       HandleClick("register-submit", RegisterSubmit);
       HandleClick("register-cancel", RegisterCancel);
     }
@@ -25,26 +26,27 @@ namespace Openworld.Menus
       me.Q<TextField>("name").value = "";
     }
 
-    void RegisterSubmit(){
+    void RegisterSubmit()
+    {
       // need to save these, because we need them later, and the FormBase
       // wipes them out after this method is called
       var me = GetVisualElement();
       email = me.Q<TextField>("email").value;
       pass = me.Q<TextField>("password").value;
-      GetGameManager().GetCommunicator().Register( email, pass,
-        me.Q<TextField>("name").value, RegisterSuccess, RequestException);
+      GetGameManager().GetCommunicator().Register(email, pass,
+        me.Q<TextField>("name").value, RegisterSuccess, (ex) => RaiseFail(ex));
     }
 
-    void RegisterCancel(){
-      getUI().ShowMenu();
+    void RegisterCancel()
+    {
+      Debug.Log("Register Cancel");
+      RaiseFail(new FormCancelException());
     }
 
-    void RegisterSuccess(ResponseHelper resp){
-      GetGameManager().Login(email, pass, LoginSuccess, RequestException);
-    }
-
-    void LoginSuccess(){
-      getUI().ShowMenu();
+    void RegisterSuccess(ResponseHelper resp)
+    {
+      Debug.Log("Register Success: " + resp);
+      RaiseSuccess();
     }
 
   }

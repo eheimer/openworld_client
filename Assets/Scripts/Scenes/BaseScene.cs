@@ -18,11 +18,6 @@ namespace Openworld.Scenes
     protected MenuButton menuButton;
     protected UIManagerBase menu;
 
-    private void Awake()
-    {
-
-    }
-
     private void OnEnable()
     {
       // this check is here to ensure that the start scene is always loaded first to initialize the game manager

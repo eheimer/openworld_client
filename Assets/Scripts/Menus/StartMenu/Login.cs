@@ -1,6 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Openworld.Models;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,23 +7,23 @@ namespace Openworld.Menus
 {
   public class Login : FormBase
   {
-    [SerializeField]
-    UIDocument registerForm;
-    [SerializeField]
 
-    protected override void RegisterButtonHandlers(){
+    protected override void RegisterButtonHandlers()
+    {
       HandleClick("login-submit", LoginSubmit);
       HandleClick("login-register", LoginRegister);
-      HandleClick("login-cancel", LoginCancel);
     }
 
-    protected override void ClearForm(){
+    protected override void ClearForm()
+    {
       try
       {
         var me = GetVisualElement();
         me.Q<TextField>("username").value = "";
         me.Q<TextField>("password").value = "";
-      } catch(Exception ex){
+      }
+      catch (Exception ex)
+      {
         Debug.Log("[Login] ClearForm: " + ex.Message);
       }
     }
@@ -32,21 +31,31 @@ namespace Openworld.Menus
     void LoginSubmit()
     {
       var me = GetVisualElement();
-      GetGameManager().Login(
+      PerformLogin(
         me.Q<TextField>("username").value,
-        me.Q<TextField>("password").value, LoginSuccess, RequestException);
+        me.Q<TextField>("password").value);
     }
 
-    void LoginRegister(){
-      registerForm.GetComponent<MenuBase>().Show();
+    public void PerformLogin(string username, string password)
+    {
+      GetGameManager().GetCommunicator().Login(username.Trim(), password, (resp) => LoginSuccess(resp), RequestException);
     }
 
-    void LoginCancel(){
-      getUI().CloseMenu();
+    void LoginRegister()
+    {
+      RaiseFail(new LoginRegisterException());
     }
 
-    void LoginSuccess(){
-      getUI().ShowMenu();
+    void LoginSuccess(LoginResponse resp)
+    {
+      Debug.Log("Login Success: " + resp.player + ", " + resp.token);
+      GetGameManager().SetToken(resp.token);
+      GetGameManager().GetCommunicator().GetPlayerDetail(resp.player, (resp) =>
+      {
+        Debug.Log("GetPlayerDetail Success: " + resp.username + ", " + resp.id);
+        GetGameManager().SetPlayer(resp);
+        RaiseSuccess();
+      }, (ex) => RaiseFail(ex));
     }
   }
 }

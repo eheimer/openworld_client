@@ -109,26 +109,6 @@ namespace Openworld
 
       EventSystem.SetUITookitEventSystemOverride(es, false, false);
       communicator.SetIsDevUrl(this.localServer);
-      if (this.localServer)
-      {
-        Login("eric", "password", LoginSuccess, (RequestException ex) =>
-        {
-          // if login fails, we try to register a new user
-          if (ex.StatusCode == 404)
-          {
-            communicator.Register("eric@test.com", "password", "eric", (req) =>
-            {
-              // if registration succeeds, try to log in again
-              Login("eric", "password", LoginSuccess, (RequestException ex) => { });
-            }, (RequestException ex) => { });
-          }
-        });
-      }
-    }
-
-    void LoginSuccess()
-    {
-      FindObjectOfType<UIManagerBase>(true).ShowMenu();
     }
 
     public void Reset()
@@ -195,18 +175,6 @@ namespace Openworld
     public void LogMessage(string message)
     {
       LogMessage("", message);
-    }
-
-    // this is here, because we have to do it in two different places
-    public void Login(string username, string password, Action FinalSuccess, Action<RequestException> Error)
-    {
-      communicator.Login(username.Trim(), password, (resp) => { LoginSuccess(resp, FinalSuccess, Error); }, Error);
-    }
-
-    void LoginSuccess(LoginResponse resp, Action FinalSuccess, Action<RequestException> Error)
-    {
-      SetToken(resp.token);
-      communicator.GetPlayerDetail(resp.player, (resp) => { PlayerDetailSuccess(resp, FinalSuccess, Error); }, Error);
     }
 
     void PlayerDetailSuccess(PlayerDetailResponse resp, Action FinalSuccess, Action<RequestException> Error)
