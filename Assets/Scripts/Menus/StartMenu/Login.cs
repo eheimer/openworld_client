@@ -31,14 +31,11 @@ namespace Openworld.Menus
     void LoginSubmit()
     {
       var me = GetVisualElement();
-      PerformLogin(
-        me.Q<TextField>("username").value,
-        me.Q<TextField>("password").value);
-    }
-
-    public void PerformLogin(string username, string password)
-    {
-      GetGameManager().GetCommunicator().Login(username.Trim(), password, (resp) => LoginSuccess(resp), RequestException);
+      GetGameManager().GetCommunicator().Login(
+        me.Q<TextField>("username").value.Trim(),
+        me.Q<TextField>("password").value,
+        (resp) => LoginSuccess(resp),
+        RequestException);
     }
 
     void LoginRegister()

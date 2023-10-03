@@ -38,10 +38,8 @@ namespace Openworld.Menus
 
     public void Login()
     {
-      Debug.Log("Login");
       // show the login panel
       loginForm.Show();
-      Debug.Log("Subscribing to login events");
       loginForm.FormSuccess += RaiseLoginSuccess;
       loginForm.FormFail += RaiseLoginFail;
     }
@@ -50,7 +48,6 @@ namespace Openworld.Menus
     {
       // show the register panel
       registerForm.Show();
-      Debug.Log("Subscribing to register events");
       registerForm.FormSuccess += RaiseRegisterSuccess;
       registerForm.FormFail += RaiseRegisterFail;
     }
@@ -59,7 +56,6 @@ namespace Openworld.Menus
     {
       // show the load game panel
       loadGameForm.Show();
-      Debug.Log("Subscribing to load game events");
       loadGameForm.FormSuccess += RaiseLoadGameSuccess;
       loadGameForm.FormFail += RaiseLoadGameFail;
     }
@@ -68,7 +64,6 @@ namespace Openworld.Menus
     {
       // show the new game panel
       newGameForm.Show();
-      Debug.Log("Subscribing to new game events");
       newGameForm.FormSuccess += RaiseNewGameSuccess;
       newGameForm.FormFail += RaiseNewGameFail;
     }
@@ -137,20 +132,7 @@ namespace Openworld.Menus
       RaiseEvent(NewGameFail, ex);
     }
 
-    private void RaiseEvent(Action action)
-    {
-      Debug.Log("[StartMenuManager] RaiseEvent: " + action?.Method.Name ?? "null");
-      UnsubscribeAllFormEvents();
-      action?.Invoke();
-    }
-    private void RaiseEvent(Action<Exception> action, Exception ex)
-    {
-      Debug.Log("[StartMenuManager] RaiseEvent: " + action?.Method.Name ?? "null, " + ex.Message ?? "null");
-      UnsubscribeAllFormEvents();
-      action?.Invoke(ex);
-    }
-
-    private void UnsubscribeAllFormEvents()
+    protected override void UnsubscribeAllFormEvents()
     {
       Debug.Log("[StartMenuManager] UnsubscribeAllFormEvents");
       // catch any errors with unsubscribing events, in the event that the form is not subscribed to the event

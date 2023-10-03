@@ -18,14 +18,12 @@ namespace Openworld.Menus
       HandleClick("character-button", CharacterClick);
       HandleClick("inventory-button", InventoryClick);
       HandleClick("battle-button", BattleClick);
-      // HandleClick("map-button", WorldMapClick);
-      // HandleClick("store-button", StoreClick);
       HandleClick("quit-button", QuitClick);
     }
 
     void CharacterClick()
     {
-      SceneManager.LoadScene(SceneName.Character.name());
+      getUI().HideAllDocuments();
     }
 
     void InventoryClick()
@@ -37,16 +35,6 @@ namespace Openworld.Menus
     {
       SceneManager.LoadScene(SceneName.Battle.name());
     }
-
-    // void WorldMapClick()
-    // {
-    //   SceneManager.LoadScene(SceneName.WorldMap.name());
-    // }
-
-    // void StoreClick()
-    // {
-    //   SceneManager.LoadScene(SceneName.Store.name());
-    // }
 
     void QuitClick()
     {

@@ -31,12 +31,12 @@ namespace Openworld.Scenes
     protected override void Start()
     {
       base.Start();
-      if (menu != null)
-      {
-        // these event handlers show and hide the panelHolder when the menu is closed and opened
-        menu.OnMenuOpen += HandleMenuOpen;
-        menu.OnMenuClose += HandleMenuClose;
-      }
+      // if (menu != null)
+      // {
+      //   // these event handlers show and hide the panelHolder when the menu is closed and opened
+      //   menu.OnMenuOpen += HandleMenuOpen;
+      //   menu.OnMenuClose += HandleMenuClose;
+      // }
 
       panelHolder = orientation == PanelOrientation.Horizontal ? GameObject.Find("PanelHolder.Horizontal") : GameObject.Find("PanelHolder.Vertical");
       canvas = FindObjectOfType<Canvas>().GetComponent<RectTransform>().rect;
@@ -159,11 +159,11 @@ namespace Openworld.Scenes
 
     private void OnDestroy()
     {
-      if (menu != null)
-      {
-        menu.OnMenuOpen -= HandleMenuOpen;
-        menu.OnMenuClose -= HandleMenuClose;
-      }
+      // if (menu != null)
+      // {
+      //   menu.OnMenuOpen -= HandleMenuOpen;
+      //   menu.OnMenuClose -= HandleMenuClose;
+      // }
     }
   }
 }

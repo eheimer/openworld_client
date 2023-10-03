@@ -49,6 +49,7 @@ namespace Openworld.Scenes
     {
       base.Start();
       this.ui = menu as StartMenuManager;
+      this.ui.CloseMenu();
       stateMachine.InitializeStateMachine(SceneStates.INITIALIZE);
     }
 

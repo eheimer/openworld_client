@@ -10,13 +10,9 @@ using UnityEngine.UIElements;
 namespace Openworld.Menus
 {
 
-  public class CreateCharacter : MenuBase
+  public class CreateCharacter : FormBase
   {
     List<RacesResponse> races;
-    protected override void Start()
-    {
-      base.Start();
-    }
 
     protected override void RegisterButtonHandlers()
     {
@@ -24,25 +20,38 @@ namespace Openworld.Menus
       HandleClick("createcharacter-cancel", CancelClick);
     }
 
+    protected override void ClearForm()
+    {
+      try
+      {
+        var me = GetVisualElement();
+        me.Q<TextField>("name").value = "";
+      }
+      catch (Exception ex)
+      {
+        Debug.Log("[CreateCharacter] ClearForm: " + ex.Message);
+      }
+    }
+
     void Submit()
     {
-      var gameManager = GetGameManager();
-      var communicator = gameManager.GetCommunicator();
       var me = GetVisualElement();
-      communicator.CreateCharacter(gameManager.currentGame,
+      GetGameManager().GetCommunicator().CreateCharacter(
+        GetGameManager().currentGame,
         me.Q<TextField>("name").text,
-        CreateSuccess, RequestException);
+        (resp) => CreateSuccess(resp),
+        RequestException);
     }
 
     void CreateSuccess(CharacterDetail resp)
     {
       GetGameManager().character = resp;
-      getUI().CloseMenu();
+      RaiseSuccess();
     }
 
     void CancelClick()
     {
-      getUI().CloseMenu();
+      RaiseFail(new FormCancelException());
     }
 
     protected override void GetData()

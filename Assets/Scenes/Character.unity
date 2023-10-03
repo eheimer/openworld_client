@@ -23090,6 +23090,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 639459354135603299, guid: 3b3e169fbe23ce69da0270b3f6305d3a, type: 3}
+      propertyPath: sourceAsset
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: 1817e3872ff92fad2be76a310d925dae, type: 3}
     - target: {fileID: 3286882587485071088, guid: 3b3e169fbe23ce69da0270b3f6305d3a, type: 3}
       propertyPath: m_Name
       value: UI

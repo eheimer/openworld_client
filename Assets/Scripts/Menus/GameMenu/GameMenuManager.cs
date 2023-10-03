@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,17 +11,40 @@ namespace Openworld.Menus
   {
 
     [SerializeField]
-    MenuBase createCharacterForm;
+    FormBase createCharacterForm;
 
-    protected override bool MenuValidate()
-    {
-      var gameManager = FindObjectOfType<GameManager>();
-      return gameManager != null && gameManager.character != null;
-    }
+    public event Action CreateCharacterSuccess;
+    public event Action<Exception> CreateCharacterFail;
+    public event Action CreateCharacterCancel;
 
-    protected override void InvalidMenu()
+    public void NewCharacter()
     {
       createCharacterForm.Show();
+      createCharacterForm.FormSuccess += RaiseCreateCharacterSuccess;
+      createCharacterForm.FormFail += RaiseCreateCharacterFail;
+    }
+
+    private void RaiseCreateCharacterSuccess()
+    {
+      Debug.Log("[GameMenuManager] RaiseCreateCharacterSuccess");
+      createCharacterForm.FormSuccess -= RaiseCreateCharacterSuccess;
+      createCharacterForm.FormFail -= RaiseCreateCharacterFail;
+      RaiseEvent(CreateCharacterSuccess);
+    }
+
+    private void RaiseCreateCharacterFail(Exception ex)
+    {
+      Debug.Log("[GameMenuManager] RaiseCreateCharacterFail");
+      createCharacterForm.FormSuccess -= RaiseCreateCharacterSuccess;
+      createCharacterForm.FormFail -= RaiseCreateCharacterFail;
+      if (ex is FormCancelException)
+      {
+        RaiseEvent(CreateCharacterCancel);
+      }
+      else
+      {
+        RaiseEvent(CreateCharacterFail, ex);
+      }
     }
   }
 }

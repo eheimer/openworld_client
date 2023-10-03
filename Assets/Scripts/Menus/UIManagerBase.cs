@@ -11,8 +11,6 @@ namespace Openworld.Menus
 
   public abstract class UIManagerBase : MonoBehaviour
   {
-    public event EventHandler OnMenuOpen;
-    public event EventHandler OnMenuClose;
 
     [SerializeField]
     UIDocument mainMenu;
@@ -20,7 +18,7 @@ namespace Openworld.Menus
     /// <summary>
     /// <c>HideAllDocuments</c> hides all UIDocuments.
     /// </summary>
-    public void HideAllDocuments(bool raiseEvent = true)
+    public void HideAllDocuments()
     {
       foreach (var ui in FindObjectsOfType<UIDocument>())
       {
@@ -30,34 +28,18 @@ namespace Openworld.Menus
         }
         catch (Exception e)
         {
+          Debug.Log("[" + this.GetType().Name + "] HideAllDocuments: " + e.Message);
         }
-      }
-      if (raiseEvent)
-      {
-        OnRaiseDocumentCloseEvent();
       }
     }
 
     public void ShowDocument(UIDocument document)
     {
       this.gameObject.SetActive(true);
-      HideAllDocuments(false);
+      HideAllDocuments();
       document.rootVisualElement.visible = true;
-      OnRaiseDocumentOpenEvent();
     }
 
-    /// <summary>
-    /// <c>MenuValidate</c> validates game state for the menu.
-    /// </summary>
-    protected virtual bool MenuValidate()
-    {
-      return true;
-    }
-
-    /// <summary>
-    /// <c>InvalidMenu</c> handles menu display in case of validation fail.
-    /// </summary>
-    protected virtual void InvalidMenu() { }
 
     /// <summary>
     /// <c>ShowMenu</c> calls <c>MenuValidate</c> to determine if the menu should be shown.
@@ -66,14 +48,7 @@ namespace Openworld.Menus
     /// </summary>
     public void ShowMenu()
     {
-      if (MenuValidate())
-      {
-        ShowDocument(mainMenu);
-      }
-      else
-      {
-        InvalidMenu();
-      }
+      ShowDocument(mainMenu);
     }
 
     /// <summary>
@@ -85,22 +60,26 @@ namespace Openworld.Menus
       FindObjectOfType<BaseScene>().ShowMenuButton();
     }
 
-    protected virtual void OnRaiseDocumentOpenEvent()
+    protected void RaiseEvent(Action action)
     {
-      EventHandler raiseEvent = OnMenuOpen;
-      if (raiseEvent != null)
-      {
-        raiseEvent(this, EventArgs.Empty);
-      }
+      Debug.Log("[" + this.GetType().Name + "] RaiseEvent: " + action?.Method.Name ?? "null");
+      UnsubscribeAllFormEvents();
+      action?.Invoke();
     }
 
-    protected virtual void OnRaiseDocumentCloseEvent()
+    protected void RaiseEvent(Action<Exception> action, Exception ex)
     {
-      EventHandler raiseEvent = OnMenuClose;
-      if (raiseEvent != null)
-      {
-        raiseEvent(this, EventArgs.Empty);
-      }
+      // get the name of the deriving class
+      Debug.Log("[" + this.GetType().Name + "] RaiseEvent: " + action?.Method.Name ?? "null, " + ex.Message ?? "null");
+      UnsubscribeAllFormEvents();
+      action?.Invoke(ex);
     }
+
+    /**
+     * <summary>
+     * <c>UnsubscribeAllFormEvents</c> implement this method to clean up event subscriptions
+     * </summary>
+     */
+    protected virtual void UnsubscribeAllFormEvents() { }
   }
 }

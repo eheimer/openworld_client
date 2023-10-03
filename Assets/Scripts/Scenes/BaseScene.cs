@@ -37,11 +37,11 @@ namespace Openworld.Scenes
       {
         ValidateFail();
       }
-      else
-      {
-        menu.CloseMenu();
-        GetData();
-      }
+      // else
+      // {
+      //   menu.CloseMenu();
+      //   GetData();
+      // }
     }
 
     protected GameManager GetGameManager()
@@ -148,6 +148,6 @@ namespace Openworld.Scenes
       Error
     }
 
-    protected virtual void GetData() { }
+    // protected virtual void GetData() { }
   }
 }
