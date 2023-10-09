@@ -6,68 +6,42 @@ using UnityEngine.SceneManagement;
 
 namespace Openworld.Scenes
 {
-  /*
-  ** Now that we have implemented a state machine, our scene manager is essentially
-  ** just a state change listener
-  */
-  public class StartScene : BaseScene
+
+  public enum StartSceneStates { INITIALIZE, LOGIN, NEW_USER, LOAD_GAME, NEW_GAME, EXIT }
+
+  public class StartScene : StatefulScene<StartSceneStates, StartUI>
   {
-    public enum SceneStates { INITIALIZE, LOGIN, NEW_USER, LOAD_GAME, NEW_GAME, EXIT }
-    public Dictionary<SceneStates, List<SceneStates>> validTransitions = new Dictionary<SceneStates, List<SceneStates>>();
-
-    protected StateMachine<SceneStates> stateMachine;
-
-    private StartMenuManager ui;
-
-    private void Awake()
+    protected override Dictionary<StartSceneStates, List<StartSceneStates>> GetStateTransitions()
     {
-      // initialize the state machine
-      validTransitions.Clear();
-      validTransitions.Add(SceneStates.INITIALIZE, new List<SceneStates> { SceneStates.LOGIN, SceneStates.LOAD_GAME });
-      validTransitions.Add(SceneStates.LOGIN, new List<SceneStates> { SceneStates.NEW_USER, SceneStates.LOAD_GAME });
-      validTransitions.Add(SceneStates.NEW_USER, new List<SceneStates> { SceneStates.LOAD_GAME, SceneStates.LOGIN });
-      validTransitions.Add(SceneStates.LOAD_GAME, new List<SceneStates> { SceneStates.NEW_GAME, SceneStates.EXIT, SceneStates.LOGIN });
-      validTransitions.Add(SceneStates.NEW_GAME, new List<SceneStates> { SceneStates.LOAD_GAME, SceneStates.EXIT, SceneStates.LOGIN });
-      this.stateMachine = new StateMachine<SceneStates>(validTransitions);
+      return new Dictionary<StartSceneStates, List<StartSceneStates>> {
+        { StartSceneStates.INITIALIZE, new List<StartSceneStates> { StartSceneStates.LOGIN, StartSceneStates.LOAD_GAME } },
+        { StartSceneStates.LOGIN, new List<StartSceneStates> { StartSceneStates.NEW_USER, StartSceneStates.LOAD_GAME } },
+        { StartSceneStates.NEW_USER, new List<StartSceneStates> { StartSceneStates.LOAD_GAME, StartSceneStates.LOGIN } },
+        { StartSceneStates.LOAD_GAME, new List<StartSceneStates> { StartSceneStates.NEW_GAME, StartSceneStates.EXIT, StartSceneStates.LOGIN } },
+        { StartSceneStates.NEW_GAME, new List<StartSceneStates> { StartSceneStates.LOAD_GAME, StartSceneStates.EXIT, StartSceneStates.LOGIN } }
+      };
     }
 
-    private void OnEnable()
+    protected override StartSceneStates GetInitialState()
     {
-      // Subscribe to state machine events
-      stateMachine.OnEnterState += HandleEnterState;
-      stateMachine.OnExitState += HandleExitState;
+      return StartSceneStates.INITIALIZE;
     }
 
-    private void OnDisable()
-    {
-      // Unsubscribe from state machine events to prevent memory leaks
-      stateMachine.OnEnterState -= HandleEnterState;
-      stateMachine.OnExitState -= HandleExitState;
-    }
-
-    protected override void Start()
-    {
-      base.Start();
-      this.ui = menu as StartMenuManager;
-      this.ui.CloseMenu();
-      stateMachine.InitializeStateMachine(SceneStates.INITIALIZE);
-    }
-
-    private void HandleEnterState(SceneStates previousState, SceneStates newState)
+    protected override void HandleEnterStateLocal(StartSceneStates previousState, StartSceneStates newState)
     {
       // log the event
-      Debug.Log("Entering state " + newState);
+      Debug.Log("[Start Scene] Entering state " + newState);
       switch (newState)
       {
-        case SceneStates.INITIALIZE:
+        case StartSceneStates.INITIALIZE:
           // check if we have "remember me" enabled and have a player id and token stored
           // if so, try to load the player data
           //   if successful, transition to LOAD_GAME
           //   if unsuccessful, transition to LOGIN
           // if not, transition to LOGIN
-          stateMachine.ChangeState(SceneStates.LOGIN);
+          stateMachine.ChangeState(StartSceneStates.LOGIN);
           break;
-        case SceneStates.LOGIN:
+        case StartSceneStates.LOGIN:
           // show the login panel
           ui.Login();
           // subscribe to the login_success
@@ -75,14 +49,14 @@ namespace Openworld.Scenes
           ui.LoginFail += HandleLoginFail;
           ui.LoginRegister += HandleLoginRegister;
           break;
-        case SceneStates.NEW_USER:
+        case StartSceneStates.NEW_USER:
           // show the register panel
           ui.Register();
           // subscribe to the register_success and register_fail events
           ui.RegisterSuccess += HandleRegisterSuccess;
           ui.RegisterFail += HandleRegisterFail;
           break;
-        case SceneStates.LOAD_GAME:
+        case StartSceneStates.LOAD_GAME:
           // show the load game panel
           ui.LoadGame();
           //   subscribe to the load_game_success and load_game_fail events
@@ -90,53 +64,53 @@ namespace Openworld.Scenes
           ui.LoadGameFail += HandleLoadGameFail;
           ui.LoadGameNewGame += HandleLoadGameNewGame;
           break;
-        case SceneStates.NEW_GAME:
+        case StartSceneStates.NEW_GAME:
           // show the new game panel
           ui.NewGame();
           //   subscribe to the new_game_success and new_game_fail events
           ui.NewGameSuccess += HandleNewGameSuccess;
           ui.NewGameFail += HandleNewGameFail;
           break;
-        case SceneStates.EXIT:
+        case StartSceneStates.EXIT:
           // load the character scene
           SceneManager.LoadScene(SceneName.Character.name());
           break;
       }
     }
 
-    private void HandleExitState(SceneStates previousState, SceneStates newState)
+    protected override void HandleExitStateLocal(StartSceneStates previousState, StartSceneStates newState)
     {
       Debug.Log("Exiting state " + previousState);
       switch (previousState)
       {
-        case SceneStates.INITIALIZE:
+        case StartSceneStates.INITIALIZE:
           break;
-        case SceneStates.LOGIN:
+        case StartSceneStates.LOGIN:
           ui.LoginSuccess -= HandleLoginSuccess;
           ui.LoginFail -= HandleLoginFail;
           ui.LoginRegister -= HandleLoginRegister;
           break;
-        case SceneStates.NEW_USER:
+        case StartSceneStates.NEW_USER:
           ui.RegisterSuccess -= HandleRegisterSuccess;
           ui.RegisterFail -= HandleRegisterFail;
           break;
-        case SceneStates.LOAD_GAME:
+        case StartSceneStates.LOAD_GAME:
           ui.LoadGameSuccess -= HandleLoadGameSuccess;
           ui.LoadGameFail -= HandleLoadGameFail;
           ui.LoadGameNewGame -= HandleLoadGameNewGame;
           break;
-        case SceneStates.NEW_GAME:
+        case StartSceneStates.NEW_GAME:
           ui.NewGameSuccess -= HandleNewGameSuccess;
           ui.NewGameFail -= HandleNewGameFail;
           break;
-        case SceneStates.EXIT:
+        case StartSceneStates.EXIT:
           break;
       }
     }
 
     private void HandleLoginSuccess()
     {
-      stateMachine.ChangeState(SceneStates.LOAD_GAME);
+      stateMachine.ChangeState(StartSceneStates.LOAD_GAME);
     }
 
     private void HandleLoginFail(Exception ex)
@@ -146,12 +120,12 @@ namespace Openworld.Scenes
 
     private void HandleLoginRegister()
     {
-      stateMachine.ChangeState(SceneStates.NEW_USER);
+      stateMachine.ChangeState(StartSceneStates.NEW_USER);
     }
 
     private void HandleRegisterSuccess()
     {
-      stateMachine.ChangeState(SceneStates.LOGIN);
+      stateMachine.ChangeState(StartSceneStates.LOGIN);
     }
 
     private void HandleRegisterFail(Exception ex)
@@ -162,7 +136,7 @@ namespace Openworld.Scenes
     private void HandleLoadGameSuccess()
     {
       // TODO: transition to the character scene
-      stateMachine.ChangeState(SceneStates.EXIT);
+      stateMachine.ChangeState(StartSceneStates.EXIT);
       SceneManager.LoadScene(SceneName.Character.name());
     }
 
@@ -173,12 +147,12 @@ namespace Openworld.Scenes
 
     private void HandleLoadGameNewGame()
     {
-      stateMachine.ChangeState(SceneStates.NEW_GAME);
+      stateMachine.ChangeState(StartSceneStates.NEW_GAME);
     }
 
     private void HandleNewGameSuccess()
     {
-      stateMachine.ChangeState(SceneStates.LOAD_GAME);
+      stateMachine.ChangeState(StartSceneStates.LOAD_GAME);
     }
 
     private void HandleNewGameFail(Exception ex)

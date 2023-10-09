@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 namespace Openworld.Menus
 {
 
-  public class GameMenu : MenuBase
+  public class CharacterMenu : MenuBase
   {
 
     protected override void RegisterButtonHandlers()

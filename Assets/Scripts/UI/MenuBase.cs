@@ -10,7 +10,7 @@ namespace Openworld.Menus
 {
   public class MenuBase : MonoBehaviour
   {
-    private UIManagerBase ui;
+    private UIBase ui;
     private VisualElement me;
     private GameManager gameManager;
 
@@ -28,11 +28,11 @@ namespace Openworld.Menus
       return gameManager;
     }
 
-    protected UIManagerBase getUI()
+    protected UIBase getUI()
     {
       if (ui == null)
       {
-        ui = FindObjectOfType<UIManagerBase>(true);
+        ui = FindObjectOfType<UIBase>(true);
         ui.gameObject.SetActive(true);
       }
       return ui;

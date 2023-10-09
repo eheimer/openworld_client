@@ -9,14 +9,17 @@ using UnityEngine.UIElements;
 
 namespace Openworld.Scenes
 {
-  public abstract class BaseScene : MonoBehaviour
+  /**
+  ** BaseScene is a base class for scenes that have a UI (basically every scene)
+  */
+  public abstract class BaseScene<T> : MonoBehaviour where T : UIBase
   {
     private GameManager gameManager;
 
     [SerializeField] protected Selectable[] tabStops;
     [SerializeField] protected Selectable[] tabStop;
     protected MenuButton menuButton;
-    protected UIManagerBase menu;
+    protected T ui;
 
     private void OnEnable()
     {
@@ -30,8 +33,9 @@ namespace Openworld.Scenes
     protected virtual void Start()
     {
       menuButton = FindObjectOfType<MenuButton>();
-      menu = FindObjectOfType<UIManagerBase>(true);
+      ui = FindObjectOfType<T>(true);
       gameManager = GetGameManager();
+      ui.CloseMenu();
 
       if (!Validate())
       {
@@ -56,14 +60,6 @@ namespace Openworld.Scenes
     public UIDocument GetMenuButton()
     {
       return menuButton.GetComponent<UIDocument>();
-    }
-
-    public void ShowMenuButton()
-    {
-      if (menuButton != null)
-      {
-        menuButton.GetComponent<UIDocument>().rootVisualElement.visible = true;
-      }
     }
 
     protected virtual bool Validate()

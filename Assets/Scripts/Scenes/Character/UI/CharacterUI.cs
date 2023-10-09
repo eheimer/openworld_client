@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 namespace Openworld.Menus
 {
 
-  public class GameMenuManager : UIManagerBase
+  public class CharacterUI : UIBase
   {
 
     [SerializeField]

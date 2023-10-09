@@ -2,7 +2,7 @@ using Openworld.Menus;
 
 namespace Openworld.Scenes
 {
-  public class StoreScene : BaseScene<UIBase>
+  public class WorldMapScene : BaseScene<UIBase>
   {
 
 

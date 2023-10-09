@@ -9,66 +9,46 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Openworld.Scenes
-
 {
-  public class CharacterScene : BaseScene
+  public enum CharacterSceneStates { INITIALIZE, NEW_CHARACTER, LOAD_CHARACTER, INTERACTIVE, EXIT }
+
+  public class CharacterScene : StatefulScene<CharacterSceneStates, CharacterUI>
   {
 
-    public enum SceneStates { INITIALIZE, NEW_CHARACTER, LOAD_CHARACTER, WAITING, EXIT }
-    public Dictionary<SceneStates, List<SceneStates>> validTransitions = new Dictionary<SceneStates, List<SceneStates>>();
-    protected StateMachine<SceneStates> stateMachine;
-    private GameMenuManager ui;
     protected RacesResponse[] races;
 
-    private void Awake()
+    protected override Dictionary<CharacterSceneStates, List<CharacterSceneStates>> GetStateTransitions()
     {
-      validTransitions.Clear();
-      validTransitions.Add(SceneStates.INITIALIZE, new List<SceneStates> { SceneStates.NEW_CHARACTER, SceneStates.LOAD_CHARACTER });
-      validTransitions.Add(SceneStates.NEW_CHARACTER, new List<SceneStates> { SceneStates.LOAD_CHARACTER, SceneStates.EXIT });
-      validTransitions.Add(SceneStates.LOAD_CHARACTER, new List<SceneStates> { SceneStates.WAITING, SceneStates.EXIT });
-      validTransitions.Add(SceneStates.WAITING, new List<SceneStates> { SceneStates.EXIT });
-      this.stateMachine = new StateMachine<SceneStates>(validTransitions);
+      return new Dictionary<CharacterSceneStates, List<CharacterSceneStates>> {
+        { CharacterSceneStates.INITIALIZE, new List<CharacterSceneStates> { CharacterSceneStates.NEW_CHARACTER, CharacterSceneStates.LOAD_CHARACTER } },
+        { CharacterSceneStates.NEW_CHARACTER, new List<CharacterSceneStates> { CharacterSceneStates.LOAD_CHARACTER, CharacterSceneStates.EXIT } },
+        { CharacterSceneStates.LOAD_CHARACTER, new List<CharacterSceneStates> { CharacterSceneStates.INTERACTIVE, CharacterSceneStates.EXIT } },
+        { CharacterSceneStates.INTERACTIVE, new List<CharacterSceneStates> { CharacterSceneStates.EXIT } },
+      };
     }
 
-    private void OnEnable()
+    protected override CharacterSceneStates GetInitialState()
     {
-      stateMachine.OnEnterState += HandleEnterState;
-      stateMachine.OnExitState += HandleExitState;
+      return CharacterSceneStates.INITIALIZE;
     }
-
-    private void OnDisable()
+    protected override void HandleEnterStateLocal(CharacterSceneStates previousState, CharacterSceneStates newState)
     {
-      stateMachine.OnEnterState -= HandleEnterState;
-      stateMachine.OnExitState -= HandleExitState;
-    }
-
-    protected override void Start()
-    {
-      base.Start();
-      this.ui = menu as GameMenuManager;
-      this.ui.CloseMenu();
-      stateMachine.InitializeStateMachine(SceneStates.INITIALIZE);
-    }
-
-    private void HandleEnterState(SceneStates previousState, SceneStates newState)
-    {
-      Debug.Log("Entering state " + newState);
       switch (newState)
       {
-        case SceneStates.INITIALIZE:
+        case CharacterSceneStates.INITIALIZE:
           // check if we have a character id on the GameManager
           // if not, transition to NEW_CHARACTER
           // otherwise, transition to LOAD_CHARACTER
           if (GetGameManager().GetPlayer().character == null)
           {
-            stateMachine.ChangeState(SceneStates.NEW_CHARACTER);
+            stateMachine.ChangeState(CharacterSceneStates.NEW_CHARACTER);
           }
           else
           {
-            stateMachine.ChangeState(SceneStates.LOAD_CHARACTER);
+            stateMachine.ChangeState(CharacterSceneStates.LOAD_CHARACTER);
           }
           break;
-        case SceneStates.NEW_CHARACTER:
+        case CharacterSceneStates.NEW_CHARACTER:
           // hide the canvas
           var canvas = FindObjectOfType<Canvas>();
           canvas.enabled = false;
@@ -77,14 +57,14 @@ namespace Openworld.Scenes
           ui.CreateCharacterCancel += HandleCreateCharacterCancel;
           ui.CreateCharacterFail += HandleCreateCharacterFail;
           break;
-        case SceneStates.LOAD_CHARACTER:
+        case CharacterSceneStates.LOAD_CHARACTER:
           // load character data from the server
           GetData();
           break;
-        case SceneStates.WAITING:
+        case CharacterSceneStates.INTERACTIVE:
           // waiting for user input
           break;
-        case SceneStates.EXIT:
+        case CharacterSceneStates.EXIT:
           // exit the scene
           SceneManager.LoadScene(SceneName.Start.name());
           break;
@@ -93,23 +73,22 @@ namespace Openworld.Scenes
       }
     }
 
-    private void HandleExitState(SceneStates previousState, SceneStates newState)
+    protected override void HandleExitStateLocal(CharacterSceneStates previousState, CharacterSceneStates newState)
     {
-      Debug.Log("Exiting state " + previousState);
       switch (previousState)
       {
-        case SceneStates.INITIALIZE:
+        case CharacterSceneStates.INITIALIZE:
           break;
-        case SceneStates.NEW_CHARACTER:
+        case CharacterSceneStates.NEW_CHARACTER:
           ui.CreateCharacterSuccess -= HandleCreateCharacterSuccess;
           ui.CreateCharacterCancel -= HandleCreateCharacterCancel;
           ui.CreateCharacterFail -= HandleCreateCharacterFail;
           break;
-        case SceneStates.LOAD_CHARACTER:
+        case CharacterSceneStates.LOAD_CHARACTER:
           break;
-        case SceneStates.WAITING:
+        case CharacterSceneStates.INTERACTIVE:
           break;
-        case SceneStates.EXIT:
+        case CharacterSceneStates.EXIT:
           break;
         default:
           throw new ArgumentOutOfRangeException(nameof(previousState), previousState, null);
@@ -131,7 +110,7 @@ namespace Openworld.Scenes
         {
           Destroy(spinner);
           gameManager.character = resp;
-          stateMachine.ChangeState(SceneStates.WAITING);
+          stateMachine.ChangeState(CharacterSceneStates.INTERACTIVE);
         }, RequestException);
         Debug.Log("fetching character detail");
       }
@@ -140,19 +119,19 @@ namespace Openworld.Scenes
     private void HandleCreateCharacterSuccess()
     {
       Debug.Log("HandleCreateCharacterSuccess");
-      stateMachine.ChangeState(SceneStates.LOAD_CHARACTER);
+      stateMachine.ChangeState(CharacterSceneStates.LOAD_CHARACTER);
     }
 
     private void HandleCreateCharacterCancel()
     {
       Debug.Log("HandleCreateCharacterCancel");
-      stateMachine.ChangeState(SceneStates.EXIT);
+      stateMachine.ChangeState(CharacterSceneStates.EXIT);
     }
 
     private void HandleCreateCharacterFail(Exception e)
     {
       Debug.Log("HandleCreateCharacterFail");
-      stateMachine.ChangeState(SceneStates.EXIT);
+      stateMachine.ChangeState(CharacterSceneStates.EXIT);
     }
   }
 }

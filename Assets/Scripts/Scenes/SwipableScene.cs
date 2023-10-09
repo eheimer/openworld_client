@@ -14,7 +14,7 @@ namespace Openworld.Scenes
 
   public enum PanelOrientation { Horizontal, Vertical }
 
-  public abstract class SwipableScene : BaseScene
+  public abstract class SwipableScene : BaseScene<UIBase>
   {
 
     private Vector3 panelLocation;
@@ -76,9 +76,9 @@ namespace Openworld.Scenes
 
     public void OnDrag(PointerEventData data)
     {
-      if (menu != null)
+      if (ui != null)
       {
-        menu.HideAllDocuments();
+        ui.HideAllDocuments();
       }
       float difference;
       if (orientation == PanelOrientation.Horizontal)
@@ -138,9 +138,9 @@ namespace Openworld.Scenes
         panelHolder.transform.position = Vector3.Lerp(startpos, endpos, Mathf.SmoothStep(0f, 1f, t));
         yield return null;
       }
-      if (menu != null)
+      if (ui != null)
       {
-        menu.CloseMenu();
+        ui.CloseMenu();
       }
     }
 

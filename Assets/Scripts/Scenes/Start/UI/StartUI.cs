@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 namespace Openworld.Menus
 {
 
-  public class StartMenuManager : UIManagerBase
+  public class StartUI : UIBase
   {
 
     [SerializeField]

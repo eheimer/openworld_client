@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 namespace Openworld.Menus
 {
 
-  public abstract class UIManagerBase : MonoBehaviour
+  public abstract class UIBase : MonoBehaviour
   {
 
     [SerializeField]
@@ -57,7 +57,12 @@ namespace Openworld.Menus
     public void CloseMenu()
     {
       HideAllDocuments();
-      FindObjectOfType<BaseScene>().ShowMenuButton();
+      ShowMenuButton();
+    }
+
+    protected void ShowMenuButton()
+    {
+      FindObjectOfType<MenuButton>().GetComponent<UIDocument>().rootVisualElement.visible = true;
     }
 
     protected void RaiseEvent(Action action)
