@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -39,7 +38,7 @@ namespace Openworld.Scenes
           // check if we have a character id on the GameManager
           // if not, transition to NEW_CHARACTER
           // otherwise, transition to LOAD_CHARACTER
-          if (GetGameManager().GetPlayer().character == null)
+          if (GetGameManager().GetPlayer().character == null || GetGameManager().GetPlayer().character.Trim().Equals(""))
           {
             stateMachine.ChangeState(CharacterSceneStates.NEW_CHARACTER);
           }
@@ -49,13 +48,10 @@ namespace Openworld.Scenes
           }
           break;
         case CharacterSceneStates.NEW_CHARACTER:
-          // hide the canvas
-          var canvas = FindObjectOfType<Canvas>();
-          canvas.enabled = false;
-          ui.NewCharacter();
-          ui.CreateCharacterSuccess += HandleCreateCharacterSuccess;
-          ui.CreateCharacterCancel += HandleCreateCharacterCancel;
-          ui.CreateCharacterFail += HandleCreateCharacterFail;
+          var characterCreator = FindObjectOfType<CharacterCreator>();
+          characterCreator.gameObject.SetActive(true);
+          characterCreator.CreateCharacterSuccess += HandleCreateCharacterSuccess;
+          characterCreator.CreateCharacterFail += HandleCreateCharacterFail;
           break;
         case CharacterSceneStates.LOAD_CHARACTER:
           // load character data from the server
@@ -80,9 +76,10 @@ namespace Openworld.Scenes
         case CharacterSceneStates.INITIALIZE:
           break;
         case CharacterSceneStates.NEW_CHARACTER:
-          ui.CreateCharacterSuccess -= HandleCreateCharacterSuccess;
-          ui.CreateCharacterCancel -= HandleCreateCharacterCancel;
-          ui.CreateCharacterFail -= HandleCreateCharacterFail;
+          var characterCreator = FindObjectOfType<CharacterCreator>();
+          characterCreator.gameObject.SetActive(false);
+          characterCreator.CreateCharacterSuccess -= HandleCreateCharacterSuccess;
+          characterCreator.CreateCharacterFail -= HandleCreateCharacterFail;
           break;
         case CharacterSceneStates.LOAD_CHARACTER:
           break;

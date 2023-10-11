@@ -13,5 +13,19 @@ namespace Openworld.Models
       get => _name;
       set => Set(ref _name, value);
     }
+
+    private int _race;
+    public int race
+    {
+      get => _race;
+      set => Set(ref _race, value);
+    }
+
+    private Skill[] _skills;
+    public Skill[] skills
+    {
+      get => _skills;
+      set => Set(ref _skills, value);
+    }
   }
 }
