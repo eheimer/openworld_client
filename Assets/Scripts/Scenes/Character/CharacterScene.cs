@@ -20,7 +20,7 @@ namespace Openworld.Scenes
     {
       return new Dictionary<CharacterSceneStates, List<CharacterSceneStates>> {
         { CharacterSceneStates.INITIALIZE, new List<CharacterSceneStates> { CharacterSceneStates.NEW_CHARACTER, CharacterSceneStates.LOAD_CHARACTER } },
-        { CharacterSceneStates.NEW_CHARACTER, new List<CharacterSceneStates> { CharacterSceneStates.LOAD_CHARACTER, CharacterSceneStates.EXIT } },
+        { CharacterSceneStates.NEW_CHARACTER, new List<CharacterSceneStates> { CharacterSceneStates.LOAD_CHARACTER, CharacterSceneStates.INTERACTIVE, CharacterSceneStates.EXIT } },
         { CharacterSceneStates.LOAD_CHARACTER, new List<CharacterSceneStates> { CharacterSceneStates.INTERACTIVE, CharacterSceneStates.EXIT } },
         { CharacterSceneStates.INTERACTIVE, new List<CharacterSceneStates> { CharacterSceneStates.EXIT } },
       };
@@ -35,6 +35,7 @@ namespace Openworld.Scenes
       switch (newState)
       {
         case CharacterSceneStates.INITIALIZE:
+          FindObjectOfType<CharacterCreator>()?.gameObject.SetActive(false);
           // check if we have a character id on the GameManager
           // if not, transition to NEW_CHARACTER
           // otherwise, transition to LOAD_CHARACTER
@@ -48,7 +49,7 @@ namespace Openworld.Scenes
           }
           break;
         case CharacterSceneStates.NEW_CHARACTER:
-          var characterCreator = FindObjectOfType<CharacterCreator>();
+          var characterCreator = FindObjectOfType<CharacterCreator>(true);
           characterCreator.gameObject.SetActive(true);
           characterCreator.CreateCharacterSuccess += HandleCreateCharacterSuccess;
           characterCreator.CreateCharacterFail += HandleCreateCharacterFail;
@@ -109,20 +110,13 @@ namespace Openworld.Scenes
           gameManager.character = resp;
           stateMachine.ChangeState(CharacterSceneStates.INTERACTIVE);
         }, RequestException);
-        Debug.Log("fetching character detail");
       }
     }
 
     private void HandleCreateCharacterSuccess()
     {
       Debug.Log("HandleCreateCharacterSuccess");
-      stateMachine.ChangeState(CharacterSceneStates.LOAD_CHARACTER);
-    }
-
-    private void HandleCreateCharacterCancel()
-    {
-      Debug.Log("HandleCreateCharacterCancel");
-      stateMachine.ChangeState(CharacterSceneStates.EXIT);
+      stateMachine.ChangeState(CharacterSceneStates.INTERACTIVE);
     }
 
     private void HandleCreateCharacterFail(Exception e)
