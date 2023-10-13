@@ -14,11 +14,11 @@ namespace Openworld.Models
       set => Set(ref _name, value);
     }
 
-    private int _race;
-    public int race
+    private int _raceId;
+    public int raceId
     {
-      get => _race;
-      set => Set(ref _race, value);
+      get => _raceId;
+      set => Set(ref _raceId, value);
     }
 
     private Skill[] _skills;

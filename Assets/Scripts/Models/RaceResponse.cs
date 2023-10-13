@@ -5,8 +5,8 @@ namespace Openworld.Models
 {
   public class RacesResponse : ObservableObject
   {
-    private string _id;
-    public string id
+    private int _id;
+    public int id
     {
       get => _id;
       set => Set(ref _id, value);

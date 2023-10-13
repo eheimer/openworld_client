@@ -13,8 +13,10 @@ namespace Openworld
     {
         [SerializeField] TMP_InputField characterName;
         [SerializeField] Button createButton;
+        [SerializeField] TMP_Dropdown raceDropdown;
         private RacesResponse[] _races;
         private Skill[] _skills;
+        private int _selectedRace;
         private CreateCharacterRequest _character;
 
         public event Action CreateCharacterSuccess;
@@ -51,6 +53,16 @@ namespace Openworld
             communicator.GetRaces((resp) =>
             {
                 Races = resp;
+                // races dropdown should be converted to a bound control, but for now we'll just
+                // manipulate the TMP one that we have
+                raceDropdown.ClearOptions();
+                raceDropdown.options.Add(new TMP_Dropdown.OptionData("Select a race..."));
+                foreach (var item in Races)
+                {
+                    raceDropdown.options.Add(new TMP_Dropdown.OptionData(item.name));
+                }
+                raceDropdown.SetValueWithoutNotify(0);
+                raceDropdown.RefreshShownValue();
             }, (RequestException ex) => { throw ex; });
 
             communicator.GetSkills((resp) =>
@@ -71,6 +83,10 @@ namespace Openworld
             {
                 return false;
             }
+            if (raceDropdown == null || raceDropdown.value == 0)
+            {
+                return false;
+            }
             return true;
         }
 
@@ -81,7 +97,7 @@ namespace Openworld
             var communicator = gameManager.GetCommunicator();
 
             // send the request to the server
-            communicator.CreateCharacter(gameManager.currentGame, characterName.text, (resp) =>
+            communicator.CreateCharacter(gameManager.currentGame, characterName.text, Races[raceDropdown.value - 1].id, (resp) =>
             {
                 // save the character to the gameManager
                 gameManager.GetPlayer().character = resp.id;
