@@ -147,6 +147,10 @@ namespace Openworld.Scenes
 
     private void HandleLoadGameFail(Exception ex)
     {
+      if (ex is NoGamesException || ex is NewGameException)
+      {
+        stateMachine.ChangeState(StartSceneStates.NEW_GAME);
+      }
       Debug.Log("HandleLoadGameFail: " + ex.Message);
     }
 

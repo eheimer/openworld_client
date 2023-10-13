@@ -17,6 +17,7 @@ namespace Openworld.Menus
     protected override void RegisterButtonHandlers()
     {
       HandleClick("cancel", CancelClick);
+      HandleClick("new-game", NewGameClick);
     }
 
     protected override void GetData()
@@ -63,7 +64,6 @@ namespace Openworld.Menus
     {
       RaiseFail(null);
     }
-
   }
 
 }
