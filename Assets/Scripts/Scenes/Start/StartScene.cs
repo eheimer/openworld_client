@@ -140,9 +140,7 @@ namespace Openworld.Scenes
 
     private void HandleLoadGameSuccess()
     {
-      // TODO: transition to the character scene
       stateMachine.ChangeState(StartSceneStates.EXIT);
-      SceneManager.LoadScene(SceneName.Character.name());
     }
 
     private void HandleLoadGameFail(Exception ex)
@@ -161,6 +159,10 @@ namespace Openworld.Scenes
 
     private void HandleNewGameSuccess()
     {
+      if (GetGameManager().currentGame != null)
+      {
+        stateMachine.ChangeState(StartSceneStates.EXIT);
+      }
       stateMachine.ChangeState(StartSceneStates.LOAD_GAME);
     }
 
