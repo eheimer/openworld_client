@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Openworld.Models;
 using Proyecto26;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -8,9 +9,6 @@ namespace Openworld.Menus
 {
   public class Register : FormBase
   {
-    private string email;
-    private string pass;
-
     protected override void RegisterButtonHandlers()
     {
       HandleClick("register-submit", RegisterSubmit);
@@ -28,26 +26,21 @@ namespace Openworld.Menus
 
     void RegisterSubmit()
     {
-      // need to save these, because we need them later, and the FormBase
-      // wipes them out after this method is called
       var me = GetVisualElement();
-      email = me.Q<TextField>("email").value;
-      pass = me.Q<TextField>("password").value;
-      GetGameManager().GetCommunicator().Register(email, pass,
-        me.Q<TextField>("name").value, RegisterSuccess, (ex) => RaiseFail(ex));
+      GetGameManager().LoginOrRegister(
+        me.Q<TextField>("email").value,
+        me.Q<TextField>("password").value,
+        me.Q<TextField>("name").value, RaiseSuccess, (ex) => RaiseFail(ex));
     }
 
     void RegisterCancel()
     {
-      Debug.Log("Register Cancel");
       RaiseFail(new FormCancelException());
     }
 
-    void RegisterSuccess(ResponseHelper resp)
+    void RegisterSuccess(LoginResponse resp)
     {
-      Debug.Log("Register Success: " + resp);
       RaiseSuccess();
     }
-
   }
 }

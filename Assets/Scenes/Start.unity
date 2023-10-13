@@ -1013,6 +1013,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6353949551885875113, guid: ce1e9dc542a70ebbbba67bd4d5ab8211, type: 3}
+      propertyPath: autoEmail
+      value: me@test.com
+      objectReference: {fileID: 0}
+    - target: {fileID: 6353949551885875113, guid: ce1e9dc542a70ebbbba67bd4d5ab8211, type: 3}
+      propertyPath: autoLogin
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6353949551885875113, guid: ce1e9dc542a70ebbbba67bd4d5ab8211, type: 3}
       propertyPath: localServer
       value: 1
       objectReference: {fileID: 0}
@@ -1020,6 +1028,14 @@ PrefabInstance:
       propertyPath: menuManager
       value: 
       objectReference: {fileID: 1456642530}
+    - target: {fileID: 6353949551885875113, guid: ce1e9dc542a70ebbbba67bd4d5ab8211, type: 3}
+      propertyPath: autoPassword
+      value: password
+      objectReference: {fileID: 0}
+    - target: {fileID: 6353949551885875113, guid: ce1e9dc542a70ebbbba67bd4d5ab8211, type: 3}
+      propertyPath: autoUsername
+      value: eric
+      objectReference: {fileID: 0}
     - target: {fileID: 6353949551885875113, guid: ce1e9dc542a70ebbbba67bd4d5ab8211, type: 3}
       propertyPath: spinnerPrefab
       value: 

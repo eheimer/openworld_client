@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Openworld.Menus;
+using Openworld.Models;
+using Proyecto26;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -30,16 +32,20 @@ namespace Openworld.Scenes
     protected override void HandleEnterStateLocal(StartSceneStates previousState, StartSceneStates newState)
     {
       // log the event
-      Debug.Log("[Start Scene] Entering state " + newState);
       switch (newState)
       {
         case StartSceneStates.INITIALIZE:
-          // check if we have "remember me" enabled and have a player id and token stored
-          // if so, try to load the player data
-          //   if successful, transition to LOAD_GAME
-          //   if unsuccessful, transition to LOGIN
-          // if not, transition to LOGIN
-          stateMachine.ChangeState(StartSceneStates.LOGIN);
+          var gm = GetGameManager();
+          if (Application.isEditor && gm.autoLogin)
+          {
+            gm.LoginOrRegister(gm.autoEmail, gm.autoPassword, gm.autoUsername,
+              () => stateMachine.ChangeState(StartSceneStates.LOAD_GAME),
+              (ex) => stateMachine.ChangeState(StartSceneStates.LOGIN));
+          }
+          else
+          {
+            stateMachine.ChangeState(StartSceneStates.LOGIN);
+          }
           break;
         case StartSceneStates.LOGIN:
           // show the login panel
@@ -53,7 +59,7 @@ namespace Openworld.Scenes
           // show the register panel
           ui.Register();
           // subscribe to the register_success and register_fail events
-          ui.RegisterSuccess += HandleRegisterSuccess;
+          ui.RegisterSuccess += HandleLoginSuccess;
           ui.RegisterFail += HandleRegisterFail;
           break;
         case StartSceneStates.LOAD_GAME:
@@ -80,7 +86,6 @@ namespace Openworld.Scenes
 
     protected override void HandleExitStateLocal(StartSceneStates previousState, StartSceneStates newState)
     {
-      Debug.Log("Exiting state " + previousState);
       switch (previousState)
       {
         case StartSceneStates.INITIALIZE:

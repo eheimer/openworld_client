@@ -6,6 +6,7 @@
                 <ui:Label text="Load Game" display-tooltip-when-elided="true" name="MenuTitle" class="menu-title" style="font-size: 50px;" />
                 <ui:VisualElement name="form-content" style="flex-grow: 1; width: 100%; align-items: center; justify-content: center;">
                     <ui:ScrollView name="gameitems" horizontal-scroller-visibility="Hidden" style="flex-grow: 1; width: 90%;" />
+                    <ui:Button text="Create Game" display-tooltip-when-elided="true" name="createGame" binding-path="createGameClick" tabindex="5" class="button" style="width: 25%;" />
                     <ui:Button text="Cancel" display-tooltip-when-elided="true" name="cancel" binding-path="loginQuitClick" tabindex="5" class="button" style="width: 25%;" />
                 </ui:VisualElement>
             </ui:VisualElement>

@@ -31,28 +31,15 @@ namespace Openworld.Menus
     void LoginSubmit()
     {
       var me = GetVisualElement();
-      GetGameManager().GetCommunicator().Login(
+      GetGameManager().Login(
         me.Q<TextField>("username").value.Trim(),
         me.Q<TextField>("password").value,
-        (resp) => LoginSuccess(resp),
-        RequestException);
+        RaiseSuccess, (ex) => RaiseFail(ex));
     }
 
     void LoginRegister()
     {
       RaiseFail(new LoginRegisterException());
-    }
-
-    void LoginSuccess(LoginResponse resp)
-    {
-      Debug.Log("Login Success: " + resp.player + ", " + resp.token);
-      GetGameManager().SetToken(resp.token);
-      GetGameManager().GetCommunicator().GetPlayerDetail(resp.player, (resp) =>
-      {
-        Debug.Log("GetPlayerDetail Success: " + resp.username + ", " + resp.id);
-        GetGameManager().SetPlayer(resp);
-        RaiseSuccess();
-      }, (ex) => RaiseFail(ex));
     }
   }
 }

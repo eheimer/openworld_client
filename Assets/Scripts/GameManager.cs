@@ -41,6 +41,10 @@ namespace Openworld
     [SerializeField] public string currentGame;
     [SerializeField] public string currentBattle;
     [SerializeField] GameObject spinnerPrefab;
+    [SerializeField] public bool autoLogin;
+    [SerializeField] public string autoEmail;
+    [SerializeField] public string autoUsername;
+    [SerializeField] public string autoPassword;
 
     public GameObject GetSpinner()
     {
@@ -177,7 +181,35 @@ namespace Openworld
       LogMessage("", message);
     }
 
-    void PlayerDetailSuccess(PlayerDetailResponse resp, Action FinalSuccess, Action<RequestException> Error)
+    /**
+    ** Logs in a user, or attempts to register them if the login fails
+    */
+    public void LoginOrRegister(string email, string password, string username, Action FinalSuccess, Action<RequestException> FinalError)
+    {
+      Login(username, password, FinalSuccess, (RequestException ex) =>
+      {
+        communicator.Register(email, password, username, (ResponseHelper r) =>
+        {
+          Login(username, password, FinalSuccess, FinalError);
+        }, FinalError);
+      });
+    }
+
+    /**
+    **  Logs in a user
+    */
+    public void Login(string username, string password, Action FinalSuccess, Action<RequestException> FinalError)
+    {
+      communicator.Login(username, password, (resp) => LoginSuccess(resp, FinalSuccess, FinalError), FinalError);
+    }
+
+    private void LoginSuccess(LoginResponse resp, Action FinalSuccess, Action<RequestException> FinalError)
+    {
+      SetToken(resp.token);
+      communicator.GetPlayerDetail(resp.player, (resp) => PlayerDetailSuccess(resp, FinalSuccess), FinalError);
+    }
+
+    private void PlayerDetailSuccess(PlayerDetailResponse resp, Action FinalSuccess)
     {
       SetPlayer(resp);
       FinalSuccess();
