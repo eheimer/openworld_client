@@ -29,8 +29,9 @@ namespace Openworld.Scenes
             stateMachine.InitializeStateMachine(InitialState);
         }
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             // Subscribe to state machine events
             stateMachine.OnEnterState += HandleEnterState;
             stateMachine.OnExitState += HandleExitState;

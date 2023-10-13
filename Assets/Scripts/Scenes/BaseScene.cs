@@ -21,8 +21,10 @@ namespace Openworld.Scenes
     protected MenuButton menuButton;
     protected T ui;
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
+      Debug.Log("OnEnable: " + this.GetType().Name);
+      Debug.Log(GetGameManager());
       // this check is here to ensure that the start scene is always loaded first to initialize the game manager
       if (GetGameManager() == null)
       {
