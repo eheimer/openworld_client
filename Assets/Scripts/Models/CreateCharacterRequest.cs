@@ -14,6 +14,27 @@ namespace Openworld.Models
       set => Set(ref _name, value);
     }
 
+    private int _strength;
+    public int strength
+    {
+      get => _strength;
+      set => Set(ref _strength, value);
+    }
+
+    private int _dexterity;
+    public int dexterity
+    {
+      get => _dexterity;
+      set => Set(ref _dexterity, value);
+    }
+
+    private int _intelligence;
+    public int intelligence
+    {
+      get => _intelligence;
+      set => Set(ref _intelligence, value);
+    }
+
     private int _raceId;
     public int raceId
     {

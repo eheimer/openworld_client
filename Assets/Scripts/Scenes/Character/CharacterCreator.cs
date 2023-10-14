@@ -14,6 +14,10 @@ namespace Openworld
         [SerializeField] TMP_InputField characterName;
         [SerializeField] Button createButton;
         [SerializeField] TMP_Dropdown raceDropdown;
+        [SerializeField] TMP_Dropdown strDropdown;
+        [SerializeField] TMP_Dropdown dexDropdown;
+        [SerializeField] TMP_Dropdown intDropdown;
+        [SerializeField] TMP_Text formErrors;
         private RacesResponse[] _races;
         private Skill[] _skills;
         private int _selectedRace;
@@ -78,15 +82,43 @@ namespace Openworld
 
         bool Validate()
         {
-            //for initial phase, just make sure there is a character name
+            // character name is required
             if (characterName == null || characterName.text.Trim().Equals(""))
             {
+                formErrors.text = "Character name is required";
                 return false;
             }
+            // race is required
             if (raceDropdown == null || raceDropdown.value == 0)
             {
+                formErrors.text = "Race selection is required";
                 return false;
             }
+
+            if (strDropdown == null)
+            {
+                formErrors.text = "Strength is required";
+                return false;
+            }
+
+            if (dexDropdown == null)
+            {
+                formErrors.text = "Dexterity is required";
+                return false;
+            }
+
+            if (intDropdown == null)
+            {
+                formErrors.text = "Intelligence is required";
+                return false;
+            }
+
+            if (strDropdown.value + dexDropdown.value + intDropdown.value != 5)
+            {
+                formErrors.text = "Total stat points must equal 8";
+                return false;
+            }
+            formErrors.text = "";
             return true;
         }
 
@@ -97,7 +129,7 @@ namespace Openworld
             var communicator = gameManager.GetCommunicator();
 
             // send the request to the server
-            communicator.CreateCharacter(gameManager.currentGame, characterName.text, Races[raceDropdown.value - 1].id, (resp) =>
+            communicator.CreateCharacter(gameManager.currentGame, characterName.text, Races[raceDropdown.value - 1].id, strDropdown.value + 1, dexDropdown.value + 1, intDropdown.value + 1, (resp) =>
             {
                 // save the character to the gameManager
                 gameManager.GetPlayer().character = resp.id;
