@@ -36,15 +36,20 @@ namespace Openworld
     [SerializeField] bool localServer;
     [SerializeField] public bool debugApi;
     [SerializeField] Player player;
-    [SerializeField] Communicator communicator;
     [SerializeField] string authToken;
     [SerializeField] public string currentGame;
     [SerializeField] public string currentBattle;
     [SerializeField] GameObject spinnerPrefab;
+    [SerializeField] public bool offlineMode;
     [SerializeField] public bool autoLogin;
     [SerializeField] public string autoEmail;
     [SerializeField] public string autoUsername;
     [SerializeField] public string autoPassword;
+    private const string prodUrl = "https://www.openworld-game.com";
+    private const string devUrl = "http://localhost:3000";
+    [SerializeField] public string baseUrl = prodUrl;
+
+    private Communicator _communicator;
 
     public GameObject GetSpinner()
     {
@@ -76,7 +81,19 @@ namespace Openworld
 
     public Communicator GetCommunicator()
     {
-      return communicator;
+      if (_communicator == null)
+      {
+        if (offlineMode)
+        {
+          _communicator = FindObjectOfType<OfflineCommunicator>();
+        }
+        else
+        {
+          _communicator = FindObjectOfType<Communicator>();
+          _communicator.SetUrl(this.localServer ? devUrl : prodUrl);
+        }
+      }
+      return _communicator;
     }
     public string GetAuthToken()
     {
@@ -112,7 +129,6 @@ namespace Openworld
       es.gameObject.GetComponentInChildren<PanelRaycaster>().enabled = false;
 
       EventSystem.SetUITookitEventSystemOverride(es, false, false);
-      communicator.SetIsDevUrl(this.localServer);
     }
 
     public void Reset()
@@ -188,7 +204,7 @@ namespace Openworld
     {
       Login(username, password, FinalSuccess, (RequestException ex) =>
       {
-        communicator.Register(email, password, username, (ResponseHelper r) =>
+        GetCommunicator().Register(email, password, username, (ResponseHelper r) =>
         {
           Login(username, password, FinalSuccess, FinalError);
         }, FinalError);
@@ -200,13 +216,13 @@ namespace Openworld
     */
     public void Login(string username, string password, Action FinalSuccess, Action<RequestException> FinalError)
     {
-      communicator.Login(username, password, (resp) => LoginSuccess(resp, FinalSuccess, FinalError), FinalError);
+      GetCommunicator().Login(username, password, (resp) => LoginSuccess(resp, FinalSuccess, FinalError), FinalError);
     }
 
     private void LoginSuccess(LoginResponse resp, Action FinalSuccess, Action<RequestException> FinalError)
     {
       SetToken(resp.token);
-      communicator.GetPlayerDetail(resp.player, (resp) => PlayerDetailSuccess(resp, FinalSuccess), FinalError);
+      GetCommunicator().GetPlayerDetail(resp.player, (resp) => PlayerDetailSuccess(resp, FinalSuccess), FinalError);
     }
 
     private void PlayerDetailSuccess(PlayerDetailResponse resp, Action FinalSuccess)
