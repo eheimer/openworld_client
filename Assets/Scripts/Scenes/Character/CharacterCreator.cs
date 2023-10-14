@@ -113,11 +113,20 @@ namespace Openworld
                 return false;
             }
 
-            if (strDropdown.value + dexDropdown.value + intDropdown.value != 5)
+            if (Races[raceDropdown.value - 1].name.Equals("Fairy"))
+            {
+                if (strDropdown.value + dexDropdown.value + intDropdown.value != 4)
+                {
+                    formErrors.text = "Total stat points must equal 7";
+                    return false;
+                }
+            }
+            else if (strDropdown.value + dexDropdown.value + intDropdown.value != 5)
             {
                 formErrors.text = "Total stat points must equal 8";
                 return false;
             }
+
             formErrors.text = "";
             return true;
         }
