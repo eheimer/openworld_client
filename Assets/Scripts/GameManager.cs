@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Openworld.Binding;
-using Openworld.Menus;
 using Openworld.Models;
 using Proyecto26;
 using UnityEditor;
@@ -62,7 +59,6 @@ namespace Openworld
     }
     public void SetPlayer(PlayerDetailResponse pr)
     {
-      Debug.Log("SetPlayer: " + pr.username + ", " + pr.id);
       player.playerId = pr.id;
       player.playerName = pr.username;
     }

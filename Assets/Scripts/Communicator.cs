@@ -59,9 +59,8 @@ namespace Openworld
       var promise = RestClient.Get<T>(req);
 
       yield return promise;
-
       promise.Done(
-        res => { Debug.Log(res); success(res); },
+        res => success(res),
         err => HandleError(err, error));
     }
 
@@ -73,7 +72,7 @@ namespace Openworld
       yield return promise;
 
       promise.Done(
-        res => { Debug.Log(res); success(res); },
+        res => success(res),
         err => HandleError(err, error));
     }
 
@@ -85,7 +84,7 @@ namespace Openworld
       yield return promise;
 
       promise.Done(
-        res => { Debug.Log(res); success(res); },
+        res => success(res),
         err => HandleError(err, error));
     }
 
@@ -97,7 +96,7 @@ namespace Openworld
       yield return promise;
 
       promise.Done(
-        res => { Debug.Log(res); success(res); },
+        res => success(res),
         err => HandleError(err, error));
     }
 
@@ -109,7 +108,7 @@ namespace Openworld
       yield return promise;
 
       promise.Done(
-        res => { Debug.Log(res); success(res); },
+        res => success(res),
         err => HandleError(err, error));
     }
 

@@ -1,15 +1,10 @@
-using System.Net.Mime;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using Proyecto26;
 using UnityEngine;
 using UnityEngine.Networking;
 using Openworld.Models;
-using Mono.Cecil.Cil;
 using System.Linq;
-using UnityEngine.UI;
 
 namespace Openworld
 {
