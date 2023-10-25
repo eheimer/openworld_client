@@ -26,8 +26,8 @@ namespace Openworld.Models
       set => Set(ref _description, value);
     }
 
-    private Skill[] _skills;
-    public Skill[] skills
+    private CharacterSkill[] _skills;
+    public CharacterSkill[] skills
     {
       get => _skills;
       set => Set(ref _skills, value);

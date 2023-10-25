@@ -5,30 +5,13 @@ using Openworld.Binding;
 
 namespace Openworld.Models
 {
-  public class CharacterSkill : ObservableObject
+  public class CharacterSkill : Skill
   {
-    private string _description;
-    public string description {
-      get => _description;
-      set => Set(ref _description, value);
-    }
-
-    private string _id;
-    public string id {
-      get => _id;
-      set => Set(ref _id, value);
-    }
-
     private int _level;
-    public int level {
+    public int level
+    {
       get => _level;
       set => Set(ref _level, value);
-    }
-
-    private string _name;
-    public string name {
-      get => _name;
-      set => Set(ref _name, value);
     }
   }
 }

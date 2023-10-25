@@ -14,7 +14,6 @@ namespace Openworld.Binding
   ** to a target, usually a property of this component
   **/
   public abstract class BoundComponent : MonoBehaviour
-  //public abstract class BoundComponent : MonoBehaviour
   {
     [SerializeField] public string bindingSourceProperty; // the property on the bindingSource that we want to observe
 
@@ -63,6 +62,10 @@ namespace Openworld.Binding
       return BindingSource.GetType().GetProperty(bindingSourceProperty, BindingFlags.Public | BindingFlags.Instance);
     }
 
+    /**
+    ** This is called when the observed property value changes, and the binding
+    ** needs to be updated.  Override this to do something more complex
+    **/
     protected virtual void UpdateBindingTarget()
     {
       if (TargetProperty != null)

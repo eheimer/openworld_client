@@ -5,11 +5,12 @@ using System;
 using Proyecto26;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 namespace Openworld
 {
 
-    public class CharacterCreator : ObservableMonoBehaviour
+    public class CharacterCreator : ObservableMonoBehaviour, IBindingProvider
     {
         [SerializeField] TMP_InputField characterName;
         [SerializeField] Button createButton;
@@ -19,7 +20,8 @@ namespace Openworld
         [SerializeField] TMP_Dropdown intDropdown;
         [SerializeField] TMP_Text formErrors;
         private RacesResponse[] _races;
-        private Skill[] _skills;
+        private ObservableArray<Skill> _skills = new ObservableArray<Skill>();
+        private List<CharacterSkill> _selectedSkills;
         private int _selectedRace;
         private CreateCharacterRequest _character;
 
@@ -42,11 +44,80 @@ namespace Openworld
         {
             get
             {
-                return _skills;
+                return _skills.Items;
             }
             set
             {
-                Set(ref _skills, value);
+                _skills.Items = value;
+            }
+        }
+
+        public ObservableArray<Skill> ObservableSkills
+        {
+            get
+            {
+                return _skills;
+            }
+        }
+
+        public List<CharacterSkill> SelectedSkills
+        {
+            get
+            {
+                if (_selectedSkills == null)
+                {
+                    _selectedSkills = new List<CharacterSkill>();
+                }
+                return _selectedSkills;
+            }
+            set
+            {
+                Set(ref _selectedSkills, value);
+            }
+        }
+
+        protected void RaceChangeListener(int value)
+        {
+            // compare value to _selectedRace
+            // if it's different, update _selectedRace and update the skill selectors
+            if (value != _selectedRace)
+            {
+                CharacterSkill[] oldRaceSkills = Races[_selectedRace - 1].skills;
+                CharacterSkill[] newRaceSkills = Races[value - 1].skills;
+
+                // remove old skills/levels from _selectedSkills
+                foreach (var raceSkill in oldRaceSkills)
+                {
+                    foreach (var selectedSkill in _selectedSkills)
+                    {
+                        if (selectedSkill.id == raceSkill.id)
+                        {
+                            selectedSkill.level -= raceSkill.level;
+                            if (selectedSkill.level <= 0)
+                            {
+                                _selectedSkills.Remove(selectedSkill);
+                            }
+                        }
+                    }
+                }
+
+                // add new skills/levels to _selectedSkills
+                foreach (var raceSkill in newRaceSkills)
+                {
+                    bool found = false;
+                    foreach (var selectedSkill in _selectedSkills)
+                    {
+                        if (selectedSkill.id == raceSkill.id)
+                        {
+                            selectedSkill.level += raceSkill.level;
+                            found = true;
+                        }
+                    }
+                    if (!found)
+                    {
+                        _selectedSkills.Add((CharacterSkill)raceSkill);
+                    }
+                }
             }
         }
 
@@ -54,6 +125,10 @@ namespace Openworld
         {
             //populate the skills and races from the server
             var communicator = FindObjectOfType<GameManager>().GetCommunicator();
+
+            //subscribe to the raceDropdown change event
+            raceDropdown.onValueChanged.AddListener(RaceChangeListener);
+
             communicator.GetRaces((resp) =>
             {
                 Races = resp;
@@ -152,6 +227,11 @@ namespace Openworld
 
 
             Debug.Log("Clicked the create button");
+        }
+
+        public ObservableObject GetBindingSource()
+        {
+            return ObservableSkills;
         }
     }
 }
