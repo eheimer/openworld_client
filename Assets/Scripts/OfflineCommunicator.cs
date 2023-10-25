@@ -54,19 +54,6 @@ namespace Openworld
             success(_player);
         }
 
-        static RacesResponse[] _races = new RacesResponse[5]
-        {
-            new RacesResponse { id = 1, name = "Elf", description = "Graceful and long-lived woodland being." },
-            new RacesResponse { id = 2, name = "Dwarf", description = "Skilled miner and craftsman with a love for mountains." },
-            new RacesResponse { id = 3, name = "Orc", description = "Fierce warrior known for strength and battle prowess." },
-            new RacesResponse { id = 4, name = "Merfolk", description = "Aquatic being with the upper body of a humanoid and lower body of a fish." },
-            new RacesResponse { id = 5, name = "Fairy", description = "Enchanting and magical creature with delicate wings." }
-        };
-        public override void GetRaces(Action<RacesResponse[]> success, Action<RequestException> error)
-        {
-            success(_races);
-        }
-
         static Skill[] _skills = new Skill[]{
             new Skill { id = "1", name = "Archery", description = "Mastery in the use of bows and arrows." },
             new Skill { id = "2", name = "Alchemy", description = "Knowledge of magical potions and elixirs." },
@@ -81,7 +68,20 @@ namespace Openworld
         };
         public override void GetSkills(Action<Skill[]> success, Action<RequestException> error)
         {
-            success(_skills);
+            StartCoroutine(DoAfterDelay(1, () => { success(_skills); }));
+        }
+
+        static RacesResponse[] _races = new RacesResponse[5]
+        {
+            new RacesResponse { id = 1, name = "Elf", description = "Graceful and long-lived woodland being.", skills = new CharacterSkill[] { new CharacterSkill() { id = _skills[0].id, name = _skills[0].name, level = 1, description = _skills[0].description } } },
+            new RacesResponse { id = 2, name = "Dwarf", description = "Skilled miner and craftsman with a love for mountains.", skills = new CharacterSkill[] { new CharacterSkill() { id = _skills[1].id, name = _skills[1].name, level = 1, description = _skills[1].description } } },
+            new RacesResponse { id = 3, name = "Orc", description = "Fierce warrior known for strength and battle prowess.", skills = new CharacterSkill[] { new CharacterSkill() { id = _skills[2].id, name = _skills[2].name, level = 1, description = _skills[2].description } } },
+            new RacesResponse { id = 4, name = "Merfolk", description = "Aquatic being with the upper body of a humanoid and lower body of a fish.", skills = new CharacterSkill[0] },
+            new RacesResponse { id = 5, name = "Fairy", description = "Enchanting and magical creature with delicate wings.", skills = new CharacterSkill[0] }
+        };
+        public override void GetRaces(Action<RacesResponse[]> success, Action<RequestException> error)
+        {
+            StartCoroutine(DoAfterDelay(1, () => { success(_races); }));
         }
 
         static CharacterDetailResponse _character = new CharacterDetailResponse()

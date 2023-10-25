@@ -15,15 +15,11 @@ namespace Openworld
         private GameObject skillSelector;
 
         // these skills record the minimum levels for skills associated with the character's race
-        private CharacterSkill[] _raceSkills;
+        private CharacterSkill[] _raceSkills = new CharacterSkill[0];
         public CharacterSkill[] RaceSkills
         {
             set
             {
-                if (_raceSkills == null)
-                {
-                    _raceSkills = new CharacterSkill[0];
-                }
                 // remove current _raceSkills from creator.SelectedSkills
                 foreach (CharacterSkill raceSkill in _raceSkills)
                 {
