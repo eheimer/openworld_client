@@ -11,6 +11,8 @@ public class SkillDisplay : MonoBehaviour
     // Reference to the Button to remove the skill
     [SerializeField] private Button removeButton;
 
+    public int SkillLevel { get; set; }
+
     // Event to notify when the skill is removed
     public delegate void SkillRemovedHandler(GameObject skillDisplay);
     public event SkillRemovedHandler OnRemove;
@@ -19,7 +21,7 @@ public class SkillDisplay : MonoBehaviour
     {
         // Set the skill name
         SetSkillName(skill.name);
-        // TODO: set skill level, min level, etc.
+        SkillLevel = skill.level;
     }
 
     public string SkillName

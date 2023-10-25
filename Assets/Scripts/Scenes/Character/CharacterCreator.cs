@@ -19,11 +19,11 @@ namespace Openworld
         [SerializeField] TMP_Dropdown dexDropdown;
         [SerializeField] TMP_Dropdown intDropdown;
         [SerializeField] TMP_Text formErrors;
+        [SerializeField] CharacterSkillContainer skillContainer;
         private RacesResponse[] _races;
         private ObservableArray<Skill> _skills = new ObservableArray<Skill>();
         private List<CharacterSkill> _selectedSkills;
         private int _selectedRace;
-        private CreateCharacterRequest _character;
 
         public event Action CreateCharacterSuccess;
         public event Action<Exception> CreateCharacterFail;
@@ -78,46 +78,11 @@ namespace Openworld
 
         protected void RaceChangeListener(int value)
         {
-            // compare value to _selectedRace
-            // if it's different, update _selectedRace and update the skill selectors
             if (value != _selectedRace)
             {
-                CharacterSkill[] oldRaceSkills = Races[_selectedRace - 1].skills;
-                CharacterSkill[] newRaceSkills = Races[value - 1].skills;
-
-                // remove old skills/levels from _selectedSkills
-                foreach (var raceSkill in oldRaceSkills)
-                {
-                    foreach (var selectedSkill in _selectedSkills)
-                    {
-                        if (selectedSkill.id == raceSkill.id)
-                        {
-                            selectedSkill.level -= raceSkill.level;
-                            if (selectedSkill.level <= 0)
-                            {
-                                _selectedSkills.Remove(selectedSkill);
-                            }
-                        }
-                    }
-                }
-
-                // add new skills/levels to _selectedSkills
-                foreach (var raceSkill in newRaceSkills)
-                {
-                    bool found = false;
-                    foreach (var selectedSkill in _selectedSkills)
-                    {
-                        if (selectedSkill.id == raceSkill.id)
-                        {
-                            selectedSkill.level += raceSkill.level;
-                            found = true;
-                        }
-                    }
-                    if (!found)
-                    {
-                        _selectedSkills.Add((CharacterSkill)raceSkill);
-                    }
-                }
+                CharacterSkill[] newRaceSkills = value > 0 ? Races[value - 1].skills : new CharacterSkill[0];
+                skillContainer.RaceSkills = newRaceSkills;
+                _selectedRace = value;
             }
         }
 
