@@ -3,18 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq.Expressions;
+using Openworld;
 using Openworld.Binding;
 using UnityEngine;
 
 public class CharacterSkillTally : ObservableMonoBehaviour, IBindingProvider
 {
-    private static int SKILLS_MAX = 24;
     private static int SKILLS_BONUS = 0;
-    private static int EFFECTIVE_SKILLS_MAX = SKILLS_MAX + SKILLS_BONUS;
     public class SkillTally : ObservableObject
     {
         private int skillsChosen = 0;
-        private int skillsRemaining = EFFECTIVE_SKILLS_MAX;
+        private int skillsRemaining = 0;
         private int skillsBonus = 0;
 
         public int SkillsChosen
@@ -55,22 +54,32 @@ public class CharacterSkillTally : ObservableMonoBehaviour, IBindingProvider
 
     }
 
-    public void SetSkillsMax(int max)
+    private CharacterCreator characterCreator;
+
+    public int GetSkillsMax()
     {
-        SKILLS_MAX = max;
-        skillTally.SkillsRemaining = max + skillTally.SkillsBonus - skillTally.SkillsChosen;
+        if (characterCreator == null)
+        {
+            characterCreator = FindObjectOfType<CharacterCreator>();
+        }
+        return characterCreator.MaxSkillAllocation;
     }
 
     public void SetSkillBonus(int bonus)
     {
         skillTally.SkillsBonus = bonus;
-        skillTally.SkillsRemaining = SKILLS_MAX + bonus - skillTally.SkillsChosen;
+        skillTally.SkillsRemaining = GetSkillsMax() + bonus - skillTally.SkillsChosen;
     }
 
     public void SetSkillsChosen(int chosen)
     {
         skillTally.SkillsChosen = chosen;
-        skillTally.SkillsRemaining = SKILLS_MAX + skillTally.SkillsBonus - chosen;
+        skillTally.SkillsRemaining = GetSkillsMax() + skillTally.SkillsBonus - chosen;
+    }
+
+    public int GetSkillsRemaining()
+    {
+        return skillTally.SkillsRemaining;
     }
 
     private SkillTally _skillTally = new SkillTally();

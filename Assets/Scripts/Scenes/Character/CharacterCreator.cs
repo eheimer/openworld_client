@@ -20,6 +20,15 @@ namespace Openworld
         [SerializeField] TMP_Dropdown intDropdown;
         [SerializeField] TMP_Text formErrors;
         [SerializeField] CharacterSkillContainer skillContainer;
+        [SerializeField] int maxSkills = 24;
+
+        public int MaxSkillAllocation
+        {
+            get
+            {
+                return maxSkills;
+            }
+        }
         private RacesResponse[] _races;
         private ObservableArray<Skill> _skills = new ObservableArray<Skill>();
         private List<CharacterSkill> _selectedSkills;

@@ -16,6 +16,9 @@ public class SkillDisplay : MonoBehaviour
     // Event to notify when the skill is removed
     public delegate void SkillRemovedHandler(GameObject skillDisplay);
     public event SkillRemovedHandler OnRemove;
+    // Event to notify when the skill level changes
+    public delegate void SkillLevelChangedHandler(GameObject skillDisplay);
+    public event SkillLevelChangedHandler OnSkillLevelChanged;
 
     public void Initialize(CharacterSkill skill)
     {
@@ -46,6 +49,13 @@ public class SkillDisplay : MonoBehaviour
         {
             skillLevelDropdown.value = value;
         }
+    }
+
+    // Method to handle the skill level dropdown value changed event
+    public void HandleSkillLevelChanged()
+    {
+        // Raise the OnSkillLevelChanged event
+        OnSkillLevelChanged?.Invoke(gameObject);
     }
 
     // Method to handle the remove button click event
