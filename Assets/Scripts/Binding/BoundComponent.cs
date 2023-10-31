@@ -23,11 +23,10 @@ namespace Openworld.Binding
       try
       {
         BindingProvider = GetBindingProvider();
-        if (BindingProvider != null) { Debug.Log("Got a binding provider"); }
-        else { Debug.Log("No binding provider found"); }
         BindingSource = GetBindingSource();
         TargetComponent = gameObject.GetComponentInChildren(BindingTargetComponentType);
         TargetProperty = TargetComponent.GetType().GetProperty(BindingTargetProperty);
+        Debug.Log(gameObject.name + ": Binding " + BindingSource.GetType() + "." + bindingSourceProperty + " to " + TargetComponent.GetType() + "." + BindingTargetProperty);
       }
       catch (Exception ex)
       {

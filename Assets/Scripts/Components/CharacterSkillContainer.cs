@@ -11,6 +11,7 @@ namespace Openworld
         [SerializeField] private GameObject skillSelectorPrefab;
         [SerializeField] private GameObject skillDisplayPrefab;
         [SerializeField] private CharacterCreator creator;
+        [SerializeField] private CharacterSkillTally tally;
 
         private GameObject skillSelector;
 
@@ -18,6 +19,10 @@ namespace Openworld
         private CharacterSkill[] _raceSkills = new CharacterSkill[0];
         public CharacterSkill[] RaceSkills
         {
+            get
+            {
+                return _raceSkills;
+            }
             set
             {
                 // remove current _raceSkills from creator.SelectedSkills
@@ -59,8 +64,28 @@ namespace Openworld
             }
         }
 
+        public void TallySkillLevels()
+        {
+            //update the tallies.  The counts represent the levels selected for each skill
+            // sum up the levels of each skill in creator.SelectedSkills and assign that to tally.SkillsChosen
+            int skillsChosen = 0;
+            foreach (CharacterSkill selectedSkill in creator.SelectedSkills)
+            {
+                skillsChosen += selectedSkill.level;
+            }
+            tally.SetSkillsChosen(skillsChosen);
+            // sum up the levels of each skill in _raceSkills and assign that to tally.SkillsBonus
+            int skillsBonus = 0;
+            foreach (CharacterSkill raceSkill in _raceSkills)
+            {
+                skillsBonus += raceSkill.level;
+            }
+            tally.SetSkillBonus(skillsBonus);
+        }
+
         public void RefreshSkillDisplays()
         {
+            TallySkillLevels();
             // remove any skill displays that are not in creator.SelectedSkills
             List<GameObject> skillDisplays = new List<GameObject>();
             foreach (Transform child in transform)
