@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillNameText: {fileID: 6988864967043092807}
+  skillLevelDropdown: {fileID: 6988864967386693398}
   removeButton: {fileID: 8128082146215894889}
 --- !u!1 &6988864966275964951
 GameObject:
@@ -862,6 +863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillNameText: {fileID: 0}
+  skillLevelDropdown: {fileID: 0}
   removeButton: {fileID: 0}
 --- !u!1 &6988864967765945018
 GameObject:

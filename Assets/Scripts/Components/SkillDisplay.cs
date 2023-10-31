@@ -8,10 +8,10 @@ public class SkillDisplay : MonoBehaviour
     // Reference to the TextMeshProUGUI to display the skill name
     [SerializeField] private TMP_Text skillNameText;
 
+    [SerializeField] private TMP_Dropdown skillLevelDropdown;
+
     // Reference to the Button to remove the skill
     [SerializeField] private Button removeButton;
-
-    public int SkillLevel { get; set; }
 
     // Event to notify when the skill is removed
     public delegate void SkillRemovedHandler(GameObject skillDisplay);
@@ -20,7 +20,7 @@ public class SkillDisplay : MonoBehaviour
     public void Initialize(CharacterSkill skill)
     {
         // Set the skill name
-        SetSkillName(skill.name);
+        SkillName = skill.name;
         SkillLevel = skill.level;
     }
 
@@ -30,12 +30,22 @@ public class SkillDisplay : MonoBehaviour
         {
             return skillNameText.text;
         }
+        set
+        {
+            skillNameText.text = value;
+        }
     }
 
-    // Method to set the skill name in the SkillDisplay
-    public void SetSkillName(string skillName)
+    public int SkillLevel
     {
-        skillNameText.text = skillName;
+        get
+        {
+            return skillLevelDropdown.value;
+        }
+        set
+        {
+            skillLevelDropdown.value = value;
+        }
     }
 
     // Method to handle the remove button click event
