@@ -24,7 +24,7 @@ namespace Openworld.Menus
       }
       catch (Exception ex)
       {
-        Debug.Log("[Login] ClearForm: " + ex.Message);
+        Debug.LogError("[Login] ClearForm: " + ex.Message);
       }
     }
 

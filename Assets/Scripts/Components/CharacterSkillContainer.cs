@@ -252,7 +252,6 @@ namespace Openworld
         {
             // find the skill in creator.SelectedSkills that has the same name as sd
             SkillDisplay sd = skillDisplay.GetComponent<SkillDisplay>();
-            Debug.Log("SkillLevelChanged: " + sd.SkillName + " : " + sd.SkillLevel);
             foreach (CharacterSkill selectedSkill in creator.SelectedSkills)
             {
                 if (selectedSkill.name == sd.SkillName)

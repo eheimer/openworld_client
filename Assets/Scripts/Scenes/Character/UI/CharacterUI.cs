@@ -26,7 +26,6 @@ namespace Openworld.Menus
 
     private void RaiseCreateCharacterSuccess()
     {
-      Debug.Log("[GameMenuManager] RaiseCreateCharacterSuccess");
       createCharacterForm.FormSuccess -= RaiseCreateCharacterSuccess;
       createCharacterForm.FormFail -= RaiseCreateCharacterFail;
       RaiseEvent(CreateCharacterSuccess);
@@ -34,7 +33,6 @@ namespace Openworld.Menus
 
     private void RaiseCreateCharacterFail(Exception ex)
     {
-      Debug.Log("[GameMenuManager] RaiseCreateCharacterFail");
       createCharacterForm.FormSuccess -= RaiseCreateCharacterSuccess;
       createCharacterForm.FormFail -= RaiseCreateCharacterFail;
       if (ex is FormCancelException)

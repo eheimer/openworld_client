@@ -53,15 +53,11 @@ namespace Openworld.Scenes
 
         private void HandleEnterState(T previousState, T newState)
         {
-            // log the event
-            Debug.Log("Entering state " + newState);
             HandleEnterStateLocal(previousState, newState);
         }
 
         private void HandleExitState(T previousState, T newState)
         {
-            // log the event
-            Debug.Log("Exiting state " + previousState);
             HandleExitStateLocal(previousState, newState);
         }
 

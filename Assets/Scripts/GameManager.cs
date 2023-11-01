@@ -63,15 +63,25 @@ namespace Openworld
       player.playerName = pr.username;
     }
 
-    private CharacterDetail _character;
+    private CharacterDetail _character = new CharacterDetail();
     public CharacterDetail character
     {
       get { return _character; }
       set
       {
-        //remove all handlers from current _character
-        if (_character != null) _character.RemoveAllHandlers();
-        Set(ref _character, value);
+        if (_character == null)
+        {
+          Set(ref _character, value);
+          return;
+        }
+        foreach (var prop in _character.GetType().GetProperties())
+        {
+          var val = prop.GetValue(value);
+          if (val != null && !val.Equals(prop.GetValue(_character)))
+          {
+            prop.SetValue(_character, val);
+          }
+        }
       }
     }
 

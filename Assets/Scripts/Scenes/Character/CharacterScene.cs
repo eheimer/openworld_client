@@ -115,13 +115,11 @@ namespace Openworld.Scenes
 
     private void HandleCreateCharacterSuccess()
     {
-      Debug.Log("HandleCreateCharacterSuccess");
       stateMachine.ChangeState(CharacterSceneStates.INTERACTIVE);
     }
 
     private void HandleCreateCharacterFail(Exception e)
     {
-      Debug.Log("HandleCreateCharacterFail");
       stateMachine.ChangeState(CharacterSceneStates.EXIT);
     }
   }

@@ -17,7 +17,6 @@ namespace Openworld
 
         public StateMachine(Dictionary<T, List<T>> validTransitions)
         {
-            Debug.Log("StateMachine constructor");
             this.validTransitions = validTransitions;
         }
 
@@ -29,7 +28,6 @@ namespace Openworld
                 Debug.LogWarning("StateMachine.InitializeStateMachine called more than once");
                 return;
             }
-            Debug.Log("StateMachine.InitializeStateMachine");
             currentState = initialState;
             initialized = true;
             OnEnterState?.Invoke(default, currentState);

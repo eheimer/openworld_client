@@ -217,9 +217,6 @@ namespace Openworld
                     CreateCharacterFail?.Invoke(ex);
                 }
             );
-
-
-            Debug.Log("Clicked the create button");
         }
 
         public ObservableObject GetBindingSource()

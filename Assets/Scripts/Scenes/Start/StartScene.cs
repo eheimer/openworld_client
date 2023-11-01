@@ -120,7 +120,7 @@ namespace Openworld.Scenes
 
     private void HandleLoginFail(Exception ex)
     {
-      Debug.Log("HandleLoginFail: " + ex.Message);
+      Error("HandleLoginFail", ex.Message);
     }
 
     private void HandleLoginRegister()
@@ -135,7 +135,7 @@ namespace Openworld.Scenes
 
     private void HandleRegisterFail(Exception ex)
     {
-      Debug.Log("HandleRegisterFail: " + ex.Message);
+      Error("HandleRegisterFail", ex.Message);
     }
 
     private void HandleLoadGameSuccess()
@@ -149,7 +149,7 @@ namespace Openworld.Scenes
       {
         stateMachine.ChangeState(StartSceneStates.NEW_GAME);
       }
-      Debug.Log("HandleLoadGameFail: " + ex.Message);
+      Error("HandleLoadGameFail", ex.Message);
     }
 
     private void HandleLoadGameNewGame()
@@ -168,7 +168,7 @@ namespace Openworld.Scenes
 
     private void HandleNewGameFail(Exception ex)
     {
-      Debug.Log("HandleNewGameFail: " + ex.Message);
+      Error("HandleNewGameFail", ex.Message);
     }
 
   }

@@ -19,7 +19,6 @@ namespace Openworld.Scenes
 
     private void GameManagerPropertyChanged(object sender, PropertyChangedEventArgs args)
     {
-      Debug.Log("CharacterOverviewPanel gameManager changed: " + args.PropertyName);
       if (args.PropertyName == "character")
       {
         RaisePropertyChanged("bindingSource");

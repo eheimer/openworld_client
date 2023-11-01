@@ -28,7 +28,7 @@ namespace Openworld.Menus
         }
         catch (Exception e)
         {
-          Debug.Log("[" + this.GetType().Name + "] HideAllDocuments: " + e.Message);
+          Debug.LogError("[" + this.GetType().Name + "] HideAllDocuments: " + e.Message);
         }
       }
     }
@@ -67,15 +67,12 @@ namespace Openworld.Menus
 
     protected void RaiseEvent(Action action)
     {
-      Debug.Log("[" + this.GetType().Name + "] RaiseEvent: " + action?.Method.Name ?? "null");
       UnsubscribeAllFormEvents();
       action?.Invoke();
     }
 
     protected void RaiseEvent(Action<Exception> action, Exception ex)
     {
-      // get the name of the deriving class
-      Debug.Log("[" + this.GetType().Name + "] RaiseEvent: " + action?.Method.Name ?? "null, " + ex.Message ?? "null");
       UnsubscribeAllFormEvents();
       action?.Invoke(ex);
     }

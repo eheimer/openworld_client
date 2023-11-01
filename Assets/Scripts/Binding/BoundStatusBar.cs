@@ -28,29 +28,29 @@ namespace Openworld.Binding
       BindingTargetComponentType = typeof(Image);
       BindingTargetProperty = "fillAmount";
     }
+
+    protected override UnityEngine.Component GetTargetComponent()
+    {
+      // by default we will get the target component from the children of this game object
+      // override to implent a different way of getting the target component
+      return gameObject.GetComponent(BindingTargetComponentType);
+    }
+
     protected override void Start()
     {
-      Debug.Log("initializing binding");
       base.Start();
-      Debug.Log("base initialization complete");
       var text = gameObject.GetComponentInChildren<TMP_Text>();
       text.text = style.ToString();
       text.gameObject.SetActive(showLabel);
 
       string filename = statusMap[style];
 
-      var texture = Resources.Load<Texture>("StatusBarSprites/" + statusMap[style]);
-      var sprite = Resources.Load<Sprite>("StatusBarSprites/" + statusMap[style]);
-      (TargetComponent as Image).sprite = sprite;
+      var sprite = Resources.Load<Sprite>("StatusBarSprites/" + filename);
+      Image component = TargetComponent as Image;
+      component.sprite = sprite;
+      component.type = Image.Type.Filled;
+      component.fillMethod = Image.FillMethod.Horizontal;
+      component.fillOrigin = 0;
     }
-
-    protected override void UpdateBindingTarget()
-    {
-      if (TargetProperty != null)
-      {
-        TargetProperty.SetValue(TargetComponent, SourcePropertyValue);
-      }
-    }
-
   }
 }

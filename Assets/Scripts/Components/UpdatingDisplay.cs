@@ -23,9 +23,7 @@ namespace Openworld
     {
       if (spinner != null)
       {
-        Debug.Log("got a spinner!!");
         Animator anim = spinner.GetComponent<Animator>();
-        Debug.Log("playing the spinner");
         anim.Play("Spinner");
         RectTransform parentTransform = transform.parent.GetComponent<RectTransform>();
         Vector2 parentSize = parentTransform.sizeDelta;
@@ -59,10 +57,6 @@ namespace Openworld
           spinner.rectTransform.sizeDelta = new Vector2(spinnerSize, spinnerSize);
         }
 
-      }
-      else
-      {
-        Debug.Log("no spinner");
       }
     }
   }

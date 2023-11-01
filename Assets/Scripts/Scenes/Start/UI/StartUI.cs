@@ -70,13 +70,11 @@ namespace Openworld.Menus
 
     private void RaiseLoginSuccess()
     {
-      Debug.Log("[StartMenuManager] RaiseLoginSuccess");
       RaiseEvent(LoginSuccess);
     }
 
     private void RaiseLoginFail(Exception ex)
     {
-      Debug.Log("[StartMenuManager] RaiseLoginFail: " + ex.Message);
       // if ex is of type LoginRegisterException, then we want to raise the LoginRegister event
       if (ex is LoginRegisterException)
       {
@@ -90,19 +88,16 @@ namespace Openworld.Menus
 
     private void RaiseRegisterSuccess()
     {
-      Debug.Log("[StartMenuManager] RaiseRegisterSuccess");
       RaiseEvent(RegisterSuccess);
     }
 
     private void RaiseRegisterFail(Exception ex)
     {
-      Debug.Log("[StartMenuManager] RaiseRegisterFail");
       RaiseEvent(RegisterFail, ex);
     }
 
     private void RaiseLoadGameSuccess()
     {
-      Debug.Log("[StartMenuManager] RaiseLoadGameSuccess");
       RaiseEvent(LoadGameSuccess);
     }
 
@@ -110,31 +105,26 @@ namespace Openworld.Menus
     {
       if (ex is NoGamesException)
       {
-        Debug.Log("[StartMenuManager] RaiseLoadGameFail: " + ex.Message);
         RaiseEvent(LoadGameNewGame);
       }
       else
       {
-        Debug.Log("[StartMenuManager] RaiseLoadGameFail: " + ex.Message);
         RaiseEvent(LoadGameFail, ex);
       }
     }
 
     private void RaiseNewGameSuccess()
     {
-      Debug.Log("[StartMenuManager] RaiseNewGameSuccess");
       RaiseEvent(NewGameSuccess);
     }
 
     private void RaiseNewGameFail(Exception ex)
     {
-      Debug.Log("[StartMenuManager] RaiseNewGameFail");
       RaiseEvent(NewGameFail, ex);
     }
 
     protected override void UnsubscribeAllFormEvents()
     {
-      Debug.Log("[StartMenuManager] UnsubscribeAllFormEvents");
       // catch any errors with unsubscribing events, in the event that the form is not subscribed to the event
       try
       {
@@ -149,7 +139,7 @@ namespace Openworld.Menus
       }
       catch (Exception ex)
       {
-        Debug.Log("[StartMenuManager] UnsubscribeAllFormEvents: " + ex.Message);
+        Debug.LogError("[StartMenuManager] UnsubscribeAllFormEvents: " + ex.Message);
       }
     }
   }

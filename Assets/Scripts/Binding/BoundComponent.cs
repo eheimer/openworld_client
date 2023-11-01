@@ -24,18 +24,24 @@ namespace Openworld.Binding
       {
         BindingProvider = GetBindingProvider();
         BindingSource = GetBindingSource();
-        TargetComponent = gameObject.GetComponentInChildren(BindingTargetComponentType);
-        TargetProperty = TargetComponent.GetType().GetProperty(BindingTargetProperty);
-        Debug.Log(gameObject.name + ": Binding " + BindingSource.GetType() + "." + bindingSourceProperty + " to " + TargetComponent.GetType() + "." + BindingTargetProperty);
+        TargetComponent = GetTargetComponent();
+        TargetProperty = TargetComponent?.GetType().GetProperty(BindingTargetProperty);
+        Debug.Log(gameObject.name + ": Binding " + BindingSource?.GetType() + "." + bindingSourceProperty + " to " + TargetComponent?.GetType() + "." + BindingTargetProperty);
       }
       catch (Exception ex)
       {
-        Debug.Log("Error configuring binding in " + this.GetType());
+        Debug.LogError("Error configuring binding in " + this.GetType() + ": " + ex.Message);
       }
     }
     #endregion
 
     #region IMPLEMENTABLE METHODS
+    protected virtual UnityEngine.Component GetTargetComponent()
+    {
+      // by default we will get the target component from the children of this game object
+      // override to implent a different way of getting the target component
+      return gameObject.GetComponentInChildren(BindingTargetComponentType);
+    }
     /**
     ** By default we will get the bindingProvider from a parent up the tree.  This
     ** can be overridden to specify a bindingProvider to use, or to use none. A
@@ -43,7 +49,7 @@ namespace Openworld.Binding
     **/
     protected virtual IBindingProvider GetBindingProvider()
     {
-      return gameObject.GetComponentsInParent<IBindingProvider>()?[0];
+      return gameObject.GetComponentsInParent<IBindingProvider>(true)?[0];
     }
 
     /**
@@ -141,7 +147,6 @@ namespace Openworld.Binding
     {
       if (e.PropertyName == "bindingSource")
       {
-        Debug.Log("BindingProvider Source Changed: " + e.PropertyName);
         BindingSource = GetBindingSource();
         // set the value immediately
         UpdateBindingSourcePropertyValue();

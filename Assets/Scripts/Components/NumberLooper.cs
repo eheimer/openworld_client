@@ -3,8 +3,10 @@ using Openworld.Binding;
 using TMPro;
 using UnityEngine;
 
-namespace Openworld {
-  public class NumberLooper : MonoBehaviour {
+namespace Openworld
+{
+  public class NumberLooper : MonoBehaviour
+  {
     [SerializeField] BoundTextComponent boundComponent;
     [SerializeField] string boundField;
     [SerializeField] bool showName;
@@ -21,23 +23,29 @@ namespace Openworld {
 
     PropertyInfo bindingSourceProperty;
 
-    void Start() {
-      if (boundComponent != null) {
+    void Start()
+    {
+      if (boundComponent != null)
+      {
         boundComponent.bindingSourceProperty = boundField;
       }
-      if (statNameComponent != null) {
+      if (statNameComponent != null)
+      {
         statNameComponent.text = statName;
         statNameComponent.gameObject.SetActive(showName);
       }
       SetButtonDisplay(minValue);
     }
 
-    public void Initialize(bool showStatName, string statName, string boundField, int minValue, int maxValue, bool loopUp, bool loopDown, bool showIncrease, bool showDecrease) {
-      if (statNameComponent != null) {
+    public void Initialize(bool showStatName, string statName, string boundField, int minValue, int maxValue, bool loopUp, bool loopDown, bool showIncrease, bool showDecrease)
+    {
+      if (statNameComponent != null)
+      {
         statNameComponent.text = statName;
         statNameComponent.gameObject.SetActive(showStatName);
       }
-      if (boundComponent != null) {
+      if (boundComponent != null)
+      {
         boundComponent.bindingSourceProperty = boundField;
       }
       this.minValue = minValue;
@@ -49,22 +57,28 @@ namespace Openworld {
       SetButtonDisplay(minValue);
     }
 
-    private int GetCurrentValue() {
+    private int GetCurrentValue()
+    {
       return int.Parse(boundComponent.GetBindingSourceProperty().GetValue(boundComponent.GetBindingSource()).ToString());
     }
 
-    private void SetButtonDisplay(int value) {
-      Debug.Log("Value:" + value + ",maxValue:" + maxValue + ",minValue:" + minValue + ",loopUp:" + loopUp + ",loopDown:" + loopDown + ",showDecreaseButton:" + showDecreaseButton + ",showIncreaseButton:" + showIncreaseButton);
+    private void SetButtonDisplay(int value)
+    {
       decreaseButton?.SetActive(showDecreaseButton && (loopDown || value > minValue));
       increaseButton?.SetActive(showIncreaseButton && (loopUp || value < maxValue));
     }
 
-    public void Increase() {
+    public void Increase()
+    {
       var value = GetCurrentValue() + 1;
-      if (value > maxValue) {
-        if (loopUp) {
+      if (value > maxValue)
+      {
+        if (loopUp)
+        {
           value = minValue;
-        } else {
+        }
+        else
+        {
           value = maxValue;
         }
       }
@@ -72,12 +86,17 @@ namespace Openworld {
       boundComponent.GetBindingSourceProperty().SetValue(boundComponent.GetBindingSource(), value);
     }
 
-    public void Decrease() {
+    public void Decrease()
+    {
       var value = GetCurrentValue() - 1;
-      if (value < minValue) {
-        if (loopDown) {
+      if (value < minValue)
+      {
+        if (loopDown)
+        {
           value = maxValue;
-        } else {
+        }
+        else
+        {
           value = minValue;
         }
       }
