@@ -131,16 +131,28 @@ namespace Openworld
 
         bool Validate()
         {
-            // character name is required
             if (characterName == null || characterName.text.Trim().Equals(""))
             {
                 formErrors.text = "Character name is required";
                 return false;
             }
-            // race is required
+
             if (raceDropdown == null || raceDropdown.value == 0)
             {
                 formErrors.text = "Race selection is required";
+                return false;
+            }
+
+            CharacterSkillTally.SkillTally tally = skillContainer.GetTally();
+            if (tally.SkillsRemaining > 0)
+            {
+                formErrors.text = "You have " + tally.SkillsRemaining + " skill points remaining to be selected";
+                return false;
+            }
+
+            if (tally.SkillsRemaining < 0)
+            {
+                formErrors.text = "You have selected " + -tally.SkillsRemaining + " too many skill points";
                 return false;
             }
 
@@ -187,17 +199,24 @@ namespace Openworld
             var communicator = gameManager.GetCommunicator();
 
             // send the request to the server
-            communicator.CreateCharacter(gameManager.currentGame, characterName.text, Races[raceDropdown.value - 1].id, strDropdown.value + 1, dexDropdown.value + 1, intDropdown.value + 1, (resp) =>
-            {
-                // save the character to the gameManager
-                gameManager.GetPlayer().character = resp.id;
-                gameManager.character = resp;
-                CreateCharacterSuccess?.Invoke();
-            }, (RequestException ex) =>
-            {
-                // fire the fail event
-                CreateCharacterFail?.Invoke(ex);
-            });
+            communicator.CreateCharacter(
+                gameManager.currentGame, characterName.text,
+                Races[raceDropdown.value - 1].id,
+                strDropdown.value + 1, dexDropdown.value + 1, intDropdown.value + 1,
+                SelectedSkills.ToArray(),
+                (resp) =>
+                {
+                    // save the character to the gameManager
+                    gameManager.GetPlayer().character = resp.id;
+                    gameManager.character = resp;
+                    CreateCharacterSuccess?.Invoke();
+                },
+                (RequestException ex) =>
+                {
+                    // fire the fail event
+                    CreateCharacterFail?.Invoke(ex);
+                }
+            );
 
 
             Debug.Log("Clicked the create button");

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using Openworld;
 using Openworld.Binding;
+using Openworld.Models;
 using UnityEngine;
 
 public class CharacterSkillTally : ObservableMonoBehaviour, IBindingProvider
@@ -51,6 +52,15 @@ public class CharacterSkillTally : ObservableMonoBehaviour, IBindingProvider
             }
         }
 
+        public SkillTally MakeDeepCopy()
+        {
+            SkillTally copy = new SkillTally();
+            copy.SkillsChosen = SkillsChosen;
+            copy.SkillsRemaining = SkillsRemaining;
+            copy.SkillsBonus = SkillsBonus;
+            return copy;
+        }
+
     }
 
     private CharacterCreator characterCreator;
@@ -92,5 +102,11 @@ public class CharacterSkillTally : ObservableMonoBehaviour, IBindingProvider
     public ObservableObject GetBindingSource()
     {
         return skillTally;
+    }
+
+    // returns a copy of the tally so that the original can't be modified
+    public SkillTally GetTallyCopy()
+    {
+        return skillTally.MakeDeepCopy();
     }
 }

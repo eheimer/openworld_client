@@ -105,7 +105,7 @@ namespace Openworld
             inventorySize = 10,
             inventory = new Inventory()
         };
-        public override void CreateCharacter(string gameId, string name, int raceId, int strength, int dexterity, int intelligence, Action<CharacterDetail> success, Action<RequestException> error)
+        public override void CreateCharacter(string gameId, string name, int raceId, int strength, int dexterity, int intelligence, CharacterSkill[] skills, Action<CharacterDetail> success, Action<RequestException> error)
         {
             _character = new CharacterDetailResponse()
             {
@@ -126,7 +126,8 @@ namespace Openworld
                 maxMana = 100,
                 maxStamina = 100,
                 inventorySize = 10,
-                inventory = new Inventory()
+                inventory = new Inventory(),
+                skills = skills
             };
             _games[0].character = _character;
             success(_character);

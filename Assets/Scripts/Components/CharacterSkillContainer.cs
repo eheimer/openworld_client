@@ -71,6 +71,11 @@ namespace Openworld
             }
         }
 
+        public CharacterSkillTally.SkillTally GetTally()
+        {
+            return this.tally.GetTallyCopy();
+        }
+
         public void TallySkillLevels()
         {
             //update the tallies.  The counts represent the levels selected for each skill
@@ -154,7 +159,7 @@ namespace Openworld
         ** If the skill is a raceSkill, return the level of the raceSkill
         ** Otherwise, return 0
         */
-        public int GetMinLevelForSkill(CharacterSkill skill)
+        private int GetMinLevelForSkill(CharacterSkill skill)
         {
             foreach (CharacterSkill raceSkill in _raceSkills)
             {
