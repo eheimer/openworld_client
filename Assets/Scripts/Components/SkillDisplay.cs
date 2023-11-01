@@ -10,20 +10,18 @@ public class SkillDisplay : MonoBehaviour
 
     [SerializeField] private TMP_Dropdown skillLevelDropdown;
 
-    // Reference to the Button to remove the skill
-    [SerializeField] private Button removeButton;
+    private int minLevel;
+    private int maxLevel;
 
-    // Event to notify when the skill is removed
-    public delegate void SkillRemovedHandler(GameObject skillDisplay);
-    public event SkillRemovedHandler OnRemove;
     // Event to notify when the skill level changes
     public delegate void SkillLevelChangedHandler(GameObject skillDisplay);
     public event SkillLevelChangedHandler OnSkillLevelChanged;
 
-    public void Initialize(CharacterSkill skill)
+    public void Initialize(CharacterSkill skill, int minLevel = 0, int maxLevel = 4)
     {
-        // Set the skill name
         SkillName = skill.name;
+        this.minLevel = minLevel;
+        this.maxLevel = maxLevel;
         SkillLevel = skill.level;
     }
 
@@ -54,14 +52,10 @@ public class SkillDisplay : MonoBehaviour
     // Method to handle the skill level dropdown value changed event
     public void HandleSkillLevelChanged()
     {
-        // Raise the OnSkillLevelChanged event
+        // make sure the skill level is within the min and max
+        skillLevelDropdown.SetValueWithoutNotify(
+            Mathf.Clamp(SkillLevel, this.minLevel, this.maxLevel)
+        );
         OnSkillLevelChanged?.Invoke(gameObject);
-    }
-
-    // Method to handle the remove button click event
-    public void HandleRemoveButtonClick()
-    {
-        // Raise the OnRemove event
-        OnRemove?.Invoke(gameObject);
     }
 }

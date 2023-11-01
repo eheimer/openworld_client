@@ -57,7 +57,14 @@ namespace Openworld
                     }
                     if (!found)
                     {
-                        creator.SelectedSkills.Add(raceSkill);
+                        //make a deep copy of raceSkill and add it to creator.SelectedSkills
+                        creator.SelectedSkills.Add(new CharacterSkill()
+                        {
+                            description = raceSkill.description,
+                            id = raceSkill.id,
+                            level = raceSkill.level,
+                            name = raceSkill.name
+                        });
                     }
                 }
                 RefreshSkillDisplays();
@@ -123,11 +130,7 @@ namespace Openworld
                     SkillDisplay sd = child.gameObject.GetComponent<SkillDisplay>();
                     if (sd != null && sd.SkillName == selectedSkill.name)
                     {
-                        // make sure the skill level is the same
-                        if (sd.SkillLevel != selectedSkill.level)
-                        {
-                            selectedSkill.level = sd.SkillLevel;
-                        }
+                        sd.Initialize(selectedSkill, GetMinLevelForSkill(selectedSkill));
                         found = true;
                         break;
                     }
@@ -136,8 +139,7 @@ namespace Openworld
                 {
                     GameObject skillDisplay = Instantiate(skillDisplayPrefab, transform);
                     var sd = skillDisplay.GetComponent<SkillDisplay>();
-                    sd.Initialize(selectedSkill);
-                    sd.OnRemove += SkillRemoved;
+                    sd.Initialize(selectedSkill, GetMinLevelForSkill(selectedSkill));
                     sd.OnSkillLevelChanged += SkillLevelChanged;
                 }
             }
@@ -146,6 +148,22 @@ namespace Openworld
                 Destroy(skillSelector);
             }
             MakeSkillSelector(AvailableSkills(creator.Skills));
+        }
+
+        /*
+        ** If the skill is a raceSkill, return the level of the raceSkill
+        ** Otherwise, return 0
+        */
+        public int GetMinLevelForSkill(CharacterSkill skill)
+        {
+            foreach (CharacterSkill raceSkill in _raceSkills)
+            {
+                if (raceSkill.name == skill.name)
+                {
+                    return raceSkill.level;
+                }
+            }
+            return 0;
         }
 
         // we're simply waiting for this to get called by the BoundComponent base class
@@ -224,33 +242,6 @@ namespace Openworld
             ss.OnSkillSelected += SkillSelected;
         }
 
-        // Method to be called when a skill is removed from the SkillDisplay
-        public void SkillRemoved(GameObject skillDisplay)
-        {
-            // Remove the skill from the CharacterCreator
-            SkillDisplay sd = skillDisplay.GetComponent<SkillDisplay>();
-
-            // if the skill is in _raceSkills, we cannot remove it
-            foreach (CharacterSkill raceSkill in _raceSkills)
-            {
-                if (raceSkill.name == sd.SkillName)
-                {
-                    return;
-                }
-            }
-
-            // find the skill in creator.SelectedSkills that has the same name as sd
-            foreach (CharacterSkill selectedSkill in creator.SelectedSkills)
-            {
-                if (selectedSkill.name == sd.SkillName)
-                {
-                    creator.SelectedSkills.Remove(selectedSkill);
-                    break;
-                }
-            }
-            RefreshSkillDisplays();
-        }
-
         // Method to be called when a skill level is changed in the SkillDisplay
         public void SkillLevelChanged(GameObject skillDisplay)
         {
@@ -261,25 +252,13 @@ namespace Openworld
             {
                 if (selectedSkill.name == sd.SkillName)
                 {
-                    int newLevel = sd.SkillLevel;
-                    // if the selectedSkill is a raceSkill, don't allow the level to be set below the raceSkill level
-                    CharacterSkill RaceSkill = null;
-                    foreach (CharacterSkill raceSkill in _raceSkills)
-                    {
-                        if (raceSkill.name == sd.SkillName)
-                        {
-                            RaceSkill = raceSkill;
-                            newLevel = Math.Max(newLevel, raceSkill.level);
-                            break;
-                        }
-                    }
-                    if (newLevel == 0)
+                    if (sd.SkillLevel == 0)
                     {
                         creator.SelectedSkills.Remove(selectedSkill);
                     }
                     else
                     {
-                        selectedSkill.level = newLevel;
+                        selectedSkill.level = sd.SkillLevel;
                     }
                     break;
                 }

@@ -9,7 +9,6 @@ using UnityEngine;
 
 public class CharacterSkillTally : ObservableMonoBehaviour, IBindingProvider
 {
-    private static int SKILLS_BONUS = 0;
     public class SkillTally : ObservableObject
     {
         private int skillsChosen = 0;
