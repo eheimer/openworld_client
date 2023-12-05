@@ -62,7 +62,11 @@ namespace Openworld.Menus
 
     protected virtual void HandleClick(string selector, Action method)
     {
-      GetVisualElement().Q<Button>(selector).clickable.clicked += method;
+      var button = GetVisualElement().Q<Button>(selector);
+      if (button != null)
+      {
+        button.clickable.clicked += method;
+      }
     }
 
     public virtual void RequestException(RequestException err)

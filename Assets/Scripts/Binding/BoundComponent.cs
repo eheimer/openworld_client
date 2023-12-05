@@ -26,7 +26,6 @@ namespace Openworld.Binding
         BindingSource = GetBindingSource();
         TargetComponent = GetTargetComponent();
         TargetProperty = TargetComponent?.GetType().GetProperty(BindingTargetProperty);
-        Debug.Log(gameObject.name + ": Binding " + BindingSource?.GetType() + "." + bindingSourceProperty + " to " + TargetComponent?.GetType() + "." + BindingTargetProperty);
       }
       catch (Exception ex)
       {
@@ -135,7 +134,7 @@ namespace Openworld.Binding
     {
       if (e.PropertyName == bindingSourceProperty)
       {
-        Debug.Log("BindingSource Property Changed: " + e.PropertyName);
+        //Debug.Log("BindingSource Property Changed: " + e.PropertyName);
         UpdateBindingSourcePropertyValue();
       }
     }

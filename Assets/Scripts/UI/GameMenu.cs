@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 namespace Openworld.Menus
 {
 
-  public class CharacterMenu : MenuBase
+  public class GameMenu : MenuBase
   {
 
     protected override void RegisterButtonHandlers()
@@ -23,7 +23,7 @@ namespace Openworld.Menus
 
     void CharacterClick()
     {
-      getUI().HideAllDocuments();
+      SceneManager.LoadScene(SceneName.Character.name());
     }
 
     void InventoryClick()

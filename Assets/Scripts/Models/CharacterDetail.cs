@@ -223,5 +223,19 @@ namespace Openworld.Models
       get => _battle;
       set => Set(ref _battle, value);
     }
+
+    private string _portrait;
+    public string portrait
+    {
+      get => _portrait;
+      set => Set(ref _portrait, value);
+    }
+
+    private string _title;
+    public string title
+    {
+      get => _title;
+      set => Set(ref _title, value);
+    }
   }
 }

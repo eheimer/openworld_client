@@ -1039,7 +1039,7 @@ PrefabInstance:
       objectReference: {fileID: 1456642530}
     - target: {fileID: 6353949551885875113, guid: ce1e9dc542a70ebbbba67bd4d5ab8211, type: 3}
       propertyPath: offlineMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6353949551885875113, guid: ce1e9dc542a70ebbbba67bd4d5ab8211, type: 3}
       propertyPath: autoPassword

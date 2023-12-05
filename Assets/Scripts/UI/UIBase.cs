@@ -11,9 +11,8 @@ namespace Openworld.Menus
 
   public abstract class UIBase : MonoBehaviour
   {
-
     [SerializeField]
-    UIDocument mainMenu;
+    protected UIDocument mainMenu;
 
     /// <summary>
     /// <c>HideAllDocuments</c> hides all UIDocuments.
@@ -24,7 +23,7 @@ namespace Openworld.Menus
       {
         try
         {
-          ui.rootVisualElement.visible = false;
+          ui.GetComponent<UIDocument>().rootVisualElement.style.display = DisplayStyle.None;
         }
         catch (Exception e)
         {
@@ -35,9 +34,12 @@ namespace Openworld.Menus
 
     public void ShowDocument(UIDocument document)
     {
-      this.gameObject.SetActive(true);
+      gameObject.SetActive(true);
       HideAllDocuments();
-      document.rootVisualElement.visible = true;
+      if (document != null)
+      {
+        document.rootVisualElement.style.display = DisplayStyle.Flex;
+      }
     }
 
 
@@ -62,7 +64,7 @@ namespace Openworld.Menus
 
     protected void ShowMenuButton()
     {
-      FindObjectOfType<MenuButton>().GetComponent<UIDocument>().rootVisualElement.visible = true;
+      ShowDocument(FindObjectOfType<MenuButton>().GetComponent<UIDocument>());
     }
 
     protected void RaiseEvent(Action action)

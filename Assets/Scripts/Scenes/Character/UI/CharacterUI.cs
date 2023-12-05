@@ -9,40 +9,9 @@ namespace Openworld.Menus
 
   public class CharacterUI : UIBase
   {
-
-    [SerializeField]
-    FormBase createCharacterForm;
-
-    public event Action CreateCharacterSuccess;
-    public event Action<Exception> CreateCharacterFail;
-    public event Action CreateCharacterCancel;
-
-    public void NewCharacter()
+    protected void Start()
     {
-      createCharacterForm.Show();
-      createCharacterForm.FormSuccess += RaiseCreateCharacterSuccess;
-      createCharacterForm.FormFail += RaiseCreateCharacterFail;
-    }
-
-    private void RaiseCreateCharacterSuccess()
-    {
-      createCharacterForm.FormSuccess -= RaiseCreateCharacterSuccess;
-      createCharacterForm.FormFail -= RaiseCreateCharacterFail;
-      RaiseEvent(CreateCharacterSuccess);
-    }
-
-    private void RaiseCreateCharacterFail(Exception ex)
-    {
-      createCharacterForm.FormSuccess -= RaiseCreateCharacterSuccess;
-      createCharacterForm.FormFail -= RaiseCreateCharacterFail;
-      if (ex is FormCancelException)
-      {
-        RaiseEvent(CreateCharacterCancel);
-      }
-      else
-      {
-        RaiseEvent(CreateCharacterFail, ex);
-      }
+      mainMenu.rootVisualElement.Q<Button>("character-button").RemoveFromHierarchy();
     }
   }
 }

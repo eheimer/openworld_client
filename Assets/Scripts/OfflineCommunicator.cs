@@ -88,6 +88,7 @@ namespace Openworld
         {
             id = "1",
             name = "Sample Character",
+            title = "Boss Master",
             race = _races.FirstOrDefault(r => r.id == 1).name,
             strength = 3,
             dexterity = 3,
@@ -103,6 +104,7 @@ namespace Openworld
             maxMana = 100,
             maxStamina = 100,
             inventorySize = 10,
+            portrait = "human_wizard_f",
             inventory = new Inventory()
         };
         public override void CreateCharacter(string gameId, string name, int raceId, int strength, int dexterity, int intelligence, CharacterSkill[] skills, Action<CharacterDetail> success, Action<RequestException> error)
@@ -111,6 +113,7 @@ namespace Openworld
             {
                 id = "1",
                 name = name,
+                title = "Boss Master",
                 race = _races.FirstOrDefault(r => r.id == raceId).name,
                 strength = 3,
                 dexterity = 3,
@@ -127,6 +130,7 @@ namespace Openworld
                 maxStamina = 100,
                 inventorySize = 10,
                 inventory = new Inventory(),
+                portrait = "human_wizard_f",
                 skills = skills
             };
             _games[0].character = _character;
