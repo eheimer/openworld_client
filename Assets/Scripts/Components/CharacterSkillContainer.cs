@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Openworld
 {
-    public class CharacterSkillContainer : BoundComponent
+    public class CharacterSkillContainer : BoundComponent<Component>
     {
         [SerializeField] private GameObject skillSelectorPrefab;
         [SerializeField] private GameObject skillDisplayPrefab;

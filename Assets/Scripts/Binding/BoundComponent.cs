@@ -13,7 +13,7 @@ namespace Openworld.Binding
   ** A BoundComponent is an observer that binds a property on an ObservableObject
   ** to a target, usually a property of this component
   **/
-  public abstract class BoundComponent : MonoBehaviour
+  public abstract class BoundComponent<T> : MonoBehaviour where T : UnityEngine.Component
   {
     [SerializeField] public string bindingSourceProperty; // the property on the bindingSource that we want to observe
 
@@ -35,11 +35,11 @@ namespace Openworld.Binding
     #endregion
 
     #region IMPLEMENTABLE METHODS
-    protected virtual UnityEngine.Component GetTargetComponent()
+    protected virtual T GetTargetComponent()
     {
       // by default we will get the target component from the children of this game object
       // override to implent a different way of getting the target component
-      return gameObject.GetComponentInChildren(BindingTargetComponentType);
+      return gameObject.GetComponentInChildren<T>();
     }
     /**
     ** By default we will get the bindingProvider from a parent up the tree.  This
@@ -72,8 +72,10 @@ namespace Openworld.Binding
     **/
     protected virtual void UpdateBindingTarget()
     {
+      Debug.Log("UpdateBindingTarget: " + TargetComponent.name + ", " + TargetProperty.Name + "=" + SourcePropertyValue);
       if (TargetProperty != null)
       {
+        Debug.Log("Current value: " + TargetProperty.GetValue(TargetComponent));
         TargetProperty.SetValue(TargetComponent, SourcePropertyValue);
       }
     }
@@ -81,9 +83,9 @@ namespace Openworld.Binding
 
     #region PROPERTIES
     protected object SourcePropertyValue { get; set; } // the value from the bindingSourceProperty
-    protected UnityEngine.Component TargetComponent { get; set; } // the component that contains the property that we want to bind
+    protected T TargetComponent { get; set; } // the component that contains the property that we want to bind
     protected PropertyInfo TargetProperty { get; set; } // the property that we want to bind
-    public System.Type BindingTargetComponentType { get; set; }
+    //public T BindingTargetComponentType { get; set; }
     public string BindingTargetProperty { get; set; }
     private IBindingProvider _bindingProvider;
     protected IBindingProvider BindingProvider

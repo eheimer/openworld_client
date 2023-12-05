@@ -14,10 +14,10 @@ namespace Openworld.Binding
 
     public void Initialize(bool showStatName, string statName, string statBindField, bool showSubStat, string subStatBindField)
     {
-      stat.GetComponentInChildren<BoundComponent>().bindingSourceProperty = statBindField;
+      stat.GetComponentInChildren<BoundComponent<TMP_Text>>().bindingSourceProperty = statBindField;
       if (showSubStat)
       {
-        subStat.GetComponentInChildren<BoundComponent>().bindingSourceProperty = subStatBindField;
+        subStat.GetComponentInChildren<BoundComponent<TMP_Text>>().bindingSourceProperty = subStatBindField;
       }
 
       statNameTarget.gameObject.SetActive(showStatName);

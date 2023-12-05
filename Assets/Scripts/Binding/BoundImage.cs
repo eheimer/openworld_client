@@ -4,19 +4,18 @@ using Openworld.Binding;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BoundImage : BoundComponent
+public class BoundImage : BoundComponent<Image>
 {
     [SerializeField] string resourcePath = ""; // the path to find the image resource
 
     public BoundImage()
     {
-        BindingTargetComponentType = typeof(Image);
         BindingTargetProperty = "sprite";
     }
 
-    protected override UnityEngine.Component GetTargetComponent()
+    protected override Image GetTargetComponent()
     {
-        return gameObject.GetComponent(BindingTargetComponentType);
+        return gameObject.GetComponent<Image>();
     }
 
     protected override void UpdateBindingTarget()

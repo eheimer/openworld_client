@@ -10,7 +10,7 @@ namespace Openworld.Binding
   {
     Health, Mana, Stamina, Sleep, Hunger
   }
-  public class BoundStatusBar : BoundComponent
+  public class BoundStatusBar : BoundComponent<Image>
   {
     private static Dictionary<StatusBarStyle, string> statusMap = new Dictionary<StatusBarStyle, string> {
         {StatusBarStyle.Health, "Bar_Red_Front"},
@@ -25,15 +25,13 @@ namespace Openworld.Binding
 
     public BoundStatusBar()
     {
-      BindingTargetComponentType = typeof(Image);
+      //BindingTargetComponentType = typeof(Image);
       BindingTargetProperty = "fillAmount";
     }
 
-    protected override UnityEngine.Component GetTargetComponent()
+    protected override Image GetTargetComponent()
     {
-      // by default we will get the target component from the children of this game object
-      // override to implent a different way of getting the target component
-      return gameObject.GetComponent(BindingTargetComponentType);
+      return gameObject.GetComponent<Image>();
     }
 
     protected override void Start()
@@ -46,7 +44,7 @@ namespace Openworld.Binding
       string filename = statusMap[style];
 
       var sprite = Resources.Load<Sprite>("StatusBarSprites/" + filename);
-      Image component = TargetComponent as Image;
+      Image component = GetTargetComponent();
       component.sprite = sprite;
       component.type = Image.Type.Filled;
       component.fillMethod = Image.FillMethod.Horizontal;

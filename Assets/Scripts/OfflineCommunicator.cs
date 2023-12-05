@@ -93,10 +93,11 @@ namespace Openworld
             strength = 3,
             dexterity = 3,
             intelligence = 2,
-            hp = 50,
-            mana = 50,
-            hunger = 75,
-            stamina = 90,
+            hp = 50f / 75f,
+            mana = 50f / 100f,
+            hunger = 75f / 100f,
+            stamina = 90f / 100f,
+            sleep = .75f,
             hpReplenish = 2,
             manaReplenish = 1,
             staminaReplenish = 1,
@@ -118,10 +119,11 @@ namespace Openworld
                 strength = 3,
                 dexterity = 3,
                 intelligence = 2,
-                hp = 50,
-                mana = 50,
-                hunger = 75,
-                stamina = 90,
+                hp = 50f / 75f,
+                mana = 50f / 100f,
+                hunger = 75f / 100f,
+                stamina = 90f / 100f,
+                sleep = .75f,
                 hpReplenish = 2,
                 manaReplenish = 1,
                 staminaReplenish = 1,
@@ -140,10 +142,11 @@ namespace Openworld
         public override void GetCharacterDetail(string characterId, Action<CharacterDetailResponse> success, Action<RequestException> error)
         {
             // need to introduce this delay to give the binding time to initialize
-            StartCoroutine(DoAfterDelay(3, () => { success(_character); }));
+            Debug.Log(_character);
+            StartCoroutine(DoAfterDelay(.25f, () => { success(_character); }));
         }
 
-        private IEnumerator DoAfterDelay(int seconds, Action doThis)
+        private IEnumerator DoAfterDelay(float seconds, Action doThis)
         {
             yield return new WaitForSeconds(seconds);
             doThis();
