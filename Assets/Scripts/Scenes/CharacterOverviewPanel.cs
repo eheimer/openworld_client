@@ -8,7 +8,7 @@ namespace Openworld.Scenes
 {
   public class CharacterOverviewPanel : ObservableMonoBehaviour, IBindingProvider
   {
-    void Start()
+    void Awake()
     {
       GameManager gm = FindObjectOfType<GameManager>();
       if (gm != null)

@@ -19,7 +19,7 @@ namespace Openworld.Scenes
     protected override Dictionary<CharacterSceneStates, List<CharacterSceneStates>> GetStateTransitions()
     {
       return new Dictionary<CharacterSceneStates, List<CharacterSceneStates>> {
-        { CharacterSceneStates.INITIALIZE, new List<CharacterSceneStates> { CharacterSceneStates.NEW_CHARACTER, CharacterSceneStates.LOAD_CHARACTER } },
+        { CharacterSceneStates.INITIALIZE, new List<CharacterSceneStates> { CharacterSceneStates.NEW_CHARACTER, CharacterSceneStates.LOAD_CHARACTER, CharacterSceneStates.INTERACTIVE } },
         { CharacterSceneStates.NEW_CHARACTER, new List<CharacterSceneStates> { CharacterSceneStates.LOAD_CHARACTER, CharacterSceneStates.INTERACTIVE, CharacterSceneStates.EXIT } },
         { CharacterSceneStates.LOAD_CHARACTER, new List<CharacterSceneStates> { CharacterSceneStates.INTERACTIVE, CharacterSceneStates.EXIT } },
         { CharacterSceneStates.INTERACTIVE, new List<CharacterSceneStates> { CharacterSceneStates.EXIT } },
@@ -36,17 +36,17 @@ namespace Openworld.Scenes
       {
         case CharacterSceneStates.INITIALIZE:
           FindObjectOfType<CharacterCreator>()?.gameObject.SetActive(false);
-          // check if we have a character id on the GameManager
-          // if not, transition to NEW_CHARACTER
-          // otherwise, transition to LOAD_CHARACTER
+          if (GetGameManager().character != null)
+          {
+            stateMachine.ChangeState(CharacterSceneStates.INTERACTIVE);
+            break;
+          }
           if (GetGameManager().GetPlayer().character == null || GetGameManager().GetPlayer().character.Trim().Equals(""))
           {
             stateMachine.ChangeState(CharacterSceneStates.NEW_CHARACTER);
+            break;
           }
-          else
-          {
-            stateMachine.ChangeState(CharacterSceneStates.LOAD_CHARACTER);
-          }
+          stateMachine.ChangeState(CharacterSceneStates.LOAD_CHARACTER);
           break;
         case CharacterSceneStates.NEW_CHARACTER:
           var characterCreator = FindObjectOfType<CharacterCreator>(true);

@@ -26,6 +26,11 @@ namespace Openworld.Binding
         BindingSource = GetBindingSource();
         TargetComponent = GetTargetComponent();
         TargetProperty = TargetComponent?.GetType().GetProperty(BindingTargetProperty);
+        // set the value immediately if possible
+        if (BindingSource != null)
+        {
+          UpdateBindingSourcePropertyValue();
+        }
       }
       catch (Exception ex)
       {
@@ -72,10 +77,8 @@ namespace Openworld.Binding
     **/
     protected virtual void UpdateBindingTarget()
     {
-      Debug.Log("UpdateBindingTarget: " + TargetComponent.name + ", " + TargetProperty.Name + "=" + SourcePropertyValue);
       if (TargetProperty != null)
       {
-        Debug.Log("Current value: " + TargetProperty.GetValue(TargetComponent));
         TargetProperty.SetValue(TargetComponent, SourcePropertyValue);
       }
     }
@@ -85,7 +88,6 @@ namespace Openworld.Binding
     protected object SourcePropertyValue { get; set; } // the value from the bindingSourceProperty
     protected T TargetComponent { get; set; } // the component that contains the property that we want to bind
     protected PropertyInfo TargetProperty { get; set; } // the property that we want to bind
-    //public T BindingTargetComponentType { get; set; }
     public string BindingTargetProperty { get; set; }
     private IBindingProvider _bindingProvider;
     protected IBindingProvider BindingProvider
@@ -157,11 +159,11 @@ namespace Openworld.Binding
     private void UpdateBindingSourcePropertyValue()
     {
       var sourceProperty = GetBindingSourceProperty();
-      if (sourceProperty != null)
+      if (sourceProperty != null && BindingSource != null)
       {
         SourcePropertyValue = sourceProperty.GetValue(BindingSource);
+        UpdateBindingTarget();
       }
-      UpdateBindingTarget();
     }
   }
   #endregion

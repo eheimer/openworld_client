@@ -235,14 +235,15 @@ namespace Openworld.Binding
       return Set(propertyName, ref field, newValue);
     }
 
-    public void RemoveAllHandlers(){
+    public void RemoveAllHandlers()
+    {
       foreach (var handler in PropertyChanged.GetInvocationList())
       {
         PropertyChanged -= (PropertyChangedEventHandler)handler;
       }
       foreach (var handler in PropertyChanging.GetInvocationList())
       {
-          PropertyChanging -= (PropertyChangingEventHandler)handler;
+        PropertyChanging -= (PropertyChangingEventHandler)handler;
       }
     }
   }

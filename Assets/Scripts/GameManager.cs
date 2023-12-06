@@ -63,7 +63,7 @@ namespace Openworld
       player.playerName = pr.username;
     }
 
-    private CharacterDetail _character = new CharacterDetail();
+    private CharacterDetail _character;
     public CharacterDetail character
     {
       get { return _character; }

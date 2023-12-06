@@ -68,7 +68,8 @@ namespace Openworld
         };
         public override void GetSkills(Action<Skill[]> success, Action<RequestException> error)
         {
-            StartCoroutine(DoAfterDelay(1, () => { success(_skills); }));
+            success(_skills);
+            // StartCoroutine(DoAfterDelay(1, () => { success(_skills); }));
         }
 
         static RacesResponse[] _races = new RacesResponse[5]
@@ -81,7 +82,8 @@ namespace Openworld
         };
         public override void GetRaces(Action<RacesResponse[]> success, Action<RequestException> error)
         {
-            StartCoroutine(DoAfterDelay(1, () => { success(_races); }));
+            success(_races);
+            //StartCoroutine(DoAfterDelay(1, () => { success(_races); }));
         }
 
         static CharacterDetailResponse _character = new CharacterDetailResponse()
@@ -141,16 +143,14 @@ namespace Openworld
 
         public override void GetCharacterDetail(string characterId, Action<CharacterDetailResponse> success, Action<RequestException> error)
         {
-            // need to introduce this delay to give the binding time to initialize
-            Debug.Log(_character);
-            StartCoroutine(DoAfterDelay(.25f, () => { success(_character); }));
+            success(_character);
         }
 
-        private IEnumerator DoAfterDelay(float seconds, Action doThis)
-        {
-            yield return new WaitForSeconds(seconds);
-            doThis();
-        }
+        // private IEnumerator DoAfterDelay(float seconds, Action doThis)
+        // {
+        //     yield return new WaitForSeconds(seconds);
+        //     doThis();
+        // }
 
         static GamesResponse[] _games = new GamesResponse[1]{
             new GamesResponse { game = new Game { id = "1", name = "SampleGame", owner = _player }, owner = true, character = _character}
