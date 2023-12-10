@@ -16,6 +16,7 @@ namespace Openworld.Binding
   public abstract class BoundComponent<T> : MonoBehaviour where T : UnityEngine.Component
   {
     [SerializeField] public string bindingSourceProperty; // the property on the bindingSource that we want to observe
+    [SerializeField] public string container; // a string representation of the ObservableObject type that contains the bindingSourceProperty
 
     #region UNITY LIFECYCLE METHODS
     protected virtual void Start()
