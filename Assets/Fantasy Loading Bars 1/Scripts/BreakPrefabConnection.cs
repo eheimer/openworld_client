@@ -7,13 +7,10 @@ using UnityEditor;
 [AddComponentMenu("Break Prefab Connection")]
 public class BreakPrefabConnection : MonoBehaviour
 {
-	void Start()
-	{
-		#if UNITY_EDITOR
-		PrefabUtility.DisconnectPrefabInstance(gameObject);
-		#endif
-		DestroyImmediate(this); // Remove this script
-	}
+    void Start()
+    {
+        DestroyImmediate(this); // Remove this script
+    }
 #if UNITY_EDITOR
     [MenuItem("Tools/Reset Prefab Transform %#r")]
     static void DoSomethingWithAShortcutKey()

@@ -13,7 +13,7 @@ public class CharacterSkillTally : ObservableMonoBehaviour, IBindingProvider
     public class SkillTally : ObservableObject
     {
         private int skillsChosen = 0;
-        private int skillsRemaining = 0;
+        private int skillsRemaining = 10;
         private int skillsBonus = 0;
 
         public int SkillsChosen
@@ -99,7 +99,7 @@ public class CharacterSkillTally : ObservableMonoBehaviour, IBindingProvider
         set { Set(ref _skillTally, value); }
     }
 
-    public ObservableObject GetBindingSource()
+    public ObservableObject GetBindingSource(string source = null)
     {
         return skillTally;
     }
@@ -108,5 +108,10 @@ public class CharacterSkillTally : ObservableMonoBehaviour, IBindingProvider
     public SkillTally GetTallyCopy()
     {
         return skillTally.MakeDeepCopy();
+    }
+
+    public Type[] provides()
+    {
+        return new Type[] { typeof(SkillTally) };
     }
 }

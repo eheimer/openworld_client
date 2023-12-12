@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1c81830fd8ec56ccb7d99ace1e2858c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bindingSourceProperty: name
+  bindingSource: CharacterDetail.name
 --- !u!1 &6929004862850087686
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,7 +372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1c81830fd8ec56ccb7d99ace1e2858c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bindingSourceProperty: title
+  bindingSource: CharacterDetail.name
 --- !u!1 &8203098272334177601
 GameObject:
   m_ObjectHideFlags: 0

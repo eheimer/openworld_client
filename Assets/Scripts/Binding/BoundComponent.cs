@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 using Openworld;
 using TMPro;
+using Unity.Properties;
 using UnityEngine;
 
 namespace Openworld.Binding
@@ -15,15 +17,16 @@ namespace Openworld.Binding
   **/
   public abstract class BoundComponent<T> : MonoBehaviour where T : UnityEngine.Component
   {
-    [SerializeField] public string bindingSourceProperty; // the property on the bindingSource that we want to observe
-    [SerializeField] public string container; // a string representation of the ObservableObject type that contains the bindingSourceProperty
+    // the bindingSourceProperty should be a string formatted like "<ObservableObject>.<property>"
+    // in the future, we may implement nested properties several levels deep, but for now it is just one level
+    [SerializeField()] string bindingSource; // the property on the bindingSource that we want to observe
 
     #region UNITY LIFECYCLE METHODS
     protected virtual void Start()
     {
       try
       {
-        BindingProvider = GetBindingProvider();
+        BindingProvider = FindBindingProvider();
         BindingSource = GetBindingSource();
         TargetComponent = GetTargetComponent();
         TargetProperty = TargetComponent?.GetType().GetProperty(BindingTargetProperty);
@@ -52,9 +55,25 @@ namespace Openworld.Binding
     ** can be overridden to specify a bindingProvider to use, or to use none. A
     ** bindingProvider is not required.
     **/
-    protected virtual IBindingProvider GetBindingProvider()
+    protected virtual IBindingProvider FindBindingProvider()
     {
-      return gameObject.GetComponentsInParent<IBindingProvider>(true)?[0];
+      IBindingProvider[] providers = gameObject.GetComponentsInParent<IBindingProvider>(true);
+      foreach (IBindingProvider provider in providers)
+      {
+        foreach (var t in provider.provides())
+        {
+          if (t.Name == BindingSourceContainer) return provider;
+          if (t.IsGenericType && t.GetGenericTypeDefinition().Name.Split('`')[0] == BindingSourceContainer.Split('<', '>')[0])
+          {
+            var genericType = t.GetGenericArguments()[0];
+            if (genericType.Name == BindingSourceContainer.Split('<', '>')[1])
+            {
+              return provider;
+            }
+          }
+        }
+      }
+      return null;
     }
 
     /**
@@ -62,14 +81,14 @@ namespace Openworld.Binding
     ** can be overridden to specify a different bindingSource, if a bindingProvider
     ** is not used.
     **/
-    public virtual ObservableObject GetBindingSource()
+    private ObservableObject GetBindingSource()
     {
-      return BindingProvider.GetBindingSource();
+      return BindingProvider.GetBindingSource(BindingSourceContainer);
     }
 
     public virtual PropertyInfo GetBindingSourceProperty()
     {
-      return BindingSource.GetType().GetProperty(bindingSourceProperty, BindingFlags.Public | BindingFlags.Instance);
+      return BindingSource.GetType().GetProperty(BindingSourcePropertyName, BindingFlags.Public | BindingFlags.Instance);
     }
 
     /**
@@ -137,7 +156,7 @@ namespace Openworld.Binding
     **/
     private void SourcePropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-      if (e.PropertyName == bindingSourceProperty)
+      if (e.PropertyName == BindingSourcePropertyName)
       {
         //Debug.Log("BindingSource Property Changed: " + e.PropertyName);
         UpdateBindingSourcePropertyValue();
@@ -164,6 +183,59 @@ namespace Openworld.Binding
       {
         SourcePropertyValue = sourceProperty.GetValue(BindingSource);
         UpdateBindingTarget();
+      }
+    }
+
+    public void SetBindingSource(string bindingSource)
+    {
+      this.bindingSource = bindingSource;
+      _bindingSourceContainer = null;
+      _bindingSourcePropertyName = null;
+    }
+
+    string _bindingSourceContainer;
+    protected string BindingSourceContainer
+    {
+      get
+      {
+        if (_bindingSourceContainer == null)
+        {
+          string[] bindingParts = bindingSource.Split('.');
+          if (bindingParts.Length != 2)
+          {
+            Debug.LogWarning("Binding source property must be in the format <ObservableObject>.<property> for " + this.GetType());
+            return null;
+          }
+          _bindingSourceContainer = bindingParts[0];
+        }
+        return _bindingSourceContainer;
+      }
+      set
+      {
+        _bindingSourceContainer = value;
+      }
+    }
+
+    string _bindingSourcePropertyName;
+    protected string BindingSourcePropertyName
+    {
+      get
+      {
+        if (_bindingSourcePropertyName == null)
+        {
+          string[] bindingParts = bindingSource.Split('.');
+          if (bindingParts.Length != 2)
+          {
+            Debug.LogWarning("Binding source property must be in the format <ObservableObject>.<property> for " + this.GetType());
+            return null;
+          }
+          _bindingSourcePropertyName = bindingParts[1];
+        }
+        return _bindingSourcePropertyName;
+      }
+      set
+      {
+        _bindingSourcePropertyName = value;
       }
     }
   }

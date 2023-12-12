@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using Openworld.Binding;
+using Openworld.Models;
 using UnityEngine;
 namespace Openworld.Scenes
 {
@@ -19,15 +22,22 @@ namespace Openworld.Scenes
 
         private void GameManagerPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            if (args.PropertyName == "inventory")
+            if (args.PropertyName == "character")
             {
                 RaisePropertyChanged("bindingSource");
             }
         }
 
-        public ObservableObject GetBindingSource()
+        public ObservableObject GetBindingSource(string sourcetype)
         {
-            return FindObjectOfType<GameManager>().character;
+            if (sourcetype == "CharacterDetail") return FindObjectOfType<GameManager>().character;
+            if (sourcetype == "Inventory") return FindObjectOfType<GameManager>().character?.inventory;
+            return null;
+        }
+
+        public Type[] provides()
+        {
+            return new Type[] { typeof(CharacterDetail), typeof(Inventory) };
         }
     }
 

@@ -25,12 +25,12 @@ namespace Openworld
       // new StatDef() { name = "Mana", statField = "maxMana", showSubStat = true, subStatField = "manaReplenish" },
       // new StatDef() { name = "HP", statField = "maxHp",  showSubStat = true,subStatField = "hpReplenish" },
       // new StatDef() { name = "Stamina", statField = "maxStamina",  showSubStat = true,subStatField = "staminaReplenish" },
-      new StatDef() { name = "Hit Ch", statField = "hitChance"},
-      new StatDef() { name = "Def Ch", statField = "defChance"},
-      new StatDef() { name = "Parry", statField = "parry"},
-      new StatDef() { name = "Swing", statField = "swingSpeed"},
-      new StatDef() { name = "Cast", statField = "castSpeed"},
-      new StatDef() { name = "Heal", statField = "healSpeed"},
+      new StatDef() { name = "Hit Ch", statField = "CharacterDetail.hitChance"},
+      new StatDef() { name = "Def Ch", statField = "CharacterDetail.defChance"},
+      new StatDef() { name = "Parry", statField = "CharacterDetail.parry"},
+      new StatDef() { name = "Swing", statField = "CharacterDetail.swingSpeed"},
+      new StatDef() { name = "Cast", statField = "CharacterDetail.castSpeed"},
+      new StatDef() { name = "Heal", statField = "CharacterDetail.healSpeed"},
     };
 
     void Start()

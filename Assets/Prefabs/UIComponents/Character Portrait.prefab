@@ -254,5 +254,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33f1f010505b8ffcf976c08ecb5b89c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bindingSourceProperty: portrait
+  bindingSource: CharacterDetail.portrait
   resourcePath: CharacterPortraits

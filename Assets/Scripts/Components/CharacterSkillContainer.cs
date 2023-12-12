@@ -13,6 +13,12 @@ namespace Openworld
         [SerializeField] private CharacterCreator creator;
         [SerializeField] private CharacterSkillTally tally;
 
+        public CharacterSkillContainer()
+        {
+            //for this object, this property is irrelevent, but it must be set to something
+            BindingTargetProperty = "name";
+        }
+
         private GameObject skillSelector;
 
         // these skills record the minimum levels for skills associated with the character's race

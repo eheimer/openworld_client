@@ -219,9 +219,14 @@ namespace Openworld
             );
         }
 
-        public ObservableObject GetBindingSource()
+        public ObservableObject GetBindingSource(string source = null)
         {
             return ObservableSkills;
+        }
+
+        public Type[] provides()
+        {
+            return new Type[] { typeof(ObservableArray<Skill>) };
         }
     }
 }
